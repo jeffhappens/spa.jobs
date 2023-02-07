@@ -5,7 +5,7 @@ import axios from 'axios'
 const results = ref()
 
 async function getResults() {
-    let { data } = await axios.get('https://jsonplaceholder.typicode.com/users')
+    let { data } = await axios.get('http://localhost:8000/api/listings')
     results.value = data
 }
 getResults()
@@ -23,15 +23,17 @@ getResults()
                 v-for="result in results" :key="result.id">
 
                 <div class="flex justify-between align-start">
-                    <h4 class="text-black text-2xl">{{ result.company.catchPhrase }}</h4>
+                    <h4 class="text-black text-2xl">{{ result.title }}</h4>
                     <p class="text-sm">{{ new Intl.DateTimeFormat('en-us').format() }}</p>
                 </div>
-                <p class="mb-2 text-[color:var(--p-blue-md)]">{{ result.email }}</p>
+                <p class="mb-2 text-[color:var(--p-blue-md)]">{{ result.company.name }}</p>
 
-                <p class="text-md">Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis consequuntur quasi recusandae! Excepturi voluptatum provident praesentium! Reprehenderit, totam eos! Delectus, quae laborum. Neque reprehenderit libero aliquid earum veniam atque tempora? Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis consequuntur quasi recusandae! Excepturi voluptatum provident praesentium! Reprehenderit, totam eos! Delectus, quae laborum. Neque reprehenderit libero aliquid earum veniam atque tempora?</p>
+                
+
+                <p class="text-md">{{ result.description }}</p>
                 
                 <div class="flex items-center justify-end mt-8">
-                    <button class="shadow-md text-lg font-semibold bg-[color:var(--p-blue-md)] text-white py-1 px-4 rounded-full">Apply for this job</button>
+                    <a :href="'http://'+result.apply_link" class="shadow-md text-lg font-semibold bg-[color:var(--p-blue-md)] text-white py-1 px-4 rounded-full">Apply for this job</a>
                 </div>
 
             </div>
