@@ -14,6 +14,7 @@
 
 </script>
 <template>
+    
     <div class="max-w-screen-xl mx-auto p-6 flex items-center justify-between w-full text-white">
 
         <div class="w-1/3 text-left">SITE NAME</div>
@@ -29,9 +30,14 @@
         </nav>
         
         <div class="w-1/3 text-right">
+            <!-- <router-link
+                :to="postJobItem.destination"
+                class="font-bold py-2 px-6 rounded-full bg-gradient-to-r from-blue-500 to-blue-600">
+                {{ postJobItem.label }}
+            </router-link> -->
             <router-link
                 :to="postJobItem.destination"
-                class="font-bold bg-blue-400 py-2 px-6 rounded-full">
+                class="font-bold py-2 px-6 rounded-full bg-[color:var(--p-orange)]">
                 {{ postJobItem.label }}
             </router-link>
         </div>

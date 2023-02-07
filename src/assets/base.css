@@ -23,7 +23,17 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+
+
+  --p-blue-lt: #8ecae6;
+  --p-blue-md: #219ebc;
+  --p-blue-drk: #023047;
+
+  --p-mustard: #ffb703;
+  --p-orange: #fb8500;
 }
+
+
 
 /* semantic color variables for this project */
 :root {
