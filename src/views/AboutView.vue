@@ -1,3 +1,5 @@
 <template>
-    <main></main>
+    <main>
+        <p>Listing View</p>
+    </main>
 </template>
