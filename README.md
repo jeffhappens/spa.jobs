@@ -1,6 +1,6 @@
-# spa.jobs
+# Companion frontend to Job Board Prototype API
 
-This template should help get you started developing with Vue 3 in Vite.
+This is a frontend written using Vue3/TailwindCSS
 
 ## Recommended IDE Setup
 
