@@ -1,6 +1,6 @@
 # Companion frontend to Job Board Prototype API
 
-This is a frontend written using Vue3/TailwindCSS
+This is a companion frontend to jeffhappens/api.jobs written using Vue3/TailwindCSS
 
 ## Recommended IDE Setup
 
