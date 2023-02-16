@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 
-const heading = ref('Job Board Prototype Remote Workers')
+const heading = ref('Job Board Prototype For Remote Workers')
 const description = ref('Jobs is a curated job board of the best jobs for developers, designers and marketers in the tech industry.')
 
 </script>  
