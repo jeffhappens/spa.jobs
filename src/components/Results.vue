@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import ListingCard from './ListingCard.vue'
 
 const props = defineProps({
     results: Array,
@@ -14,7 +15,11 @@ const props = defineProps({
 
             <h2 class="text-4xl p-3 mb-10 text-center text-[color:var(--p-blue-drk)] font-semibold">{{ heading }}</h2>
 
-            <div
+            <div v-for="listing in results" :key="listing.id">
+                <ListingCard  :data="listing" />
+            </div>
+
+            <!-- <div
                 class="bg-white mb-12 p-6 text-black shadow-md rounded-3xl last:mb-0"
                 v-for="result in results" :key="result.id">
 
@@ -35,7 +40,7 @@ const props = defineProps({
                     <a :href="'http://'+result.apply_link" class="shadow-md text-lg font-semibold bg-[color:var(--p-blue-md)] text-white py-1 px-4 rounded-full">Apply for this job</a>
                 </div>
 
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
