@@ -67,7 +67,8 @@
                 </div>
                 <div v-else>
                     <p>
-                        <router-link to="/login">Sign In</router-link>
+                        <router-link to="/login" class="hover:text-[color:var(--p-orange)] hover:underline underline-offset-2">Sign In</router-link> /
+                        <router-link to="/register" class="hover:text-[color:var(--p-blue-md)] hover:underline underline-offset-2">Create Account</router-link>
                     </p>
                 </div>
 

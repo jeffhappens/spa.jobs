@@ -70,7 +70,8 @@
                 <div class="mb-4">
                     <label for="password" class="mb-1 block font-semibold text-lg text-gray-700">Password</label>
 
-                    <input v-model="user.password" type="password" name="password" class="w-full p-2 border border-gray-300 text-lg text-gray-600" />
+                    <input v-model="user.password" type="password" name="password" class="w-full p-2 mb-1 border border-gray-300 text-lg text-gray-600" />
+                    <router-link class="text-sm text-[color:var(--p-orange)] font-semibold" to="/forgot-password">I forgot my password</router-link>
                 </div>
 
                 <div class="flex items-center justify-between">
@@ -88,8 +89,10 @@
                         </svg>
                         <span v-else>Sign In</span>
                     </button>
-                    
+
                     <router-link class="text-sky-500 font-semibold" to="/register">Create a new account</router-link>
+                        
+
                 </div>
             </form>
         </div>
