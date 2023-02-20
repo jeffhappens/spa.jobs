@@ -57,6 +57,12 @@ const router = createRouter({
         beforeEnter: isAuthenticated,
         component: () => import('../views/MyCompanies.vue')
     },
+    {
+        path: '/account/companies/add',
+        name: 'add-company',
+        beforeEnter: isAuthenticated,
+        component: () => import('../views/AddCompany.vue')
+    },
 
 
     {

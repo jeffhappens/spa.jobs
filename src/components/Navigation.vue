@@ -63,7 +63,7 @@
                             <p @click="userLogout" class="text-sm text-[color:var(--p-orange)] cursor-pointer hover:underline underline-offset-2">Logout</p>
                         </div>
                     </div>
-                    <img class="inline-block h-12 w-12 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
+                    <img class="inline-block h-12 w-12 rounded-full ring-2 ring-white" src="/img/profile.avif" alt=""/>
                 </div>
                 <div v-else>
                     <p>

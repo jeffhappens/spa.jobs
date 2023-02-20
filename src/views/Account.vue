@@ -11,16 +11,21 @@
 
             <div class="flex items-start gap-5">
                 <aside class="w-1/3">
-                    <div class="bg-white p-4 mb-6 w-full shadow-md text-gray-800 flex items-center gap-4">
+                    
+                    <div class="bg-white p-4 mb-6 w-full shadow-md text-gray-800 flex gap-4">
+                    
                         <div>
                             <img class="inline-block h-16 w-16 rounded-full ring-2 ring-gray-300" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
                         </div>
                         
-                        <ul>
+                        <ul class="flex-1">
                             <li class="text-xl font-semibold">{{ user.name }}</li>
                             <li class="font-semibold mb-1">{{ user.email }}</li>
                             <li class="text-sm">Joined on: {{ new Intl.DateTimeFormat('en-US').format( new Date(user.created_at) ) }}</li>
                         </ul>
+                        <div>
+                            <span class="cursor-pointer material-symbols-outlined">edit</span>
+                        </div>
                     </div>
 
                     <div class="bg-white w-full shadow-md text-gray-800">

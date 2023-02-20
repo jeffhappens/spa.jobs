@@ -22,14 +22,15 @@
 
 
             <div v-for="company in companies" :key="company.id" class="p-4 mb-8 shadow-md flex gap-5">
-                <div class="w-1/4">
+                <div class="w-36">
                     <img :src="`/img/${company.logo}`" />
                 </div>
                 <div class="text-gray-600">
                     <h2 class="text-2xl text-gray-700">{{ company.name }}</h2>
-                    <p class="mb-2">{{ company.industry }}</p>
+                    <p class="mb-2">{{ company.address }}</p>
                     <p>{{ company.listings_count }} current listings</p>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. At ratione nulla aut perspiciatis magnam laboriosam possimus eum sapiente aliquid ipsam? Accusamus esse qui pariatur sed. Dolor blanditiis velit maxime quo.</p>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. At ratione nulla aut perspiciatis magnam laboriosam possimus eum sapiente aliquid ipsam?</p>
+                    <p class="mb-2">{{ company.industry }}</p>
                 </div> 
             </div>
         </div>

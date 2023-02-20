@@ -1,16 +1,14 @@
 <script setup>
     import { ref } from 'vue'
 
-    const myCompanies = ref([])
-
     const user = JSON.parse(localStorage.getItem('user'))
 
-    async function getCompanies() {
-        const { data } = await axios.get('http://localhost:8000/api/companies/' + user.uuid)
-        myCompanies.value = data
-    }
+    // async function getCompanies() {
+    //     const { data } = await axios.get('http://localhost:8000/api/companies/' + user.uuid)
+    //     myCompanies.value = data
+    // }
 
-    getCompanies()
+    // getCompanies()
 
 
 </script>
@@ -19,7 +17,7 @@
     <main class="flex justify-center items-start bg-gray-100 bg">
         <div class="rounded-lg w-3/4 mx-auto">
             <div class="my-8 flex justify-between">
-                <h2 class="text-4xl text-gray-800 font-semibold">Companies</h2>
+                <h2 class="text-4xl text-gray-800 font-semibold">Add New Company</h2>
                 <div class="mb-4">
                     <router-link to="/account/companies/add" class="text-white bg-[color:var(--p-blue-md)] p-2">Add New Company</router-link>
                 </div>
@@ -57,21 +55,6 @@
                 </aside>
 
                 <section class="flex-1">
-
-                    <div v-for="company in myCompanies" :key="company.id" class="bg-white w-full shadow-md text-gray-800 mb-6 p-4 flex gap-5">
-                        <div class="w-16">
-                            <img :src="`/img/${company.logo}`" />
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="text-xl">{{ company.name }}</h3>
-                            <p>{{ company.address }}</p>
-                            <p>{{ company.listings_count }} current listings</p>
-                        </div>
-                        <div>
-                            <span class="cursor-pointer material-symbols-outlined">edit</span>
-                        </div>
-                    </div>
-                    
 
                 </section>
             </div>
