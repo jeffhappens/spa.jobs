@@ -38,12 +38,24 @@ const router = createRouter({
     {
         path: '/companies',
         name: 'companies',
-        component: () => import('../views/Register.vue')
+        component: () => import('../views/BrowseCompanies.vue')
     },
     {
         path: '/post',
         name: 'post',
         component: () => import('../views/Register.vue')
+    },
+    {
+        path: '/account',
+        name: 'account',
+        beforeEnter: isAuthenticated,
+        component: () => import('../views/Account.vue')
+    },
+    {
+        path: '/account/companies',
+        name: 'my-companies',
+        beforeEnter: isAuthenticated,
+        component: () => import('../views/MyCompanies.vue')
     },
 
 
@@ -62,5 +74,29 @@ const router = createRouter({
     }
   ]
 })
+
+
+async function isAuthenticated(to, from , next) {
+    
+    // is there a user object stored?
+    let userObj = localStorage.getItem('user')
+
+    if(userObj) {
+        try {
+
+            const user = await axios.get('http://localhost:8000/api/user')
+            next()
+
+        } catch(error) {
+
+            next('/login')
+
+        }
+    } else {
+
+        next('/login')
+
+    }
+}
 
 export default router

@@ -1,4 +1,5 @@
 <script setup>
+
     import { ref, defineProps, defineEmits } from 'vue'
     import { useRouter } from 'vue-router'
 
@@ -9,8 +10,7 @@
 
     const navigationItems = ref([
         { label: 'HOME', destination: '/' },
-        { label: 'FAQ', destination: '/faq' },
-        { label: 'COMPANIES', destination: '/companies' },
+        { label: 'BROWSE COMPANIES', destination: '/companies' },
     ])
     
     const postJobItem = ref({
@@ -52,7 +52,7 @@
             </nav>
             
             <div class="w-1/4 flex justify-end  items-center gap-5 text-right">
-                <div v-if="user" class="flex items-center gap-4">
+                <div v-if="user?.uuid" class="flex items-center gap-4">
                     
                     <div>
                         <p class="font-semibold">{{ user.name }}</p>
@@ -74,6 +74,5 @@
 
             </div>
         </div>
-        
     </div>
 </template>
