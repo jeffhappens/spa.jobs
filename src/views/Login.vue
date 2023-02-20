@@ -29,7 +29,6 @@
         try {
             await axios.post('http://localhost:8000/login', user.value)
         } catch(error) {
-            console.log( error.response )
             loginError.value = error.response.data.message
             return false
         }

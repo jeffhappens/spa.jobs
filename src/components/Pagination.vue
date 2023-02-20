@@ -14,7 +14,7 @@ function paginate(index, data) {
 
     if(!isPrevButton && !isNextButton) {
 
-        if(index === data.current_page) { // Prevent duplicate nextwork requests
+        if(index === data.current_page) { // Prevent duplicate network requests
             return false
         }
         emit('paginate', index)
@@ -35,7 +35,9 @@ function paginate(index, data) {
 </script>
 
 <template>
-    <div class="flex items-center justify-end gap-3 mb-6 text-sky-400">
+    <div class="flex items-center justify-between gap-3 mb-6 text-sky-400 rounded-sm">
+        <p class="text-gray-400">Page {{ data.current_page }} of {{ data.last_page }}</p>
+        <div class="flex gap-2">
         <div
             v-for="(link, index) in data.links"
             :key="link.label"
@@ -44,6 +46,7 @@ function paginate(index, data) {
             
             v-html="link.label"
             @click="paginate(index, data)">
+        </div>
         </div>
     </div>
 </template>

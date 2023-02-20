@@ -1,11 +1,12 @@
 <script setup>
     import { ref } from 'vue'
+    import Pagination from '../components/Pagination.vue'
 
-    const companies = ref([])
+    const companies = ref({})
 
-    async function getCompanies() {
+    async function getCompanies(page = 1) {
 
-        const { data } = await axios.get('http://localhost:8000/api/companies')
+        const { data } = await axios.get(`http://localhost:8000/api/companies?page=${page}`)
         companies.value = data
 
     }
@@ -20,8 +21,10 @@
                 <h2 class="text-4xl text-gray-800 font-semibold">Browse Companies</h2>
             </div>
 
+            <Pagination v-if="companies.links?.length > 3" :data="companies" @paginate="getCompanies" />
 
-            <div v-for="company in companies" :key="company.id" class="p-4 mb-8 shadow-md flex gap-5">
+
+            <div v-for="company in companies.data" :key="company.id" class="bg-white p-4 mb-8 shadow-md flex gap-5">
                 <div class="w-36">
                     <img :src="`/img/${company.logo}`" />
                 </div>
@@ -33,6 +36,8 @@
                     <p class="mb-2">{{ company.industry }}</p>
                 </div> 
             </div>
+
+            <Pagination v-if="companies.links?.length > 3" :data="companies" @paginate="getCompanies" />
         </div>
     </main>
 </template>

@@ -1,5 +1,32 @@
 <script setup>
+    import { ref } from 'vue'
+    import { toast } from 'vue3-toastify'
+
     const user = JSON.parse(localStorage.getItem('user'))
+
+    const validationError = ref('')
+
+    const currentPassword = ref('')
+    const newPassword = ref('')
+
+    async function changePassword() {
+
+        validationError.value = ''
+        try {
+            await axios.post('http://localhost:8000/api/change-password', {
+                'password' : currentPassword.value,
+                'newPassword': newPassword.value
+            })
+            console.log('OOOOOOK')
+            toast('Your password has been updated.', { autoClose: 2000 })
+
+        } catch(error) {
+
+            validationError.value = error.response.data.message
+        }
+
+
+    }
 </script>
 
 <template>
@@ -48,14 +75,17 @@
                         
 
                         <h4 class="mb-3 text-xl font-semibold text-gray-600">Change your password</h4>
-                        <form>
+                        <div v-if="validationError" class="bg-rose-200 border border-rose-400 p-2 mb-2 rounded-sm text-rose-600">
+                            {{ validationError }}
+                        </div>
+                        <form @submit.prevent="changePassword">
                             <div class="mb-2">
                                 <label class="block text-gray-700 mb-1 font-semibold">Current Password</label>
-                                <input type="password" name="password" class="p-2 w-full border border-gray-300 bg-white" />
+                                <input v-model="currentPassword" type="password" name="password" class="p-2 w-full border border-gray-300 bg-white text-gray-700" />
                             </div>
                             <div>
                                 <label class="block text-gray-700 mb-1 font-semibold">New Password</label>
-                                <input type="password" name="password" class="p-2 w-full border border-gray-300 bg-white" />
+                                <input v-model="newPassword" type="password" name="password" class="p-2 w-full border border-gray-300 bg-white text-gray-700" />
                             </div>
 
                             <button class="mt-4 p-2 bg-[color:var(--p-blue-md)] text-white">Save Changes</button>
