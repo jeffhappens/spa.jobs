@@ -4,52 +4,72 @@
     import TextInput from '../components/form/TextInput.vue'
     import Select from '../components/form/Select.vue'
     import FileInput from '../components/form/FileInput.vue'
+    import Cookies from 'js-cookie'
+
+    import vueFilePond from 'vue-filepond'
+    import 'filepond/dist/filepond.min.css'
+    import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type"
 
     const user = JSON.parse(localStorage.getItem('user'))
+
+    const company = ref({
+        user_id: user.uuid,
+        name: '',
+        address: '',
+        industry_id: ''
+    })
+    const companyLogo = ref('hi ther')
+
+    const serverOptions = {
+
+        url: 'http://localhost:8000',
+        process: {
+            url: '/api/company/logo/add',
+            headers: {
+                'X-XSRF-TOKEN': Cookies.get('XSRF-TOKEN')
+            },
+            withCredentials: true
+        }
+    }
+
+    const FilePond = vueFilePond(
+        FilePondPluginFileValidateType,
+        // FilePondPluginImagePreview
+    )
+
+    
+
     let industries = ref({})
 
     async function getIndustries() {
         let { data } = await axios.get('http://localhost:8000/api/industries')
         industries.value = data
     }
-    
     getIndustries()
 
-    const file = ref(null)
+    function handleProcessFile(e, file) {
 
-    function updateLogoFile() {
-        const f = document.getElementById('logo').files[0]
-        file.value = f
-        company.logo = f.name
+        companyLogo.value = file.serverId
+
     }
 
     async function addCompany() {
 
         try {
-
             // add company
-            await axios.post('http://localhost:8000/api/company/add', company.value)
-            // upload logo
-            const formData = new FormData();
-            formData.append('file', file)
-            await axios.post('http://localhost:8000/api/company/logo/add', formData)
-
-
-
-
+            
+            await axios.post('http://localhost:8000/api/company/add', {
+                company: company.value,
+                logo: companyLogo.value
+            })
+            
         } catch(error) {
 
         }
 
     }
 
-    const company = ref({
-        user_id: user.uuid,
-        name: '',
-        address: '',
-        industry_id: '',
-        logo: ''
-    })
+
 
 
 </script>
@@ -98,6 +118,8 @@
                 <section class="flex-1">
 
                     <form @submit.prevent="addCompany" class="py-4 px-6 bg-white">
+                        
+                        <!-- <input type="hidden" name="filepond" value=""> -->
 
                         <div class="mb-4">
                             <FormLabel value="Company Name" for="company_name" />
@@ -128,18 +150,17 @@
 
                         <div class="mb-4">
                             <FormLabel value="Logo" for="logo" />
-                            <FileInput
-                                id="logo"
-                                name="logo"
-                                ref="logo"
-                                v-model="company.logo"
-                                @change="updateLogoFile"
-                                @update:modelValue="company.logo = $event"
+                            <FilePond
+                                :server="serverOptions"
+                                :init="fpInit"
+                                acceptedFileTypes="image/jpeg, image/png"
+                                @processfile="handleProcessFile"
                             />
+
                         </div>
 
                         <div class="mb-4">
-                            <button class="mt-4 p-2 bg-[color:var(--p-blue-md)] text-white">Add Company</button>
+                            <button type="submit" class="mt-4 p-2 bg-[color:var(--p-blue-md)] text-white">Add Company</button>
                         </div>
 
                     </form>

@@ -25,7 +25,7 @@
             <div class="flex items-center justify-between bg-white w-2/3 p-2 rounded-full shadow-sm">
                 
                 <span class="material-symbols-outlined text-[color:var(--p-orange)]">search</span>
-                <input v-model="searchParams.keyword" type="text" class="w-full p-2 text-xl text-black focus:outline-none" placeholder="Search by Job Title, Keyword, or Company Name" />
+                <input v-model="searchParams.keyword" type="text" class="w-full p-5 text-xl text-black focus:outline-none border-0" placeholder="Search by Job Title, Keyword, or Company Name" />
 
             </div>
             

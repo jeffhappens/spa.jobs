@@ -1,6 +1,8 @@
 <script setup>
     import { ref, defineEmits } from 'vue'
     import { useRoute, useRouter } from 'vue-router'
+    import TextInput from '../components/form/TextInput.vue'
+    import Label from '../components/form/Label.vue'
 
     const router = useRouter()
 
@@ -62,14 +64,13 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="email" class="mb-1 block font-semibold text-lg text-gray-700">Email Address</label>
-                    <input v-model="user.email" type="text" name="email" class="w-full p-2 border border-gray-300 text-lg text-gray-600" />
+                    <Label for="email" value="Email Address" />
+                    <TextInput :modelValue="user.email" @update:modelValue="user.email = $event" />
                 </div>
 
                 <div class="mb-4">
-                    <label for="password" class="mb-1 block font-semibold text-lg text-gray-700">Password</label>
-
-                    <input v-model="user.password" type="password" name="password" class="w-full p-2 mb-1 border border-gray-300 text-lg text-gray-600" />
+                    <Label for="password" value="Password" />
+                    <TextInput :modelValue="user.password" @update:modelValue="user.password = $event" />
                     <router-link class="text-sm text-[color:var(--p-orange)] font-semibold" to="/forgot-password">I forgot my password</router-link>
                 </div>
 
