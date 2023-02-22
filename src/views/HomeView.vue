@@ -3,7 +3,6 @@ import { ref, defineProps } from 'vue'
 import HeroHome from '../components/HeroHome.vue'
 import SearchBoxHome from '../components/SearchBoxHome.vue'
 import ListingCard from '../components/ListingCard.vue'
-import { TailwindPagination } from 'laravel-vue-pagination';
 import Pagination from '../components/Pagination.vue'
 
 

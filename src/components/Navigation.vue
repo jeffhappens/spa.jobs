@@ -2,7 +2,7 @@
 
     import { ref, defineProps, defineEmits } from 'vue'
     import { useRouter } from 'vue-router'
-
+    
     const emit = defineEmits(['user:logout'])
     const props = defineProps(['user'])
     const router = useRouter()
@@ -10,6 +10,7 @@
 
     const navigationItems = ref([
         { label: 'HOME', destination: '/' },
+        { label: 'CATEGORIES', destination: '/companies' },
         { label: 'BROWSE COMPANIES', destination: '/companies' },
     ])
     

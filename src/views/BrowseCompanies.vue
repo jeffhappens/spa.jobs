@@ -33,7 +33,7 @@
                     <p class="mb-2">{{ company.address }}</p>
                     <p>{{ company.listings_count }} current listings</p>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. At ratione nulla aut perspiciatis magnam laboriosam possimus eum sapiente aliquid ipsam?</p>
-                    <p class="mb-2">{{ company.industry }}</p>
+                    <p class="mb-2">{{ company.industry.label }}</p>
                 </div> 
             </div>
 

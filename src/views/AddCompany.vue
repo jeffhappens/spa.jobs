@@ -1,14 +1,55 @@
 <script setup>
     import { ref } from 'vue'
+    import FormLabel from '../components/form/Label.vue'
+    import TextInput from '../components/form/TextInput.vue'
+    import Select from '../components/form/Select.vue'
+    import FileInput from '../components/form/FileInput.vue'
 
     const user = JSON.parse(localStorage.getItem('user'))
+    let industries = ref({})
 
-    // async function getCompanies() {
-    //     const { data } = await axios.get('http://localhost:8000/api/companies/' + user.uuid)
-    //     myCompanies.value = data
-    // }
+    async function getIndustries() {
+        let { data } = await axios.get('http://localhost:8000/api/industries')
+        industries.value = data
+    }
+    
+    getIndustries()
 
-    // getCompanies()
+    const file = ref(null)
+
+    function updateLogoFile() {
+        const f = document.getElementById('logo').files[0]
+        file.value = f
+        company.logo = f.name
+    }
+
+    async function addCompany() {
+
+        try {
+
+            // add company
+            await axios.post('http://localhost:8000/api/company/add', company.value)
+            // upload logo
+            const formData = new FormData();
+            formData.append('file', file)
+            await axios.post('http://localhost:8000/api/company/logo/add', formData)
+
+
+
+
+        } catch(error) {
+
+        }
+
+    }
+
+    const company = ref({
+        user_id: user.uuid,
+        name: '',
+        address: '',
+        industry_id: '',
+        logo: ''
+    })
 
 
 </script>
@@ -18,9 +59,9 @@
         <div class="rounded-lg w-3/4 mx-auto">
             <div class="my-8 flex justify-between">
                 <h2 class="text-4xl text-gray-800 font-semibold">Add New Company</h2>
-                <div class="mb-4">
+                <!-- <div class="mb-4">
                     <router-link to="/account/companies/add" class="text-white bg-[color:var(--p-blue-md)] p-2">Add New Company</router-link>
-                </div>
+                </div> -->
             </div>
 
             <div class="flex items-start gap-5">
@@ -55,6 +96,53 @@
                 </aside>
 
                 <section class="flex-1">
+
+                    <form @submit.prevent="addCompany" class="py-4 px-6 bg-white">
+
+                        <div class="mb-4">
+                            <FormLabel value="Company Name" for="company_name" />
+                            <TextInput name="company_name" v-model="company.name" @update:modelValue="company.name = $event" />
+                        </div>
+
+                        <div class="mb-4">
+                            <FormLabel value="Company Address" for="company_address" />
+                            <TextInput name="company_address" v-model="company.address" @update:modelValue="company.address = $event" />
+                        </div>
+
+                        <div class="mb-4">
+                            <FormLabel value="Industry" for="company_industry" />
+                            <Select
+                                name="company_industry"
+                                v-model="company.industry_id"
+                                @update:modelValue="company.industry_id = $event">
+
+                                <option value="">Select an industry</option>
+                                <option
+                                    v-for="industry in industries"
+                                    :key="industry.id"
+                                    :value="industry.id">
+                                    {{ industry.label }}
+                                </option>
+                            </Select>
+                        </div>
+
+                        <div class="mb-4">
+                            <FormLabel value="Logo" for="logo" />
+                            <FileInput
+                                id="logo"
+                                name="logo"
+                                ref="logo"
+                                v-model="company.logo"
+                                @change="updateLogoFile"
+                                @update:modelValue="company.logo = $event"
+                            />
+                        </div>
+
+                        <div class="mb-4">
+                            <button class="mt-4 p-2 bg-[color:var(--p-blue-md)] text-white">Add Company</button>
+                        </div>
+
+                    </form>
 
                 </section>
             </div>
