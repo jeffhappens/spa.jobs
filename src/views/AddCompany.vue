@@ -1,16 +1,28 @@
 <script setup>
-    import { ref } from 'vue'
+    import { ref, computed } from 'vue'
+    import Cookies from 'js-cookie'
     import FormLabel from '../components/form/Label.vue'
     import TextInput from '../components/form/TextInput.vue'
     import Select from '../components/form/Select.vue'
-    import FileInput from '../components/form/FileInput.vue'
-    import Cookies from 'js-cookie'
-
     import vueFilePond from 'vue-filepond'
     import 'filepond/dist/filepond.min.css'
     import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type"
+    import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+    import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
+
+    const FilePond = vueFilePond(
+        FilePondPluginFileValidateType,
+        FilePondPluginImagePreview,
+    )
+
+    const fileUploading = ref(false)
 
     const user = JSON.parse(localStorage.getItem('user'))
+
+    const formDisabled = computed( () => {
+        // Disable the form if any required fields are missing OR a file is in the process of uploading
+        return fileUploading.value || !(company.value.name && company.value.address && company.value.industry_id)
+    })
 
     const company = ref({
         user_id: user.uuid,
@@ -32,10 +44,7 @@
         }
     }
 
-    const FilePond = vueFilePond(
-        FilePondPluginFileValidateType,
-        // FilePondPluginImagePreview
-    )
+
 
     
 
@@ -47,10 +56,15 @@
     }
     getIndustries()
 
+
     function handleProcessFile(e, file) {
-
+        console.log('upload finished')
         companyLogo.value = file.serverId
-
+        fileUploading.value = false
+    }
+    function handleAddFileStart() {
+        console.log('upload starting...')
+        fileUploading.value = true
     }
 
     async function addCompany() {
@@ -152,15 +166,25 @@
                             <FormLabel value="Logo" for="logo" />
                             <FilePond
                                 :server="serverOptions"
-                                :init="fpInit"
+                                :allowImageCrop="true"
+                                imagePreviewHeight="200"
+                                image-crop-aspect-ratio="1:1"
                                 acceptedFileTypes="image/jpeg, image/png"
+                                @addfilestart="handleAddFileStart"
                                 @processfile="handleProcessFile"
+
                             />
 
                         </div>
 
                         <div class="mb-4">
-                            <button type="submit" class="mt-4 p-2 bg-[color:var(--p-blue-md)] text-white">Add Company</button>
+                            <button
+                                :disabled="formDisabled"
+                                type="submit"
+                                class="mt-4 p-2 bg-[color:var(--p-blue-md)] text-white disabled:opacity-30 disabled:cursor-not-allowed"
+                            >
+                                Add Company
+                            </button>
                         </div>
 
                     </form>

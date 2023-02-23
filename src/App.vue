@@ -4,6 +4,7 @@ import { RouterLink, RouterView } from 'vue-router'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css';
 import Navigation from './components/Navigation.vue'
+import Cookies from 'js-cookie'
 
 
 const user = ref()
@@ -19,7 +20,9 @@ function logoutUser() {
 }
 
 function getLoggedInUser() {
+
     return JSON.parse(localStorage.getItem('user'))
+    
 }
 user.value = getLoggedInUser()
 
