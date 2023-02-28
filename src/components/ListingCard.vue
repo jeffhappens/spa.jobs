@@ -16,7 +16,7 @@
 
         <p v-if="props.listing.distance">{{ Math.floor(props.listing.distance) }} miles away</p>
 
-        <p class="mb-2 text-[color:var(--p-blue-md)]">{{ props.listing.company.name }}</p>
+        <p class="mb-2 text-[color:var(--p-blue-md)]">{{ props.listing.company?.name }}</p>
 
         <p class="text-md">{{ props.listing.description }}</p>
 

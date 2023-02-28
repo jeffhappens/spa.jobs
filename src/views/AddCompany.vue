@@ -1,5 +1,13 @@
 <script setup>
-    import { ref, computed } from 'vue'
+    import { ref, computed, defineEmits } from 'vue'
+    import MainContentArea from '../components/MainContentArea.vue'
+    import Container from '../components/Container.vue'
+    import PageHeading from '../components/PageHeading.vue'
+    import SidebarAccount from '../components/SidebarAccount.vue'
+
+
+    import { useRouter } from 'vue-router'
+    import toast from 'vue3-toastify'
     import Cookies from 'js-cookie'
     import FormLabel from '../components/form/Label.vue'
     import TextInput from '../components/form/TextInput.vue'
@@ -7,12 +15,13 @@
     import vueFilePond from 'vue-filepond'
     import 'filepond/dist/filepond.min.css'
     import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type"
-    import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-    import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
+
+
+    const router = useRouter();
+    const emit = defineEmits('company:added')
 
     const FilePond = vueFilePond(
         FilePondPluginFileValidateType,
-        FilePondPluginImagePreview,
     )
 
     const fileUploading = ref(false)
@@ -21,19 +30,19 @@
 
     const formDisabled = computed( () => {
         // Disable the form if any required fields are missing OR a file is in the process of uploading
-        return fileUploading.value || !(company.value.name && company.value.address && company.value.industry_id)
+        return fileUploading.value || !(company.value.name && company.value.address && company.value.industry_id && company.value.description)
     })
 
     const company = ref({
         user_id: user.uuid,
         name: '',
         address: '',
-        industry_id: ''
+        industry_id: '',
+        description: ''
     })
-    const companyLogo = ref('hi ther')
+    const companyLogo = ref(null)
 
     const serverOptions = {
-
         url: 'http://localhost:8000',
         process: {
             url: '/api/company/logo/add',
@@ -44,94 +53,62 @@
         }
     }
 
-
-
-    
-
     let industries = ref({})
+
+    const buttonText = ref('Add Company')
 
     async function getIndustries() {
         let { data } = await axios.get('http://localhost:8000/api/industries')
         industries.value = data
     }
-    getIndustries()
-
-
+    
     function handleProcessFile(e, file) {
-        console.log('upload finished')
-        companyLogo.value = file.serverId
+        // console.log(file.serverId.split('/'))
+        companyLogo.value = file.serverId.split('/')
         fileUploading.value = false
+        buttonText.value = 'Add Company'
     }
+
     function handleAddFileStart() {
-        console.log('upload starting...')
         fileUploading.value = true
+        buttonText.value = 'File Uploading...'
     }
 
     async function addCompany() {
-
         try {
-            // add company
-            
+            // Add Company Http
             await axios.post('http://localhost:8000/api/company/add', {
                 company: company.value,
                 logo: companyLogo.value
             })
+            emit('company:added')
+
+            router.push({ path: '/account/companies' })
             
+
+
         } catch(error) {
-
+            //
         }
-
     }
 
-
-
-
+    getIndustries()
+    
 </script>
 <template>
 
-    <main class="flex justify-center items-start bg-gray-100 bg">
-        <div class="rounded-lg w-3/4 mx-auto">
-            <div class="my-8 flex justify-between">
-                <h2 class="text-4xl text-gray-800 font-semibold">Add New Company</h2>
-                <!-- <div class="mb-4">
-                    <router-link to="/account/companies/add" class="text-white bg-[color:var(--p-blue-md)] p-2">Add New Company</router-link>
-                </div> -->
-            </div>
+    <MainContentArea>
+        <PageHeading text="Add New Company" />
+        <Container>
 
             <div class="flex items-start gap-5">
-                <aside class="w-1/3">
-                    <div class="bg-white p-4 mb-6 w-full shadow-md text-gray-800 flex gap-4">
-                        <div>
-                            <img class="inline-block h-16 w-16 rounded-full ring-2 ring-gray-300" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
-                        </div>
-                        
-                        <ul class="flex-1">
-                            <li class="text-xl font-semibold">{{ user.name }}</li>
-                            <li class="font-semibold mb-1">{{ user.email }}</li>
-                            <li class="text-sm">Joined on: {{ new Intl.DateTimeFormat('en-US').format( new Date(user.created_at) ) }}</li>
-                        </ul>
-                        <div>
-                            <span class="cursor-pointer material-symbols-outlined">edit</span>
-                        </div>
-                    </div>
 
-                    <div class="bg-white w-full shadow-md text-gray-800">
-                        <ul class="p-2">
-                            <li class="px-4 py-2 flex items-center justify-between border-b border-gray-200">
-                                <router-link to="/account" class="font-semibold">Account Details</router-link>
-                                <span class="material-symbols-outlined">chevron_right</span>
-                            </li>
-                            <li class="px-4 py-2 px-4 py-2 flex items-center justify-between">
-                                <router-link to="/account/companies" class="font-semibold">Companies</router-link>
-                                <span class="material-symbols-outlined">chevron_right</span>
-                            </li>
-                        </ul>
-                    </div>
-                </aside>
+                <SidebarAccount />
+
 
                 <section class="flex-1">
 
-                    <form @submit.prevent="addCompany" class="py-4 px-6 bg-white">
+                    <form @submit.prevent="addCompany" class="py-4 px-6 bg-white rounded-lg shadow-sm">
                         
                         <!-- <input type="hidden" name="filepond" value=""> -->
 
@@ -163,6 +140,11 @@
                         </div>
 
                         <div class="mb-4">
+                            <FormLabel value="Description" for="description" />
+                            <textarea v-model="company.description" class="w-full border border-gray-300 shadow-sm h-36 text-gray-700" name="description"></textarea>
+                        </div>
+
+                        <div class="mb-4">
                             <FormLabel value="Logo" for="logo" />
                             <FilePond
                                 :server="serverOptions"
@@ -183,15 +165,14 @@
                                 type="submit"
                                 class="mt-4 p-2 bg-[color:var(--p-blue-md)] text-white disabled:opacity-30 disabled:cursor-not-allowed"
                             >
-                                Add Company
+                                {{ buttonText }}
                             </button>
                         </div>
-
                     </form>
 
                 </section>
             </div>
-        </div>
-    </main>
+        </Container>
+    </MainContentArea>
     
 </template>

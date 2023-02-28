@@ -6,7 +6,6 @@ import 'vue3-toastify/dist/index.css';
 import Navigation from './components/Navigation.vue'
 import Cookies from 'js-cookie'
 
-
 const user = ref()
 
 function setLoggedInUser(u) {
@@ -24,6 +23,9 @@ function getLoggedInUser() {
     return JSON.parse(localStorage.getItem('user'))
     
 }
+function notifyCompanyAdded() {
+    toast('New Company Added', { autoClose: 2000 })
+}
 user.value = getLoggedInUser()
 
 </script>
@@ -35,6 +37,7 @@ user.value = getLoggedInUser()
     />
     <RouterView
         @user:login="setLoggedInUser"
+        @company:added="notifyCompanyAdded"
         class="flex-1"
     />
     <!-- <RouterView class="flex-1" /> -->

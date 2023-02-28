@@ -1,26 +1,27 @@
 <script setup>
-
     import { ref, defineProps, defineEmits } from 'vue'
     import { useRouter } from 'vue-router'
+    import Container from '../components/Container.vue'
     
     const emit = defineEmits(['user:logout'])
     const props = defineProps(['user'])
     const router = useRouter()
-    
+    const host = 'http://localhost:8000'
+    const apihost = host + '/api'
 
     const navigationItems = ref([
         { label: 'HOME', destination: '/' },
-        { label: 'CATEGORIES', destination: '/companies' },
-        { label: 'BROWSE COMPANIES', destination: '/companies' },
+        { label: 'BROWSE BY INDUSTRY', destination: '/industries' },
+        { label: 'BROWSE BY COMPANY', destination: '/companies' },
     ])
-    
+
     const postJobItem = ref({
         label: 'POST A JOB',
         destination: '/post'
     })
 
     async function userLogout() {
-        await axios.post('http://localhost:8000/logout')
+        await axios.post(`${host}/logout`)
         localStorage.removeItem('user')
         emit('user:logout')
         router.push({ path: '/'})
@@ -30,14 +31,14 @@
 <template>
 
     <div class="bg-black shadow-md">
-    
-        <div class="max-w-screen-xl mx-auto p-6 flex items-center justify-between w-full text-white">
 
-            <div class="w-1/4 text-left">
-                <router-link to="/">JOB BOARD PROTOTYPE</router-link>
+        <Container class="flex items-center justify-between h-20">
+
+            <div class="text-left bg-gray-800 rounded-md py-2 px-6">
+                <router-link to="/">SITE NAME</router-link>
             </div>
             
-            <nav class="w-1/2 flex items-center justify-center gap-10 text-white">
+            <nav class="flex items-center justify-center gap-10 text-white">
                 <div v-for="navItem in navigationItems" :key="navItem.label">
                     <router-link
                         :to="navItem.destination"
@@ -52,7 +53,7 @@
                 </router-link>
             </nav>
             
-            <div class="w-1/4 flex justify-end  items-center gap-5 text-right">
+            <div class="flex justify-end items-center gap-5 text-right">
                 <div v-if="user?.uuid" class="flex items-center gap-4">
                     
                     <div>
@@ -74,6 +75,6 @@
                 </div>
 
             </div>
-        </div>
+        </Container>
     </div>
 </template>

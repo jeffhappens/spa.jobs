@@ -40,6 +40,13 @@ const router = createRouter({
         name: 'companies',
         component: () => import('../views/BrowseCompanies.vue')
     },
+
+    {
+        path: '/industries',
+        name: 'industries',
+        component: () => import('../views/Industries.vue')
+    },
+
     {
         path: '/post',
         name: 'post',
@@ -62,6 +69,13 @@ const router = createRouter({
         name: 'add-company',
         beforeEnter: isAuthenticated,
         component: () => import('../views/AddCompany.vue')
+    },
+
+    {
+        path: '/account/companies/edit/:id',
+        name: 'edit-company',
+        beforeEnter: isAuthenticated,
+        component: () => import('../views/EditCompany.vue')
     },
 
 

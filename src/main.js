@@ -6,6 +6,7 @@ import axios from 'axios'
 window.axios = axios
 axios.defaults.withCredentials = true
 
+window.apihost = 'http://localhost:8000/api'
 
 
 
