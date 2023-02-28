@@ -110,8 +110,6 @@
 
                     <form @submit.prevent="addCompany" class="py-4 px-6 bg-white rounded-lg shadow-sm">
                         
-                        <!-- <input type="hidden" name="filepond" value=""> -->
-
                         <div class="mb-4">
                             <FormLabel value="Company Name" for="company_name" />
                             <TextInput name="company_name" v-model="company.name" @update:modelValue="company.name = $event" />
