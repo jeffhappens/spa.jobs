@@ -7,6 +7,10 @@
     import Label from '../components/form/Label.vue';
     import TextInput from '../components/form/TextInput.vue';
     import Select from '../components/form/Select.vue'
+    import MainContentArea from '../components/MainContentArea.vue'
+    import PageHeading from '../components/PageHeading.vue'
+    import Container from '../components/Container.vue'
+    import SidebarAccount from '../components/SidebarAccount.vue'
     
     import vueFilePond from 'vue-filepond'
     import 'filepond/dist/filepond.min.css'
@@ -32,6 +36,8 @@
     let newLogo = ref(null)
 
     const buttonText = ref('Update Company')
+
+    const formDisabled = ref(false)
 
     const FilePond = vueFilePond(
         FilePondPluginFileValidateType,
@@ -85,44 +91,16 @@
 
 </script>
 <template>
-    <main class="flex justify-center items-start bg-gray-100 bg">
-        <div class="rounded-lg w-3/4 mx-auto">
-            <div class="my-8 flex justify-between">
-                <h2 class="text-4xl text-gray-800 font-semibold">Edit Company</h2>
-            </div>
+    <MainContentArea>
+        <PageHeading text="Edit Company" />
 
+        <Container>
+    
             <div class="flex items-start gap-5">
-                <aside class="w-1/3">
-                    <div class="bg-white p-4 mb-6 w-full shadow-md text-gray-800 flex gap-4">
-                        <div>
-                            <img class="inline-block h-16 w-16 rounded-full ring-2 ring-gray-300" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
-                        </div>
-                        
-                        <ul class="flex-1">
-                            <li class="text-xl font-semibold">{{ user.name }}</li>
-                            <li class="font-semibold mb-1">{{ user.email }}</li>
-                            <li class="text-sm">Joined on: {{ new Intl.DateTimeFormat('en-US').format( new Date(user.created_at) ) }}</li>
-                        </ul>
-                        <div>
-                            <span class="cursor-pointer material-symbols-outlined">edit</span>
-                        </div>
-                    </div>
 
-                    <div class="bg-white w-full shadow-md text-gray-800">
-                        <ul class="p-2">
-                            <li class="px-4 py-2 flex items-center justify-between border-b border-gray-200">
-                                <router-link to="/account" class="font-semibold">Account Details</router-link>
-                                <span class="material-symbols-outlined">chevron_right</span>
-                            </li>
-                            <li class="px-4 py-2 px-4 py-2 flex items-center justify-between">
-                                <router-link to="/account/companies" class="font-semibold">Companies</router-link>
-                                <span class="material-symbols-outlined">chevron_right</span>
-                            </li>
-                        </ul>
-                    </div>
-                </aside>
+                <SidebarAccount />
 
-                <section class="flex-1">
+                <section class="flex-1 bg-white p-6 rounded-lg shadow-lg">
 
                     <form @submit.prevent="updateCompany">
                         <div class="mb-4">
@@ -157,7 +135,7 @@
                             <Label value="Logo" for="logo" />
 
                             <div class="flex items-center gap-5">
-                                <div class="w-32">
+                                <div class="w-32" v-if="company.logo">
                                     <img v-if="newLogo" :src="`${host}/${newLogo}`" />
                                     <img v-else :src="`${host}/${company.logo}`" />
                                 </div>
@@ -170,7 +148,6 @@
                                     imagePreviewHeight="200"
                                     image-crop-aspect-ratio="1:1"
                                     acceptedFileTypes="image/jpeg, image/png"
-                                    @addfilestart="handleAddFileStart"
                                     @processfile="handleProcessFile"
                                     @removefile="handleUpdateFiles"
 
@@ -193,6 +170,6 @@
 
                 </section>
             </div>
-        </div>
-    </main>
+        </Container>
+    </MainContentArea>
 </template>

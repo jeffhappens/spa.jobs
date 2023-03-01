@@ -7,7 +7,7 @@
                     <span class="material-symbols-outlined">chevron_right</span>
                 </li>
                 <li class="px-4 py-2 px-4 py-2 flex items-center justify-between">
-                    <router-link to="/account/companies" class="font-semibold">Companies</router-link>
+                    <router-link to="/account/companies" class="font-semibold">My Companies</router-link>
                     <span class="material-symbols-outlined">chevron_right</span>
                 </li>
             </ul>

@@ -41,7 +41,7 @@
                                 <img :src="`http://localhost:8000/${company.logo}`" />
                             </div>
                             <div class="flex-1">
-                                <h3 class="text-xl">{{ company.name }}</h3>
+                                <h3 class="text-xl font-semibold">{{ company.name }}</h3>
                                 <p>{{ company.address }}</p>
                                 <p>{{ company.industry.label }}</p>
                                 <p>{{ company.listings_count }} current listing(s)</p>

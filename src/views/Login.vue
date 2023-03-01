@@ -38,7 +38,11 @@
         localStorage.setItem('user', JSON.stringify(me.data))
         
         emit('user:login', me.data)
-        router.push({ path: '/' })
+        if(route.redirectedFrom) {
+            router.push({ path: route.redirectedFrom.fullPath })
+        } else {
+            router.push({ path: '/' })
+        }
     }
 </script>
 

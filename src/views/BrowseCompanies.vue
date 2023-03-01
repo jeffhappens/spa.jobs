@@ -18,20 +18,20 @@
 
 <template>
     <main class="bg-gray-100 bg">
-        <PageHeading text="Companies" />
+        <PageHeading text="Browse Companies" />
         <Container>
 
             <Pagination v-if="companies.links?.length > 3" :data="companies" @paginate="getCompanies" />
 
 
-            <div v-for="company in companies.data" :key="company.id" class="bg-white p-4 mb-8 shadow-md flex gap-5">
+            <div v-for="company in companies.data" :key="company.id" class="bg-white p-4 mb-8 shadow-md rounded-lg flex gap-5">
                 <div class="w-36">
                     <img :src="`http://localhost:8000/${company.logo}`" />
                 </div>
                 <div class="text-gray-600 flex-1">
                     <h2 class="text-2xl text-gray-700">{{ company.name }}</h2>
                     <p class="mb-2">{{ company.address }}</p>
-                    <p>{{ company.listings_count }} current listings</p>
+                    <p>{{ company.listings_count }} current listing(s)</p>
                     <p>{{ company.description }}</p>
                     <p class="mb-2">{{ company.industry.label }}</p>
                 </div> 

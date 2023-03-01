@@ -106,9 +106,9 @@
                 <SidebarAccount />
 
 
-                <section class="flex-1">
+                <section class="flex-1 bg-white p-6 rounded-lg shadow-lg">
 
-                    <form @submit.prevent="addCompany" class="py-4 px-6 bg-white rounded-lg shadow-sm">
+                    <form @submit.prevent="addCompany">
                         
                         <div class="mb-4">
                             <FormLabel value="Company Name" for="company_name" />

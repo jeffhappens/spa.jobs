@@ -18,7 +18,7 @@
 <template>
     <main class="bg-gray-100 bg">
 
-        <PageHeading text="Industries" />
+        <PageHeading text="Browse Industries" />
         
         <Container>
             

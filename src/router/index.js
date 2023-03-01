@@ -50,7 +50,8 @@ const router = createRouter({
     {
         path: '/post',
         name: 'post',
-        component: () => import('../views/Register.vue')
+        beforeEnter: isAuthenticated,
+        component: () => import('../views/PostListing.vue')
     },
     {
         path: '/account',

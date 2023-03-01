@@ -18,19 +18,25 @@ function logoutUser() {
     toast('You are logged out', { autoClose: 2000 })
 }
 
-function getLoggedInUser() {
+async function getLoggedInUser() {
 
-    return JSON.parse(localStorage.getItem('user'))
-    
+    try {
+        const { data } = await axios.get('http://localhost:8000/api/user')
+        localStorage.setItem('user', JSON.stringify(data))
+        user.value = JSON.parse(localStorage.getItem('user'))
+    } catch(error) {
+        localStorage.removeItem('user')
+    }
 }
 function notifyCompanyAdded() {
     toast('New Company Added', { autoClose: 2000 })
 }
-user.value = getLoggedInUser()
+// user.value = getLoggedInUser()
+getLoggedInUser()
 
 </script>
 
-<template>
+<template class="text-gray-700">
     <Navigation
         @user:logout="logoutUser"
         :user="user"
