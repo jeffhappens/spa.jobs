@@ -16,8 +16,9 @@
     }
 
     function newResults(d) {
+        console.log(d)
         results.value = d.d
-        resultsHeading.value = `We found ${d.d.length} listings for "${d.term}"`
+        resultsHeading.value = `We found ${d.d.data.length} listings for "${d.term}"`
     }
     getResults()
 
@@ -26,7 +27,7 @@
 <template>
     <div>
         <HeroHome />
-        <SearchBoxHome  @results-updated="newResults" />
+        <SearchBoxHome  @resultsUpdated="newResults" />
 
         <div class="bg-gray-50 pt-24">
             <div class="rounded-lg w-3/4 mx-auto">

@@ -42,6 +42,12 @@ const router = createRouter({
     },
 
     {
+        path: '/company/:uuid/:slug',
+        name: 'company',
+        component: () => import('../views/Company.vue')
+    },
+
+    {
         path: '/industries',
         name: 'industries',
         component: () => import('../views/Industries.vue')

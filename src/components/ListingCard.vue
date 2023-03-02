@@ -14,9 +14,20 @@
             <p class="text-sm">Posted {{ new Intl.DateTimeFormat('en-us').format() }}</p>
         </div>
 
-        <p v-if="props.listing.distance">{{ Math.floor(props.listing.distance) }} miles away</p>
+        <p class="mb-2 text-lg text-[color:var(--p-orange)]">
+            <router-link
+                :to="{
+                    name: 'company',
+                    params: {
+                        uuid: props.listing.company.uuid,
+                        slug: props.listing.company.slug
+                    }
+                }"
+                class="hover:underline hover:underline-offset-2">
 
-        <p class="mb-2 text-[color:var(--p-blue-md)]">{{ props.listing.company?.name }}</p>
+                {{ props.listing.company?.name }}
+            </router-link>
+        </p>
 
         <p class="text-md">{{ props.listing.description }}</p>
 

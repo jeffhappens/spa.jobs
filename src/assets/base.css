@@ -26,7 +26,9 @@
 
 
   --p-blue-lt: #8ecae6;
-  --p-blue-md: #219ebc;
+  /* --p-blue-md: #219ebc; */
+  --p-blue-md: #108dc7;
+  
   --p-blue-drk: #023047;
 
   --p-mustard: #ffb703;
