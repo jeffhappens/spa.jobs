@@ -48,6 +48,12 @@ const router = createRouter({
     },
 
     {
+        path: '/industries/:slug',
+        name: 'industries-jobs',
+        component: () => import('../views/IndustriesJobs.vue')
+    },
+
+    {
         path: '/post',
         name: 'post',
         beforeEnter: isAuthenticated,

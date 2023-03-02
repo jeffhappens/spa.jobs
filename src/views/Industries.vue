@@ -1,16 +1,24 @@
 <script setup>
     import Container from '../components/Container.vue'
     import PageHeading from '../components/PageHeading.vue'
+    import BadgeRound from '../components/BadgeRound.vue'
     import { ref } from 'vue'
+    import { useRouter } from 'vue-router'
 
     const industries = ref(null)
     const host = 'http://localhost:8000'
     const apihost = host + '/api'
+    const router = useRouter()
 
     async function getIndustries() {
         const { data } = await axios.get(`${apihost}/industries`)
         industries.value = data
     }
+
+    function navigateTo(destination) {
+        router.push({ path: destination })
+    }
+
     getIndustries()
 
 
@@ -22,15 +30,17 @@
         
         <Container>
             
-            <!-- <div class="my-6">
-                <h2 class="text-4xl text-gray-800 font-semibold">Industries</h2>
-            </div> -->
-
             <div class="flex flex-wrap gap-5">
 
-                <div v-for="industry in industries" :key="industry.id" class="bg-white p-4 mb-4 shadow-md flex items-center gap-5">
+                <div
+                    v-for="industry in industries"
+                    :key="industry.id"
+                    @click="navigateTo(`/industries/${industry.slug}`)"
+
+                    class="cursor-pointer transition bg-white hover:bg-gray-50 p-4 mb-4 shadow-md flex items-center justify-between gap-5">
+
                     <h2 class="text-gray-700 text-xl font-semibold">{{ industry.label }}</h2>
-                    <p class="text-gray-700">{{ industry.listings_count }} listing(s)</p>
+                    <BadgeRound :text="industry.listings_count" />
                 </div>
             </div>
             
