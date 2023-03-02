@@ -37,6 +37,7 @@
         user_id: user.uuid,
         name: '',
         address: '',
+        url: '',
         industry_id: '',
         description: ''
     })
@@ -118,6 +119,11 @@
                         <div class="mb-4">
                             <FormLabel value="Company Address" for="company_address" />
                             <TextInput name="company_address" v-model="company.address" @update:modelValue="company.address = $event" />
+                        </div>
+
+                        <div class="mb-4">
+                            <FormLabel value="Company URL" for="company_url" />
+                            <TextInput name="company_url" v-model="company.url" @update:modelValue="company.url = $event" />
                         </div>
 
                         <div class="mb-4">

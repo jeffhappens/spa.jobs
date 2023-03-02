@@ -9,7 +9,15 @@
         <div class="flex justify-between align-start">
 
             <h4 class="text-3xl">
-                <router-link :to="{ name: 'listing' }">{{ props.listing.title }}</router-link>
+                <router-link
+                    :to="{
+                        name: 'listing',
+                        params: {
+                            uuid: props.listing.uuid,
+                            slug: props.listing.slug
+                        }
+                    }">
+                    {{ props.listing.title }}</router-link>
             </h4>
             <p class="text-sm">Posted {{ new Intl.DateTimeFormat('en-us').format() }}</p>
         </div>

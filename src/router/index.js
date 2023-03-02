@@ -101,9 +101,9 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
-        path: '/listing',
+        path: '/listing/:uuid/:slug',
         name: 'listing',
-        component: () => import('../views/AboutView.vue')
+        component: () => import('../views/ListingView.vue')
     }
   ]
 })
