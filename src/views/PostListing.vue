@@ -6,30 +6,41 @@
     import Label from '../components/form/Label.vue'
     import Select from '../components/form/Select.vue'
     import TextInput from '../components/form/TextInput.vue'
+    import Tag from '../components/Tag.vue'
     import { QuillEditor } from '@vueup/vue-quill'
     import '@vueup/vue-quill/dist/vue-quill.snow.css'
     import '@vueup/vue-quill/dist/vue-quill.bubble.css';
 
     const job = ref({
+        company_id: '',
         title: '',
-        category: ''
+        category: '',
+        skills: [],
+        apply_link: '',
+        type: '',
+        description: '',
     })
 
-    const companies = ref([])
-    const selectedCompany = ref({})
+    const skillTags = ref([])
 
-    function setSelectedCompany($event) {
+    function addSkillTag($event) {
 
-        const index = $event.target.selectedIndex
-        selectedCompany.value = companies.value[index]
+        console.log($event)
+        skillTags.value.push($event.target.value)
+        $event.target.value = ''
+
+
     }
 
-    async function getCompanies() {
-        const user = JSON.parse( localStorage.getItem('user') )
-        const { data } = await axios.get(`http://localhost:8000/api/companies/${user.uuid}`)
-        companies.value = data
-    }
-    getCompanies()
+    
+
+    const company = ref({
+        name: '',
+        hq: '',
+        url: '',
+        email: ''
+    })
+    const selectedCompany = ref()
 
     const currentStep = ref(0)
 
@@ -61,11 +72,18 @@
         })
         stepper.value[currentStep.value].active = true
     }
+
+    function removeSkillTag($event) {
+        const text = $event.target.innerText
+        const index = skillTags.value.indexOf(text)
+        skillTags.value.splice(index, 1)
+
+    }
 </script>
 
 <template>
     <MainContentArea>
-        <PageHeading text="Post a Job" />
+        <PageHeading text="Post a Job Listing" />
 
         <Container>
 
@@ -75,50 +93,46 @@
 
                     <form v-if="currentStep === 0">
 
-                        <div v-if="companies.length" class="mb-4">
-
-                            <Label for="company" value="Company" />
-
-                            <Select name="company" v-model="selectedCompany.id" @change="setSelectedCompany">
-                                <!-- <option value="">Select a Company</option> -->
-                                <option
-                                    v-for="company in companies"
-                                    :key="company"
-                                    :value="company.id">
-                                    {{ company.name }}
-                                </option>
-                            </Select>
-                            
-                        </div>
-
                         <div class="mb-4">
-                            <Label for="title" value="Job Title" />
+                            <Label for="title" helpText="e.g. Web Developer III, or Sales Associate." value="Job Title" />
                             <TextInput v-model="job.title" @update:modelValue="job.title = $event" />
                         </div>
 
                         <div class="flex gap-5">
 
                             <div class="mb-4 w-1/2">
-                                <Label for="category" value="Category" />
-                                <TextInput v-model="job.category" @update:modelValue="job.category = $event" />
+                                <Label for="category" helpText="Choose the job category." value="Category" />
+                                <TextInput v-model="job.category" />
                             </div>
 
                             <div class="mb-4 w-1/2">
-                                <Label for="skills" value="Skills" />
-                                <TextInput v-model="job.category" @update:modelValue="job.category = $event" />
+                                <Label for="skills" helpText="Type a skill and press enter to add it." value="Required Skills" />
+                                
+
+                                <TextInput
+                                    @keyup.enter="addSkillTag($event)"
+                                />
+                                <p class="flex flex-wrap gap-1 my-2">
+                                    <Tag
+                                        v-for="skill in skillTags"
+                                        @remove:skillTag="removeSkillTag"
+                                        :key="skill">
+                                        {{ skill }}
+                                    </Tag>
+                                </p>
                             </div>
                         </div>
 
                         <div class="flex gap-5">
 
                             <div class="mb-4 w-1/2">
-                                <Label for="title" value="Application Link or Email" />
-                                <TextInput v-model="job.title" @update:modelValue="job.title = $event" />
+                                <Label for="title" helpText="The url to your application, or an email address." value="Application Link or Email" />
+                                <TextInput v-model="job.apply_link" @update:modelValue="job.apply_link = $event" />
                             </div>
 
                             <div class="mb-4 w-1/2">
-                                <Label for="title" value="Job Type" />
-                                <TextInput v-model="job.title" @update:modelValue="job.title = $event" />
+                                <Label for="job_type" helpText="Full-time, Part-time, Contract" value="Job Type" />
+                                <TextInput v-model="job.type" @update:modelValue="job.type = $event" />
                             </div>
 
                         </div>
@@ -151,7 +165,7 @@
                             </div>
 
                             <div class="text-xl h-48 bg-gray-100">
-                                <QuillEditor toolbar="#my-toolbar"></QuillEditor>
+                                <QuillEditor toolbar="#my-toolbar" v-model:content="job.description" contentType="html"></QuillEditor>
                             </div>
 
                             <div class="flex gap-2">
@@ -167,30 +181,36 @@
                         <div class="flex gap-5 mb-4">
                             <div class="w-1/2">
                                 <Label for="title" value="Company Name" />
-                                <TextInput v-model="selectedCompany.name" @update:modelValue="selectedCompany.name = $event" />
+                                <TextInput v-model="company.name" />
                             </div>
                             <div class="w-1/2">
                                 <Label for="title" value="Company HQ" />
-                                <TextInput v-model="selectedCompany.address" @update:modelValue="job.title = $event" />
+                                <TextInput v-model="company.hq" />
                             </div>
                         </div>
 
                         <div class="flex gap-5">
                             <div class="w-1/2">
                                 <Label for="title" value="Company Website URL" />
-                                <TextInput v-model="selectedCompany.url" @update:modelValue="job.title = $event" />
+                                <TextInput v-model="company.url" />
                             </div>
                             <div class="w-1/2">
                                 <Label for="title" value="Email" />
-                                <TextInput v-model="job.title" @update:modelValue="job.title = $event" />
+                                <TextInput v-model="company.email" />
                             </div>
                         </div>
 
-                            <div class="flex gap-2">
-                                <button @click.prevent="decrementStep" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-amber-400">Previous</button>
-                                <button @click.prevent="incrementStep" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-sky-400">Continue</button>
-                            </div>
+                        <div class="flex gap-2">
+                            <button @click.prevent="decrementStep" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-amber-400">Previous</button>
+                            <button @click.prevent="incrementStep" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-sky-400">Continue</button>
+                        </div>
+                    </form>
 
+                    <form v-if="currentStep === 2">
+                        <div class="flex gap-2">
+                            <button @click.prevent="decrementStep" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-amber-400">Previous</button>
+                            <button @click.prevent="incrementStep" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-sky-400">Continue to Payment</button>
+                        </div>
                     </form>
                 </div>
 
@@ -202,11 +222,12 @@
                         class="flex items-center gap-3 pb-4 border-b border-gray-100 last:border-b-0">
 
                         <div
+                            class="h-14 w-14 rounded-full text-white text-2xl flex items-center justify-center"
                             :class="{
                                 'bg-sky-500' : step.active,
-                                'bg-lime-500' : step.complete
-                            }"
-                            class="h-14 w-14 rounded-full bg-gray-300 text-white text-2xl flex items-center justify-center">
+                                'bg-lime-500' : step.complete,
+                                'bg-gray-300' : !step.complete
+                            }">
                             <h2 v-if="!step.complete">{{ index + 1 }}</h2>
                             <h2 v-else class="flex items-center justify-center">
                                 <span class="material-symbols-outlined">done</span>
