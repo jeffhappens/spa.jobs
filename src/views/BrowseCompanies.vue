@@ -30,17 +30,26 @@
                     <img :src="`http://localhost:8000/${company.logo}`" />
                 </div>
                 <div class="text-gray-600 flex-1">
-                    <router-link :to="{
-                        name: 'company',
-                        params: {
-                            uuid: company.uuid,
-                            slug: company.slug
-                        }
-                    }">
-                        <h2 class="text-2xl font-semibold text-gray-700">{{ company.name }}</h2>
-                    </router-link>
-                    <p class="mb-2">{{ company.address }}</p>
-                    <p class="bg-orange-400 inline-block px-2 mb-2 text-white rounded-sm">{{ company.listings_count }} listing(s)</p>
+
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <router-link :to="{
+                                name: 'company',
+                                params: {
+                                    uuid: company.uuid,
+                                    slug: company.slug
+                                }
+                            }">
+                                <h2 class="text-2xl font-semibold text-gray-700">{{ company.name }}</h2>
+                            </router-link>
+                            <p class="mb-2">{{ company.city }}, {{ company.state }}</p>
+                        </div>
+
+                        <div>
+                            <p class="bg-orange-400 inline-block px-2 mb-2 text-white rounded-sm">{{ company.listings_count }} listing(s)</p>
+                        </div>
+
+                    </div>
                     
 
                     

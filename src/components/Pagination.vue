@@ -41,7 +41,7 @@ function paginate(index, data) {
         <div
             v-for="(link, index) in data.links"
             :key="link.label"
-            class="bg-white py-2 px-4 flex items-center justify-between rounded-sm shadow-sm cursor-pointer select-none"
+            class="py-2 px-4 flex items-center justify-between rounded-sm shadow-sm cursor-pointer select-none"
             :class="{ 'bg-[color:var(--p-blue-md)] text-white' : index === data.current_page }"
             
             v-html="link.label"

@@ -31,8 +31,8 @@
                     <h2 class="text-5xl mb-2 text-gray-700">{{ company.name }}</h2>
                     <div class="mb-8">
                         <p class="text-gray-700">
-                            <span class="font-semibold">Address:</span>
-                            {{ company.address }}
+                            <span class="font-semibold">Location:</span>
+                            {{ company.city }}, {{ company.state }}
                         </p>
                         <p class="text-gray-700">
                             <span class="font-semibold">Industry:</span> {{ company.industry.label }}

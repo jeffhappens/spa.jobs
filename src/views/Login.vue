@@ -74,7 +74,7 @@
 
                 <div class="mb-4">
                     <Label for="password" value="Password" />
-                    <TextInput :modelValue="user.password" @update:modelValue="user.password = $event" />
+                    <TextInput type="password" :modelValue="user.password" @update:modelValue="user.password = $event" />
                     <router-link class="text-sm text-[color:var(--p-orange)] font-semibold" to="/forgot-password">I forgot my password</router-link>
                 </div>
 

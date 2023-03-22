@@ -1,5 +1,5 @@
 <script setup>
-    import { ref } from 'vue'
+    import { ref, onMounted } from 'vue'
     import MainContentArea from "../components/MainContentArea.vue";
     import PageHeading from '../components/PageHeading.vue'
     import Container from '../components/Container.vue'
@@ -7,21 +7,36 @@
     import Select from '../components/form/Select.vue'
     import TextInput from '../components/form/TextInput.vue'
     import Tag from '../components/Tag.vue'
-    import { QuillEditor } from '@vueup/vue-quill'
+    import { Quill } from '@vueup/vue-quill'
     import '@vueup/vue-quill/dist/vue-quill.snow.css'
+
+
+    onMounted(() => {
+        const options = {
+            debug: 'info',
+            placeholder: 'Compose an epic...',
+            theme: 'snow',
+            modules: {
+                toolbar: [ ['bold', 'italic'], [{ 'list': 'ordered'}, { 'list': 'bullet' }], [{ 'header': [1, 2, 3, false] }] ]
+            }
+        }
+        const editor = new Quill('#editor', options)
+    })
+
 
     const user = JSON.parse(localStorage.getItem('user'))
 
-    const skillTags = ref([])
+    const skillTags = ref(['PHP','JavaScript','CSS','Laravel'])
 
     const job = ref({
         company_id: '',
-        title: '',
-        category: '',
+        title: 'Web Developer III',
+        category: 'Programming',
         skills: [],
-        apply_link: '',
-        type: '',
-        description: '',
+        apply_link: 'test@example.com',
+        type: 'ft',
+        description: `<p>We are seeking a Customer Service Specialist to interact with our customers to provide and process information in response to inquiries and requests about products, services and promotions.</p><br/><p><b>Main Job Tasks and Responsibilities (includes, but is not limited to):</b></p><ul><li>Work with customers daily via email, live chat or other channels</li><li>Handle retail customer service inquiries mainly for English-speaking markets.</li><li>Response to minimum 100 E-mails/Live Chat equivalent per day.</li><li>Promote our products to customers</li></ul><br/><p><b>The Successful Applicant:</b></p><ul><li>Fluency in verbal and written English; additional language is an advantage</li><li>Excellent time management and documentation skills</li><li>Customer service experience preferred</li><li>Availability for 30 - 40 hours a week with flexible shifts</li><li>High-speed stable internet connection</li></ul><br/><p><b>Job Description:</b></p><ul><li>This job requires a patient and stable work style and consistency in dealing with repetitive routines.</li><li>The job demands a cooperative, agreeable and sympathetic listener who gets along with others and enjoys being helpful to them.</li><li>A customer service, the team-oriented focus is of utmost importance. The job requires attention to the details of work, handling them with better-than-average accuracy and with careful attention to the quality of the work.</li><li>The focus is on working comfortably under close supervision within a stable, secure team.</li></ul>`,
+        
     })
 
     function addSkillTag($event) {
@@ -42,7 +57,7 @@
         if(!$event.target.value) {
             skillTags.value.pop()
         }
-        console.log($event.target.value)
+        
     }
 
     const companies = ref()
@@ -186,7 +201,7 @@
                             </div>
 
                             <div class="mb-4 w-1/2">
-                                <Label for="skills" helpText="Type a skill and press enter to add it." value="Required Skills" />
+                                <Label for="skills" helpText="Type a skill and press enter to add that skill to the list." value="Required Skills" />
 
                                 <div class="flex flex-wrap border border-gray-300 bg-gray-50 shadow-sm px-2 py-1">
 
@@ -220,7 +235,7 @@
 
                             <div class="mb-4 w-1/2">
                                 <Label for="job_type" helpText="Full-time, Part-time, Contract" value="Job Type" />
-                                <Select @update:modelValue="job.type = $event">
+                                <Select v-model="job.type" @update:modelValue="job.type = $event">
                                     <option value="ft">Full Time</option>
                                     <option value="pt">Part Time</option>
                                     <option value="c">Contract</option>
@@ -230,40 +245,11 @@
                         
                         <div class="mb-4 text-gray-700">
                             <Label for="title" value="Job Description" />
-                            <div id="my-toolbar" class="flex gap-10">
-                                <!-- Add buttons as you would before -->
-                                <div>
-                                    <button class="ql-bold"></button>
-                                    <button class="ql-italic"></button>
-                                    <button class="ql-underline"></button>
-                                </div>
-                                <div>
-                                    <button class="ql-list" value="bullet"></button>
-                                    <button class="ql-list" value="ordered"></button>
-                                </div>
-                                <div>
-                                    <button class="ql-header" value="1"></button>
-                                    <button class="ql-header" value="2"></button>
-
-                                    <select class="ql-size">
-                                        <option value="small"></option>
-                                        <!-- Note a missing, thus falsy value, is used to reset to default -->
-                                        <option selected></option>
-                                        <option value="large"></option>
-                                        <option value="huge"></option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="text-xl h-48 bg-gray-100">
-                                <QuillEditor toolbar="#my-toolbar" v-model:content="job.description" contentType="html"></QuillEditor>
-                            </div>
+                            <div class="p-6 border border-gray-300" id="editor" v-html="job.description"></div>
 
                             <div class="flex gap-2">
-                                <button @click.prevent="decrementStep" class="my-6 px-4 py-2 text-white font-semibold rounded-md bg-amber-400">Previous</button>
-                                <button @click.prevent="incrementStep" class="my-6 px-4 py-2 text-white font-semibold rounded-md bg-sky-400">Continue</button>
+                                <button @click.prevent="incrementStep" class="my-6 px-4 py-2 text-white font-semibold rounded-md bg-sky-400">Continue to Company</button>
                             </div>
-
 
                         </div>
                     </form>
@@ -272,7 +258,7 @@
 
                         <div class="mb-8">
 
-                            <Label helpText="Select a company from the list, or create a new one." value="Choose a company" />
+                            <Label helpText="Select a company from the list, or create a new one in the form below." value="Choose a company" />
 
                             <select
                                 class="bg-gray-50 border border-gray-300 shadow-sm w-1/3 text-gray-700"
@@ -288,41 +274,94 @@
                         </div>
 
 
-                        <div class="flex gap-5">
+                        <div class="mb-4">
+                            <Label for="title" helpText="Company name as you would like it to appear." value="Company Name" />
+                            <TextInput v-model="company.name" />
+                        </div>
+
+                        <div class="mb-4 flex gap-5">
+
                             <div class="w-1/2">
-                                <Label for="title" value="Company Name" />
-                                <TextInput v-model="company.name" />
-                            </div>
-                            <div class="w-1/2">
-                                <Label for="title" value="Company HQ" />
+                                <Label for="title" helpText="e.g. 1600 Pennsylvania Ave." value="Street Address" />
                                 <TextInput v-model="company.address" />
                             </div>
+                            <div class="flex-1">
+                                <Label for="title" helpText="e.g. Washington, DC." value="City" />
+                                <TextInput v-model="company.city" />
+                            </div>
+                            <div>
+                                <Label for="title" helpText="e.g. Washington, DC." value="State" />
+                                <TextInput v-model="company.state" />
+                            </div>
                         </div>
+                        
 
                         <div class="flex gap-5">
                             <div class="w-1/2">
-                                <Label for="title" value="Company Website URL" />
+                                <Label for="title" helpText="https://www.example.com" value="Company Website URL" />
                                 <TextInput v-model="company.url" />
                             </div>
                             <div class="w-1/2">
-                                <Label for="title" value="Email" />
+                                <Label for="title" helpText="The email address where we can send you your reciept" value="Email" />
                                 <TextInput v-model="company.email" />
                             </div>
                         </div>
 
                         <div class="flex gap-2">
                             <button @click.prevent="decrementStep" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-amber-400">Previous</button>
-                            <button @click.prevent="incrementStep" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-sky-400">Continue</button>
+                            <button @click.prevent="incrementStep" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-sky-400">Continue to Listing Preview</button>
                         </div>
                     </form>
 
                     <form @submit.prevent="addTempListing" v-if="currentStep === 2">
-                        <div v-if="tempListing">
-                            {{ tempListing }}
+                        <div class="flex items-start gap-5">
+                            
+                            <div class="w-2/3 text-gray-700">
+                                <h2 class="text-3xl font-semibold">{{ job.title }}</h2>
+                                <p>
+                                    <span class="font-semibold">Job Type:</span>
+                                    {{ job.type === 'ft' ? 'Full Time' : 'Part Time' }}
+                                </p>
+                                <div class="mt-10" v-html="job.description"></div>
+                            </div>
+
+                            <div class="flex-1 text-gray-700 shadow-md p-4 sticky top-28 self-start">
+
+                                <div class="flex gap-3 mb-2">
+                                    <img class="w-16" :src="`http://localhost:8000/${company.logo}`" />
+                                    <h3 class="text-xl font-semibold">{{ company.name }}</h3>
+                                </div>
+
+                                <p class="text-sm">{{ company.address }}</p>
+
+                                <div class="p-4">
+                                    <ul>
+                                        <li>
+                                            <router-link class="text-sky-500 font-semibold" :to="`/company/${company.uuid}/${company.slug}`">Company Profile &amp; All listings</router-link>
+                                            
+                                        </li>
+                                        <li>
+                                            <a target="_blank" class="text-sky-500 font-semibold" :href="company.url">Company Website</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="text-center mt-6">
+                                    <button disabled class="bg-rose-400 text-white py-2 px-6 rounded-md">Applyfor this Job</button>
+                                </div>
+
+                            </div>
+                            
+
+                            
                         </div>
+
+
+                            
+                        
                         <div class="flex gap-2">
                             <button @click.prevent="decrementStep" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-amber-400">Previous</button>
-                            <button class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-sky-400">Continue to Payment</button>
+                            <a href="https://buy.stripe.com/test_8wM041fpEbUZ8b6bII" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-sky-400">Continue to Payment</a>
                         </div>
                     </form>
                 </div>
