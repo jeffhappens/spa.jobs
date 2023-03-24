@@ -1,6 +1,7 @@
 <script setup>
     import { ref, onMounted } from 'vue'
-    import MainContentArea from "../components/MainContentArea.vue";
+    import { useStore } from 'vuex'
+    import MainContentArea from "../components/MainContentArea.vue"
     import PageHeading from '../components/PageHeading.vue'
     import Container from '../components/Container.vue'
     import Label from '../components/form/Label.vue'
@@ -10,10 +11,10 @@
     import { Quill } from '@vueup/vue-quill'
     import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
+    const store = useStore()
 
     onMounted(() => {
         const options = {
-            debug: 'info',
             placeholder: 'Compose an epic...',
             theme: 'snow',
             modules: {
@@ -26,8 +27,6 @@
 
     const user = JSON.parse(localStorage.getItem('user'))
 
-    const skillTags = ref(['PHP','JavaScript','CSS','Laravel'])
-
     const job = ref({
         company_id: '',
         title: 'Web Developer III',
@@ -38,27 +37,6 @@
         description: `<p>We are seeking a Customer Service Specialist to interact with our customers to provide and process information in response to inquiries and requests about products, services and promotions.</p><br/><p><b>Main Job Tasks and Responsibilities (includes, but is not limited to):</b></p><ul><li>Work with customers daily via email, live chat or other channels</li><li>Handle retail customer service inquiries mainly for English-speaking markets.</li><li>Response to minimum 100 E-mails/Live Chat equivalent per day.</li><li>Promote our products to customers</li></ul><br/><p><b>The Successful Applicant:</b></p><ul><li>Fluency in verbal and written English; additional language is an advantage</li><li>Excellent time management and documentation skills</li><li>Customer service experience preferred</li><li>Availability for 30 - 40 hours a week with flexible shifts</li><li>High-speed stable internet connection</li></ul><br/><p><b>Job Description:</b></p><ul><li>This job requires a patient and stable work style and consistency in dealing with repetitive routines.</li><li>The job demands a cooperative, agreeable and sympathetic listener who gets along with others and enjoys being helpful to them.</li><li>A customer service, the team-oriented focus is of utmost importance. The job requires attention to the details of work, handling them with better-than-average accuracy and with careful attention to the quality of the work.</li><li>The focus is on working comfortably under close supervision within a stable, secure team.</li></ul>`,
         
     })
-
-    function addSkillTag($event) {
-
-        skillTags.value.push($event.target.value)
-        job.value.skills.push($event.target.value)
-        $event.target.value = ''
-    }
-
-    function removeSkillTag($event) {
-        const text = $event.target.parentNode.children[0].innerText
-        const index = skillTags.value.indexOf(text)
-        skillTags.value.splice(index, 1)
-
-    }
-
-    function popSkillTag($event) {
-        if(!$event.target.value) {
-            skillTags.value.pop()
-        }
-        
-    }
 
     const companies = ref()
 
@@ -119,7 +97,7 @@
 
     async function addTempListing() {
 
-        const { data } = await axios.post('http://localhost:8000/api/addtemplisting', job.value )
+        const { data } = await axios.post(`${store.state.api_url_base}/api/addtemplisting`, job.value )
         tempListing.value = data
         console.log(data)
 
@@ -127,7 +105,7 @@
 
     async function getCompanies() {
 
-        const { data } = await axios.get(`http://localhost:8000/api/companies/${user.uuid}`)
+        const { data } = await axios.get(`${store.state.api_url_base}/api/companies/${user.uuid}`)
         companies.value = data
     }
 
@@ -186,7 +164,7 @@
 
                 <div class="bg-white p-6 rounded-lg shadow-md flex-1">
 
-                    <form v-if="currentStep === 0">
+                    <form @submit.prevent v-if="currentStep === 0">
 
                         <div class="mb-4">
                             <Label for="title" helpText="e.g. Web Developer III, or Sales Associate." value="Job Title" />
@@ -201,39 +179,15 @@
                             </div>
 
                             <div class="mb-4 w-1/2">
-                                <Label for="skills" helpText="Type a skill and press enter to add that skill to the list." value="Required Skills" />
-
-                                <div class="flex flex-wrap border border-gray-300 bg-gray-50 shadow-sm px-2 py-1">
-
-                                    <div class="flex flex-wrap items-start justify-start gap-1">
-                                        <div
-                                            class="flex bg-[color:var(--p-orange)] text-white p-1 rounded-sm mr-1"
-                                            v-for="skill in skillTags"
-                                            @remove:skillTag="removeSkillTag"
-                                            :key="skill">
-                                            <span class="mr-1">{{ skill }}</span>
-                                            <span @click="removeSkillTag($event)" class="cursor-pointer material-symbols-outlined" style="font-size: 12px; font-weight: bold;">close</span>
-                                        </div>
-                                    </div>
-                                    <input 
-                                        type="text"
-                                        @keyup.enter="addSkillTag($event)"
-                                        @keydown.delete="popSkillTag($event)"
-                                        class="p-0 m-0 border-0 w-1/4 focus:ring-0 bg-gray-50 text-gray-900 h-8" />
-                                    <!-- <TextInput @keyup.enter="addSkillTag($event)" class="border-0 p-0" /> -->
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="flex gap-5">
-
-                            <div class="mb-4 w-1/2">
                                 <Label for="title" helpText="The url to your application, or an email address." value="Application Link or Email" />
                                 <TextInput v-model="job.apply_link" @update:modelValue="job.apply_link = $event" />
                             </div>
 
-                            <div class="mb-4 w-1/2">
+                        </div>
+
+                        <div class="flex gap-5 mb-8">
+
+                            <div class="w-1/2">
                                 <Label for="job_type" helpText="Full-time, Part-time, Contract" value="Job Type" />
                                 <Select v-model="job.type" @update:modelValue="job.type = $event">
                                     <option value="ft">Full Time</option>
@@ -244,7 +198,7 @@
                         </div>
                         
                         <div class="mb-4 text-gray-700">
-                            <Label for="title" value="Job Description" />
+                            <Label for="title" value="Job Description" helpText="Make sure to include at least a detailed job summary, and required/preferred skills." />
                             <div class="p-6 border border-gray-300" id="editor" v-html="job.description"></div>
 
                             <div class="flex gap-2">
@@ -254,7 +208,7 @@
                         </div>
                     </form>
 
-                    <form v-if="currentStep === 1">
+                    <form @submit.prevent v-if="currentStep === 1">
 
                         <div class="mb-8">
 
@@ -328,7 +282,7 @@
                             <div class="flex-1 text-gray-700 shadow-md p-4 sticky top-28 self-start">
 
                                 <div class="flex gap-3 mb-2">
-                                    <img class="w-16" :src="`http://localhost:8000/${company.logo}`" />
+                                    <img class="w-16" :src="`${store.state.api_url_base}/${company.logo}`" />
                                     <h3 class="text-xl font-semibold">{{ company.name }}</h3>
                                 </div>
 
@@ -361,7 +315,12 @@
                         
                         <div class="flex gap-2">
                             <button @click.prevent="decrementStep" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-amber-400">Previous</button>
-                            <a href="https://buy.stripe.com/test_8wM041fpEbUZ8b6bII" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-sky-400">Continue to Payment</a>
+                            <a
+                                @click.prevent="addTempListing"
+                                href="https://buy.stripe.com/test_8wM041fpEbUZ8b6bII"
+                                class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-sky-400">
+                                Continue to Payment
+                            </a>
                         </div>
                     </form>
                 </div>

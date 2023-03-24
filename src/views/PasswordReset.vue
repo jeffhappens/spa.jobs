@@ -1,14 +1,17 @@
 <script setup>
     import { ref } from 'vue'
     import { useRoute } from 'vue-router'
+    import { useStore } from 'vuex'
     const newPassword = ref('')
     const route = useRoute()
+    const store = useStore()
+
     const success = ref(false)
 
     console.log(route.query.email)
 
     async function onResetPassword() {
-        await axios.post('http://localhost:8000/reset-password', {
+        await axios.post(`${store.state.api_url_base}/reset-password`, {
             token: route.params.token,
             email: route.query.email,
             password: newPassword.value,

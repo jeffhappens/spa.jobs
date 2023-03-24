@@ -4,14 +4,14 @@
     import BadgeRound from '../components/BadgeRound.vue'
     import { ref } from 'vue'
     import { useRouter } from 'vue-router'
+    import { useStore } from 'vuex'
 
     const industries = ref(null)
-    const host = 'http://localhost:8000'
-    const apihost = host + '/api'
     const router = useRouter()
+    const store = useStore()
 
     async function getIndustries() {
-        const { data } = await axios.get(`${apihost}/industries`)
+        const { data } = await axios.get(`${store.state.api_url_base}/api/industries`)
         industries.value = data
     }
 

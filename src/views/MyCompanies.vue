@@ -1,12 +1,16 @@
 <script setup>
 
     import { ref } from 'vue'
+    
     import MainContentArea from '../components/MainContentArea.vue'
     import Container from '../components/Container.vue'
     import PageHeading from '../components/PageHeading.vue'
     import SidebarAccount from '../components/SidebarAccount.vue'
+    import { useStore } from 'vuex'
 
+    const store = useStore()
     const user = JSON.parse(localStorage.getItem('user'))
+
     const myCompanies = ref(null)
     const actions = {
         label: 'Add New Company',
@@ -14,7 +18,7 @@
     }
 
     async function getCompanies() {
-        const { data } = await axios.get('http://localhost:8000/api/companies/' + user.uuid)
+        const { data } = await axios.get(`${store.state.api_url_base}/api/companies/` + user.uuid)
         myCompanies.value = data
     }
     getCompanies()
@@ -38,7 +42,7 @@
 
                         <div v-for="company in myCompanies" :key="company.id" class="bg-white w-full shadow-md rounded-lg text-gray-800 mb-6 p-4 flex gap-5">
                             <div class="w-20">
-                                <img :src="`http://localhost:8000/${company.logo}`" />
+                                <img :src="`${store.state.api_url_base}/${company.logo}`" />
                             </div>
                             <div class="flex-1">
                                 <h3 class="text-xl font-semibold">{{ company.name }}</h3>
@@ -51,7 +55,7 @@
                                     name: 'edit-company',
                                     params: { id: company.id }
                                 }">
-                                <span class="cursor-pointer material-symbols-outlined">edit</span>
+                                <font-awesome-icon class="text-xl text-gray-600" icon="fa-solid fa-pen-to-square" />
                                 </router-link>
                             </div>
                         </div>

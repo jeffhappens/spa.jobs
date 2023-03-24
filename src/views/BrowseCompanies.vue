@@ -9,7 +9,7 @@
 
     async function getCompanies(page = 1) {
 
-        const { data } = await axios.get(`http://localhost:8000/api/companies?page=${page}`)
+        const { data } = await axios.get(`${store.state.api_url_base}/api/companies?page=${page}`)
         companies.value = data
 
     }
@@ -27,7 +27,7 @@
 
             <div v-for="company in companies.data" :key="company.id" class="bg-white p-4 mb-8 shadow-md rounded-lg flex gap-5">
                 <div class="w-36">
-                    <img :src="`http://localhost:8000/${company.logo}`" />
+                    <img :src="`${store.state.api_url_base}/${company.logo}`" />
                 </div>
                 <div class="text-gray-600 flex-1">
 

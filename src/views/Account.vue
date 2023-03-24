@@ -1,6 +1,6 @@
 <script setup>
-
     import { ref, computed } from 'vue'
+    import { useStore } from 'vuex'
     import { toast } from 'vue3-toastify'
     import MainContentArea from '../components/MainContentArea.vue'
     import Container from '../components/Container.vue'
@@ -9,6 +9,7 @@
     import TextInput from '../components/form/TextInput.vue'
     import SidebarAccount from '../components/SidebarAccount.vue'
 
+    const store = useStore()
     const user = JSON.parse(localStorage.getItem('user'))
     
     const validationError = ref('')
@@ -28,7 +29,7 @@
     async function changePassword() {
         validationError.value = ''
         try {
-            await axios.post('http://localhost:8000/api/change-password', {
+            await axios.post(`${store.state.api_url_base}/api/change-password`, {
                 'password' : currentPassword.value,
                 'newPassword': newPassword.value
             })
@@ -67,7 +68,7 @@
                         </ul>
                         
                         <div>
-                            <span class="cursor-pointer material-symbols-outlined">edit</span>
+                            <font-awesome-icon class="text-xl text-gray-600" icon="fa-solid fa-pen-to-square" />
                         </div>
                     </div>
                     

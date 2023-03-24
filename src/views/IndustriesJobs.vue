@@ -5,15 +5,17 @@
     import PageHeading from "../components/PageHeading.vue"
     import Container from "../components/Container.vue"
     import ListingCard from "../components/ListingCard.vue"
+    import { useStore } from 'vuex'
 
     const route = useRoute()
+    const store = useStore()
 
     const industry = ref()
 
     async function getListingsByIndustry() {
         
         const slug = route.params.slug
-        const { data } = await axios.get(`http://localhost:8000/api/industries/${slug}`)
+        const { data } = await axios.get(`${store.state.api_url_base}/api/industries/${slug}`)
 
         industry.value = data
     }

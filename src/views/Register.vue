@@ -1,26 +1,25 @@
 <script setup>
+    import { ref } from 'vue'
+    import { useStore } from 'vuex'
 
-import { ref } from 'vue'
+    const store = useStore()
 
-const nn = ref(false)
+    const nn = ref(false)
+    const user = ref({
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
+    })
 
-const user = ref({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: ''
-})
-
-async function onRegister() {
-
-    await axios.post('http://localhost:8000/register', user.value )
-    nn.value = true // Show success message
-
-
-}
-
+    async function onRegister() {
+        await axios.post(`${store.state.api_url_base}/register`, user.value )
+        nn.value = true // Show success message
+    }
 </script>
+
 <template>
+
 
     <main class="flex justify-center items-center pt-4 bg-gray-100 bg">
 

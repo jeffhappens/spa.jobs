@@ -1,6 +1,8 @@
 <script setup>
     import { ref, defineEmits } from 'vue'
     import { useRoute, useRouter  } from 'vue-router';
+    import { useStore  } from 'vuex';
+    
 
     import Cookies from 'js-cookie'
     
@@ -18,9 +20,7 @@
     import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type"
 
 
-    const host = 'http://localhost:8000'
-    const apihost = host + '/api'
-    
+    const store = useStore()
     const user = JSON.parse(localStorage.getItem('user'))
     const router = useRouter()
     const route = useRoute()
@@ -28,7 +28,7 @@
 
     let industries = ref({})
     async function getIndustries() {
-        let { data } = await axios.get(`${apihost}/industries`)
+        let { data } = await axios.get(`${store.state.api_url_base}/api/industries`)
         industries.value = data
     }
 
@@ -45,7 +45,7 @@
 
     async function handleProcessFile(e, file) {
 
-        const {data} = await axios.get(`${apihost}/logo/${file.serverId}`)
+        const {data} = await axios.get(`${store.state.api_url_base}/api/logo/${file.serverId}`)
         console.log(data)
         newLogo.value = `tmp/${data.folder}/${data.file}`
     }
@@ -54,7 +54,7 @@
     }
 
     const serverOptions = {
-        url: apihost,
+        url: `${store.state.api_url_base}/api`,
         process: {
             url: '/company/logo/add',
             headers: {
@@ -65,7 +65,7 @@
     }
 
     async function getCompany() {
-        const { data } = await axios.get(`${apihost}/companies/edit/${route.params.id}`)
+        const { data } = await axios.get(`${store.state.api_url_base}/api/companies/edit/${route.params.id}`)
         
         company.value = data
     }
@@ -73,7 +73,7 @@
     async function updateCompany() {
         try {
             // Add Company Http
-            await axios.post(`${apihost}/company/update`, {
+            await axios.post(`${store.state.api_url_base}/api/company/update`, {
                 company: company.value,
                 logo: newLogo.value
             })
@@ -136,8 +136,8 @@
 
                             <div class="flex items-center gap-5">
                                 <div class="w-32" v-if="company.logo">
-                                    <img v-if="newLogo" :src="`${host}/${newLogo}`" />
-                                    <img v-else :src="`${host}/${company.logo}`" />
+                                    <img v-if="newLogo" :src="`${store.state.api_url_base}/${newLogo}`" />
+                                    <img v-else :src="`${store.state.api_url_base}/${company.logo}`" />
                                 </div>
 
 

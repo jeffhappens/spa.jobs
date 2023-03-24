@@ -35,13 +35,13 @@ function paginate(index, data) {
 </script>
 
 <template>
-    <div class="flex items-center justify-between gap-3 mb-6 text-sky-400 rounded-sm">
-        <p class="text-gray-400">Page {{ data.current_page }} of {{ data.last_page }}</p>
+    <div class="flex items-center justify-between gap-3 mb-6 text-sky-400 rounded-lg bg-white shadow-sm p-2">
+        <p class="text-gray-400 ml-2">Page {{ data.current_page }} of {{ data.last_page }}</p>
         <div class="flex gap-2">
         <div
             v-for="(link, index) in data.links"
             :key="link.label"
-            class="py-2 px-4 flex items-center justify-between rounded-sm shadow-sm cursor-pointer select-none"
+            class="py-2 px-4 flex items-center justify-between cursor-pointer select-none"
             :class="{ 'bg-[color:var(--p-blue-md)] text-white' : index === data.current_page }"
             
             v-html="link.label"

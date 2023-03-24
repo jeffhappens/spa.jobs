@@ -1,14 +1,14 @@
 <script setup>
     import { ref, defineProps, defineEmits } from 'vue'
     import { useRouter } from 'vue-router'
+    import { useStore } from 'vuex'
     import Container from '../components/Container.vue'
     
     const emit = defineEmits(['user:logout'])
     const props = defineProps(['user'])
     const router = useRouter()
-    const host = 'http://localhost:8000'
-    const apihost = host + '/api'
-
+    const store = useStore()
+    
     const navigationItems = ref([
         { label: 'HOME', destination: '/' },
         { label: 'BROWSE BY INDUSTRY', destination: '/industries' },
@@ -16,12 +16,12 @@
     ])
 
     const postJobItem = ref({
-        label: 'POST A JOB',
-        destination: '/post'
+        label: 'POST A JOB FOR $99',
+        destination: '/post/job-details'
     })
 
     async function userLogout() {
-        await axios.post(`${host}/logout`)
+        await axios.post(`${store.state.api_url_base}/logout`)
         localStorage.removeItem('user')
         emit('user:logout')
         router.push({ path: '/'})
@@ -34,8 +34,8 @@
 
         <Container class="flex items-center justify-between h-20">
 
-            <div class="text-left bg-gray-800 rounded-md py-2 px-6">
-                <router-link to="/">SITE NAME</router-link>
+            <div class="text-left rounded-md py-2 px-6">
+                <router-link to="/">{{ $store.state.site_title }}</router-link>
             </div>
             
             <nav class="flex items-center justify-center gap-10 text-white">
@@ -48,7 +48,7 @@
                 </div>
                 <router-link
                     :to="postJobItem.destination"
-                    class="font-semibold py-1 px-4 rounded-full bg-[color:var(--p-orange)]">
+                    class="font-semibold py-2 px-4 rounded-full bg-[color:var(--p-orange)]">
                     {{ postJobItem.label }}
                 </router-link>
             </nav>

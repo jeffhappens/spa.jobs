@@ -1,6 +1,8 @@
 <script setup>
     import { ref } from 'vue'
+    import { useStore } from 'vuex'
 
+    const store = useStore()
     const user = ref({
         email: ''
     })
@@ -8,7 +10,7 @@
 
     async function onForgotPassword() {
         loading.value = true
-        await axios.post('http://localhost:8000/forgot-password', user.value)
+        await axios.post(`${store.state.api_url_base}/forgot-password`, user.value)
         loading.value = false
     }
 </script>

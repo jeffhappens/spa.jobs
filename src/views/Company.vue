@@ -1,5 +1,6 @@
 <script setup>
     import { ref } from 'vue'
+    import { useStore } from 'vuex'
     import { useRoute, useRouter } from 'vue-router'
     import MainContentArea from '../components/MainContentArea.vue'
     import PageHeading from '../components/PageHeading.vue'
@@ -7,6 +8,7 @@
     
 
     const route = useRoute()
+    const store = useStore()
 
     const company = ref()
 
@@ -15,7 +17,7 @@
         const uuid = route.params.uuid
         const slug = route.params.slug
 
-        const { data } = await axios.get(`http://localhost:8000/api/company/${uuid}/${slug}`)
+        const { data } = await axios.get(`${store.state.api_url_base}/api/company/${uuid}/${slug}`)
         company.value = data
     }
     getCompany()

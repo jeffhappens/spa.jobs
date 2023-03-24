@@ -1,11 +1,12 @@
 <script setup>
 import { ref } from 'vue'
-import { RouterLink, RouterView } from 'vue-router'
+import { useStore } from 'vuex'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css';
 import Navigation from './components/Navigation.vue'
 import Cookies from 'js-cookie'
 
+const store = useStore()
 const user = ref()
 
 function setLoggedInUser(u) {
@@ -21,7 +22,7 @@ function logoutUser() {
 async function getLoggedInUser() {
 
     try {
-        const { data } = await axios.get('http://localhost:8000/api/user')
+        const { data } = await axios.get(`${store.state.api_url_base}/api/user`)
         localStorage.setItem('user', JSON.stringify(data))
         user.value = JSON.parse(localStorage.getItem('user'))
     } catch(error) {
@@ -31,7 +32,6 @@ async function getLoggedInUser() {
 function notifyCompanyAdded() {
     toast('New Company Added', { autoClose: 2000 })
 }
-// user.value = getLoggedInUser()
 getLoggedInUser()
 
 </script>
@@ -46,5 +46,4 @@ getLoggedInUser()
         @company:added="notifyCompanyAdded"
         class="flex-1"
     />
-    <!-- <RouterView class="flex-1" /> -->
 </template>

@@ -1,12 +1,14 @@
 <script setup>
     import { ref, defineEmits } from 'vue'
+    import { useStore } from 'vuex'
     import { useRoute, useRouter } from 'vue-router'
     import TextInput from '../components/form/TextInput.vue'
     import Label from '../components/form/Label.vue'
 
     const router = useRouter()
-
     const route = useRoute()
+    const store = useStore()
+
     let loading = ref(false)
     
     const user = ref({
@@ -26,15 +28,15 @@
         loading.value = true
 
         emailVerified = false
-        await axios.get('http://localhost:8000/sanctum/csrf-cookie')
+        await axios.get(`${store.state.api_url_base}/sanctum/csrf-cookie`)
 
         try {
-            await axios.post('http://localhost:8000/login', user.value)
+            await axios.post(`${store.state.api_url_base}/login`, user.value)
         } catch(error) {
             loginError.value = error.response.data.message
             return false
         }
-        const me = await axios.get('http://localhost:8000/api/user')
+        const me = await axios.get(`${store.state.api_url_base}/api/user`)
         localStorage.setItem('user', JSON.stringify(me.data))
         
         emit('user:login', me.data)

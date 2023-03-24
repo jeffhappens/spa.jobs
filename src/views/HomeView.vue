@@ -6,12 +6,15 @@
     import SearchBoxHome from '../components/SearchBoxHome.vue'
     import ListingCard from '../components/ListingCard.vue'
     import Pagination from '../components/Pagination.vue'
+    import { useStore } from 'vuex'
+
+    const store = useStore()
 
     const results = ref({})
     const resultsHeading = ref('Recent Listings')
 
     async function getResults(page = 1) {
-        let { data } = await axios.get(`http://localhost:8000/api/listings?page=${page}`)
+        let { data } = await axios.get(`${store.state.api_url_base}/api/listings?page=${page}`)
         results.value = data
     }
 

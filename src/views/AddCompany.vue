@@ -1,5 +1,6 @@
 <script setup>
     import { ref, computed, defineEmits } from 'vue'
+    import { useStore } from 'vuex'
     import MainContentArea from '../components/MainContentArea.vue'
     import Container from '../components/Container.vue'
     import PageHeading from '../components/PageHeading.vue'
@@ -18,6 +19,7 @@
 
 
     const router = useRouter();
+    const store = useStore()
     const emit = defineEmits('company:added')
 
     const FilePond = vueFilePond(
@@ -44,7 +46,7 @@
     const companyLogo = ref(null)
 
     const serverOptions = {
-        url: 'http://localhost:8000',
+        url: store.state.api_url_base,
         process: {
             url: '/api/company/logo/add',
             headers: {
@@ -59,7 +61,7 @@
     const buttonText = ref('Add Company')
 
     async function getIndustries() {
-        let { data } = await axios.get('http://localhost:8000/api/industries')
+        let { data } = await axios.get(`${store.state.api_url_base}/api/industries`)
         industries.value = data
     }
     
@@ -78,7 +80,7 @@
     async function addCompany() {
         try {
             // Add Company Http
-            await axios.post('http://localhost:8000/api/company/add', {
+            await axios.post(`${store.state.api_url_base}/api/company/add`, {
                 company: company.value,
                 logo: companyLogo.value
             })

@@ -1,6 +1,8 @@
 <script setup>
-
     import { ref } from 'vue'
+    import { useStore } from 'vuex'
+
+    const store = useStore()
     const emit = defineEmits(['resultsUpdated'])
     const radii = ref(['25', '50', '75'])
     
@@ -10,7 +12,7 @@
     })
 
     const updateResults = async () => {
-        let { data } = await axios.post('http://localhost:8000/api/search', searchParams.value)
+        let { data } = await axios.post(`${store.state.api_base_url}/api/search`, searchParams.value)
         emit('resultsUpdated', { d: data, term: searchParams.value.keyword })
     }
 
@@ -33,9 +35,6 @@
 
             </div>
             
-            <!-- <div class="bg-[color:var(--p-blue-md)] p-6 rounded-full shadow-sm">
-                <button type="submit" class="px-3 text-xl text-white drop-shadow-sm">Search</button>
-            </div> -->
         </form>
     </div>    
 </template>
