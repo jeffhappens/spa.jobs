@@ -10,7 +10,7 @@
     const store = useStore()
     
     const navigationItems = ref([
-        { label: 'HOME', destination: '/' },
+        // { label: 'HOME', destination: '/' },
         { label: 'BROWSE BY INDUSTRY', destination: '/industries' },
         { label: 'BROWSE BY COMPANY', destination: '/companies' },
     ])

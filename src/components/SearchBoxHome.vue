@@ -44,8 +44,8 @@
                     placeholder="Search by Job Title, Keyword, or Company Name"
                 />
 
-                <div v-if="searchResults" class="flex items-center justify-end mr-2">
-                    <font-awesome-icon class="text-black text-4xl cursor-pointer mr-2" icon="fa-solid fa-xmark" />
+                <div v-if="searchResults" class="flex items-center justify-end mr-2 cursor-pointer">
+                    <font-awesome-icon class="text-black text-4xl mr-2" icon="fa-solid fa-xmark" />
                     <p class="text-black">Clear Results</p>
                 </div>
 

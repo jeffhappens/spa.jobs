@@ -108,6 +108,13 @@ const router = createRouter({
     },
 
     {
+        path: '/account/listings',
+        name: 'my-listings',
+        beforeEnter: isAuthenticated,
+        component: () => import('../views/MyListings.vue')
+    },
+
+    {
         path: '/account/companies/add',
         name: 'add-company',
         beforeEnter: isAuthenticated,

@@ -13,7 +13,7 @@
 
                 <h4 class="text-2xl">
                     <router-link
-                        class="font-semibold"
+                        class="font-semibold hover:underline hover:underline-offset-2"
                         :to="{
                             name: 'listing',
                             params: {

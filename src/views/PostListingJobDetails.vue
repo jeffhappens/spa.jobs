@@ -1,20 +1,23 @@
 <script setup>
+
     import { ref, onMounted } from 'vue'
     import { useRouter } from 'vue-router'
     import { useStore } from 'vuex'
-    import MainContentArea from "../components/MainContentArea.vue";
-    import PageHeading from '../components/PageHeading.vue'
-    import Container from '../components/Container.vue'
-    import Label from '../components/form/Label.vue'
-    import Select from '../components/form/Select.vue'
-    import TextInput from '../components/form/TextInput.vue'
-    import Stepper from '../components/form/Stepper.vue'
+
+    import MainContentArea from "#/MainContentArea.vue";
+    import PageHeading from '#/PageHeading.vue'
+    import Container from '#/Container.vue'
+    import Label from '#/form/Label.vue'
+    import Select from '#/form/Select.vue'
+    import TextInput from '#/form/TextInput.vue'
+
+    import Stepper from '#/form/Stepper.vue'
+
     import { QuillEditor } from '@vueup/vue-quill'
     import '@vueup/vue-quill/dist/vue-quill.snow.css';
     
     const router = useRouter()
     const store = useStore()
-
     const user = JSON.parse(localStorage.getItem('user'))
 
     // Set up the Quill editor
@@ -79,7 +82,7 @@
                     <form @submit.prevent="">
                         <div class="mb-4">
                             <Label for="title" helpText="e.g. Web Developer III, or Sales Associate." value="Job Title" />
-                            <TextInput v-model="job.title" @update:modelValue="job.title = $event" />
+                            <TextInput v-model="job.title" @update:modelValue="job.title = $event" required/>
                         </div>
 
                         <div class="flex gap-5">
@@ -96,6 +99,7 @@
                                 </Select>
                             </div>
 
+                            <!-- Apply Link -->
                             <div class="mb-4 w-1/2">
                                 <Label for="title" helpText="The url to your application, or an email address." value="Application Link or Email" />
                                 <TextInput v-model="job.apply_link" @update:modelValue="job.apply_link = $event" />

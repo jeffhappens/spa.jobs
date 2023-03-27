@@ -64,7 +64,9 @@
                             :key="listing.id"
                             class="bg-white px-4 py-3 mb-4 rounded-md shadow-sm">
 
-                            <p class="text-gray-700 text-lg font-semibold">{{ listing.title }}</p>
+                            <p class="text-gray-700 text-lg">
+                                <router-link class="font-semibold" :to="{ name: 'listing', params: { uuid: listing.uuid, slug: listing.slug }}">{{ listing.title }}</router-link>
+                            </p>
                             <p class="text-gray-500 text-xs font-semibold">Posted on: {{ listing.created_at }}</p>
                         </div>
                     </div>

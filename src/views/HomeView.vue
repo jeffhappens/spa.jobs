@@ -2,10 +2,10 @@
 
     import { ref, defineProps } from 'vue'
     
-    import HeroHome from '../components/HeroHome.vue'
-    import SearchBoxHome from '../components/SearchBoxHome.vue'
-    import ListingCard from '../components/ListingCard.vue'
-    import Pagination from '../components/Pagination.vue'
+    import HeroHome from '#/HeroHome.vue'
+    import SearchBoxHome from '#/SearchBoxHome.vue'
+    import ListingCard from '#/ListingCard.vue'
+    import Pagination from '#/Pagination.vue'
     import { useStore } from 'vuex'
 
     const store = useStore()

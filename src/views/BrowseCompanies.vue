@@ -1,9 +1,12 @@
 <script setup>
     import { ref } from 'vue'
+    import { useStore } from 'vuex'
     import Pagination from '../components/Pagination.vue'
     import Container from '../components/Container.vue'
     import PageHeading from '../components/PageHeading.vue'
     import BadgeRound from '../components/BadgeRound.vue'
+
+    const store = useStore()
 
     const companies = ref({})
 
@@ -42,7 +45,13 @@
                             }">
                                 <h2 class="text-2xl font-semibold text-gray-700">{{ company.name }}</h2>
                             </router-link>
-                            <p class="mb-2">{{ company.city }}, {{ company.state }}</p>
+                            <p>
+                                {{ company.city }}, {{ company.state }}
+                            </p>
+                            <p class="font-semibold mb-2">
+                                Industry:
+                                <span class="italic">{{ company.industry.label }}</span>
+                            </p>
                         </div>
 
                         <div>
@@ -53,8 +62,7 @@
                     
 
                     
-                    <p>{{ company.description }}</p>
-                    <p class="mb-2">{{ company.industry.label }}</p>
+                    <!-- <p>{{ company.description }}</p> -->
                 </div> 
             </div>
 

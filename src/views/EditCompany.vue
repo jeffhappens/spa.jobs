@@ -109,9 +109,35 @@
                         </div>
 
                         <div class="mb-4">
-                            <Label for="address" value="Company Address" />
+                            <Label for="address" value="Address" />
                             <TextInput name="address" v-model="company.address" @update:modelValue="$event = company.address" />
                         </div>
+
+
+
+                        <div class="flex gap-5">
+
+                            <div class="mb-4 w-1/2">
+                                <Label for="address" value="City" />
+                                <TextInput name="address" v-model="company.city" @update:modelValue="$event = company.city" />
+                            </div>
+                            <div class="mb-4 w-1/4">
+                                <Label for="address" value="State" />
+                                <TextInput name="address" v-model="company.state" @update:modelValue="$event = company.state" />
+                            </div>
+                            <div class="mb-4 w-1/4">
+                                <Label for="address" value="Zip Code" />
+                                <TextInput name="address" v-model="company.zip" @update:modelValue="$event = company.zip" />
+                            </div>
+
+                        </div>
+
+                        <div class="mb-4">
+                            <Label for="address" value="Email" />
+                            <TextInput name="address" v-model="company.email" @update:modelValue="$event = company.email" />
+                        </div>
+
+                        
 
                         <div class="mb-4">
                             <Label value="Industry" for="company_industry" />
@@ -132,7 +158,14 @@
                         </div>
 
                         <div class="mb-4">
-                            <Label value="Logo" for="logo" />
+                            <Label value="Company Description" for="company_description" />
+                            <textarea
+                                class="w-full border border-gray-300 text-gray-700 h-36"
+                                v-model="company.description"></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <Label value="Company Logo" for="logo" />
 
                             <div class="flex items-center gap-5">
                                 <div class="w-32" v-if="company.logo">

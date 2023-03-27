@@ -2,18 +2,55 @@
     import { ref, onMounted } from 'vue'
     import { useRouter } from 'vue-router'
     import { useStore } from 'vuex'
-    import MainContentArea from "../components/MainContentArea.vue";
-    import PageHeading from '../components/PageHeading.vue'
-    import Container from '../components/Container.vue'
-    import Stepper from '../components/form/Stepper.vue'
-    import Label from '../components/form/Label.vue'
-    import Select from '../components/form/Select.vue'
-    import TextInput from '../components/form/TextInput.vue'
+
+    import Cookies from 'js-cookie'
+
+    import vueFilePond from 'vue-filepond'
+    import 'filepond/dist/filepond.min.css'
+    
+    import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type"
+
+    import MainContentArea from "#/MainContentArea.vue";
+    import PageHeading from '#/PageHeading.vue'
+    import Container from '#/Container.vue'
+    import Stepper from '#/form/Stepper.vue'
+    import Label from '#/form/Label.vue'
+    import Select from '#/form/Select.vue'
+    import TextInput from '#/form/TextInput.vue'
+
+    const FilePond = vueFilePond(
+        FilePondPluginFileValidateType,
+    )
 
     const router = useRouter()
     const store = useStore()
-
     const user = JSON.parse(localStorage.getItem('user'))
+
+    let newLogo = ref(null)
+
+    async function handleProcessFile(e, file) {
+        const {data} = await axios.get(`${store.state.api_url_base}/api/logo/${file.serverId}`)
+
+        store.dispatch('set_company_logo', `tmp/${data.folder}/${data.file}`)
+        
+        console.log(data)
+        newLogo.value = `tmp/${data.folder}/${data.file}`
+    }
+
+    function handleUpdateFiles() {
+        newLogo.value = null
+    }
+
+    const serverOptions = {
+        url: `${store.state.api_url_base}/api`,
+        process: {
+            url: '/company/logo/add',
+            headers: {
+                'X-XSRF-TOKEN': Cookies.get('XSRF-TOKEN')
+            },
+            withCredentials: true
+        }
+    }
 
     const companies = ref()
 
@@ -112,15 +149,42 @@
                         </div>
                         
 
-                        <div class="flex gap-5">
-                            <div class="w-1/2">
-                                <Label for="title" helpText="https://www.example.com" value="Company Website URL" />
-                                <TextInput v-model="company.url" />
-                            </div>
+                        <div class="flex gap-5 mb-4">
                             <div class="w-1/2">
                                 <Label for="title" helpText="The email address where we can send you your reciept" value="Email" />
                                 <TextInput v-model="company.email" />
                             </div>
+
+                            <div class="w-1/2">
+                                <Label for="title" helpText="https://www.example.com" value="Company Website URL" />
+                                <TextInput v-model="company.url" />
+                            </div>
+
+                        </div>
+
+                        <!-- -->
+                        <div class="mb-4">
+                            <Label value="Company Logo" for="logo" />
+
+                            <div class="flex items-center gap-5">
+                                <div class="w-32" v-if="store.state.job_listing.company.logo">
+                                    <img class="rounded-md" :src="`${store.state.api_url_base}/${store.state.job_listing.company.logo}`" />
+                                </div>
+
+
+                                <FilePond
+                                    class="flex-1"
+                                    :server="serverOptions"
+                                    :allowImageCrop="true"
+                                    imagePreviewHeight="200"
+                                    image-crop-aspect-ratio="1:1"
+                                    acceptedFileTypes="image/jpeg, image/png"
+                                    @processfile="handleProcessFile"
+                                    @removefile="handleUpdateFiles"
+
+                                />
+                            </div>
+
                         </div>
 
                         <div class="flex gap-2">

@@ -22,7 +22,10 @@ const store = createStore({
 
         set_company(state, company) {
             state.job_listing.company = company
+        },
 
+        set_company_logo(state, logo) {
+            state.job_listing.company.logo = logo
         }
     },
 
@@ -33,6 +36,10 @@ const store = createStore({
 
         set_company(context, company) {
             context.commit('set_company', company)
+        },
+
+        set_company_logo(context, logo) {
+            context.commit('set_company_logo', logo)
         }
     }
 

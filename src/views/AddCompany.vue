@@ -39,6 +39,10 @@
         user_id: user.uuid,
         name: '',
         address: '',
+        city: '',
+        state: '',
+        zip: '',
+        email: '',
         url: '',
         industry_id: '',
         description: ''
@@ -121,6 +125,26 @@
                         <div class="mb-4">
                             <FormLabel value="Company Address" for="company_address" />
                             <TextInput name="company_address" v-model="company.address" @update:modelValue="company.address = $event" />
+                        </div>
+
+                        <div class="flex gap-5">
+                            <div class="mb-4 w-1/2">
+                                <FormLabel value="City" for="company_city" />
+                                <TextInput name="company_city" v-model="company.city" @update:modelValue="company.city = $event" />
+                            </div>
+                            <div class="mb-4 w-1/4">
+                                <FormLabel value="State" for="company_state" />
+                                <TextInput name="company_state" v-model="company.state" @update:modelValue="company.state = $event" />
+                            </div>
+                            <div class="mb-4 w-1/4">
+                                <FormLabel value="Zip Code" for="company_zip" />
+                                <TextInput name="company_zip" v-model="company.zip" @update:modelValue="company.zip = $event" />
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <FormLabel value="Email" for="company_email" />
+                            <TextInput name="company_email" v-model="company.email" @update:modelValue="company.email = $event" />
                         </div>
 
                         <div class="mb-4">
