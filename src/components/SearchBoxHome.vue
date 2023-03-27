@@ -4,16 +4,27 @@
 
     const store = useStore()
     const emit = defineEmits(['resultsUpdated'])
-    const radii = ref(['25', '50', '75'])
     
     const searchParams = ref({
         keyword: '',
         distance: 25
     })
 
+    const searchResults = ref(false)
+
+    const clearResults = async () => {
+
+        searchResults.value = false
+        searchParams.value.keyword = ''
+
+        emit('resultsCleared')
+
+    }
+
     const updateResults = async () => {
-        let { data } = await axios.post(`${store.state.api_base_url}/api/search`, searchParams.value)
-        emit('resultsUpdated', { d: data, term: searchParams.value.keyword })
+        let { data } = await axios.post(`${store.state.api_url_base}/api/search`, searchParams.value)
+        searchResults.value = true
+        emit('resultsUpdated', { data, term: searchParams.value.keyword })
     }
 
 </script>
@@ -24,14 +35,21 @@
 
         <form @submit.prevent="updateResults" class="p-4 flex items-center gap-5 shadow-lg absolute top-1/2 left-1/2 z-10 transform -translate-x-1/2 -translate-y-1/2 bg-gray-100 bg-opacity-80 w-3/4 rounded-full">
         
-            <div class="flex items-center justify-between bg-white flex-1 p-2 rounded-full shadow-sm">
+            <div @click="clearResults" class="flex items-center justify-between bg-white flex-1 p-2 rounded-full shadow-sm">
                 
                 <input
                     v-model="searchParams.keyword"
                     type="text"
-                    class="w-full rounded-full px-6 py-4 text-xl text-black border-0 focus:ring-0"
+                    class="w-4/5 rounded-full px-6 py-4 text-xl text-black border-0 focus:ring-0"
                     placeholder="Search by Job Title, Keyword, or Company Name"
                 />
+
+                <div v-if="searchResults" class="flex items-center justify-end mr-2">
+                    <font-awesome-icon class="text-black text-4xl cursor-pointer mr-2" icon="fa-solid fa-xmark" />
+                    <p class="text-black">Clear Results</p>
+                </div>
+
+
 
             </div>
             

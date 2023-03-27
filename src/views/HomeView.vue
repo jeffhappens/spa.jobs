@@ -16,12 +16,15 @@
     async function getResults(page = 1) {
         let { data } = await axios.get(`${store.state.api_url_base}/api/listings?page=${page}`)
         results.value = data
+        resultsHeading.value = 'Recent Listings'
+
     }
 
     function newResults(d) {
         console.log(d)
-        results.value = d.d
-        resultsHeading.value = `We found ${d.d.data.length} listings for "${d.term}"`
+        console.log('event captured')
+        results.value = d.data
+        resultsHeading.value = `We found ${d.data.total} listing(s) for "${d.term}"`
     }
     getResults()
 
@@ -30,20 +33,22 @@
 <template>
     <div>
         <HeroHome />
-        <SearchBoxHome  @resultsUpdated="newResults" />
+        <SearchBoxHome  @resultsUpdated="newResults" @resultsCleared="getResults" />
 
         <div class="bg-gray-50 pt-24">
             <div class="rounded-lg w-3/4 mx-auto">
                 
                 <h2 class="text-4xl p-3 mb-10 text-center text-[color:var(--p-blue-drk)] font-semibold">{{ resultsHeading }}</h2>
                 
-                <Pagination :data="results" @paginate="getResults" />
+                <Pagination v-if="results.total > 10" :data="results" @paginate="getResults" />
                 
                 <div v-for="listing in results.data" :key="listing.id">
                     <ListingCard  :listing="listing" />
                 </div>
 
-                <Pagination :data="results" @paginate="getResults" />
+                <div class="pb-8">
+                    <Pagination v-if="results.total > 10" :data="results" @paginate="getResults" />
+                </div>
 
             </div>
         </div>

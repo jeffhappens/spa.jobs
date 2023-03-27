@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from 'vue'
+import { useStore } from 'vuex'
+
+const store = useStore()
 
 const heading = ref([
     'Location Independent? So are We!',
@@ -16,6 +19,15 @@ const description = ref('Flex Job listings is a curated job board of the best re
             <h2 class="font-bold text-6xl mb-6">{{ heading[2] }}</h2>
             
             <p class="text-lg">{{ description }}</p>
+
+            <div class="mt-10">
+
+                <router-link
+                    :to="store.state.post_job_item.destination"
+                    class="text-xl font-semibold py-4 px-8 rounded-full bg-[color:var(--p-orange)]">
+                    {{ store.state.post_job_item.label }}
+                </router-link>
+            </div>
         </div>
     </div>
 </template>

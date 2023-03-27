@@ -15,10 +15,10 @@
         { label: 'BROWSE BY COMPANY', destination: '/companies' },
     ])
 
-    const postJobItem = ref({
-        label: 'POST A JOB FOR $99',
-        destination: '/post/job-details'
-    })
+    // const postJobItem = ref({
+    //     label: 'POST A JOB FOR $99',
+    //     destination: '/post/job-details'
+    // })
 
     async function userLogout() {
         await axios.post(`${store.state.api_url_base}/logout`)
@@ -47,9 +47,9 @@
                     </router-link>
                 </div>
                 <router-link
-                    :to="postJobItem.destination"
+                    :to="store.state.post_job_item.destination"
                     class="font-semibold py-2 px-4 rounded-full bg-[color:var(--p-orange)]">
-                    {{ postJobItem.label }}
+                    {{ store.state.post_job_item.label }}
                 </router-link>
             </nav>
             

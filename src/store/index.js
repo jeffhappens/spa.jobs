@@ -5,7 +5,12 @@ const store = createStore({
         site_title: 'FLEX JOB LISTINGS',
         api_url_base: 'http://localhost:8000',
 
-        job_listing: {}
+        job_listing: {},
+
+        post_job_item: {
+            label: 'POST A JOB FOR $99',
+            destination: '/post/job-details'
+        }
     },
 
     getters: {},
