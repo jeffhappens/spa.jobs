@@ -99,7 +99,7 @@
 
         const { data } = await axios.post(`${store.state.api_url_base}/api/addtemplisting`, job.value )
         tempListing.value = data
-        console.log(data)
+        
 
     }
 
@@ -110,8 +110,7 @@
     }
 
     function updateSelectedCompany($event) {
-        console.log($event.target.value)
-
+        
         const p = companies.value.find(v => {
             return v.id === Number($event.target.value)
         })

@@ -113,6 +113,12 @@ const router = createRouter({
         beforeEnter: isAuthenticated,
         component: () => import('../views/MyListings.vue')
     },
+    {
+        path: '/account/listings/edit/:uuid',
+        name: 'edit-listing',
+        beforeEnter: isAuthenticated,
+        component: () => import('../views/EditListing.vue')
+    },
 
     {
         path: '/account/companies/add',
@@ -151,8 +157,6 @@ async function isAuthenticated(to, from , next) {
     
     // is there a user object stored?
     let userObj = localStorage.getItem('user')
-
-    console.log(store)
 
     if(userObj) {
         try {

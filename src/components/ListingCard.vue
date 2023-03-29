@@ -1,16 +1,25 @@
 <script setup>
     import { ref, defineProps } from 'vue'
+    import { useRoute } from 'vue-router'
+    const route = useRoute()
     let props = defineProps(['listing'])
 </script>
 <template>
 
     <div class="bg-white mb-8 p-4 text-black shadow-md rounded-xl">
+
+        <div class="flex justify-between">
+            <p class="text-gray-600 mb-3">{{ props.listing.industry?.label }}</p>
+            <p v-if="route.name === 'my-listings'">
+                <router-link :to="{ name: 'edit-listing', params: { uuid: props.listing.uuid } }">
+                    <font-awesome-icon icon="fa-solid fa-pen-to-square" class="text-xl" />
+                </router-link>
+            </p>
+        </div>
         
-        <div class="flex items-center justify-between align-start">
+        <div class="flex justify-between align-start">
 
             <div>
-                <p class="text-gray-600 mb-3">{{ props.listing.industry?.label }}</p>
-
                 <h4 class="text-2xl">
                     <router-link
                         class="font-semibold hover:underline hover:underline-offset-2"
@@ -46,20 +55,7 @@
             </div>
             <div>
                 <p class="text-gray-500 text-sm">Posted on {{ new Intl.DateTimeFormat('en-us').format() }}</p>
-                <!-- <a
-                    :href="'http://'+props.listing.apply_link"
-                    class="shadow-md text-lg font-semibold bg-[color:var(--p-blue-md)] text-white py-2 px-4 rounded-md">
-                    Apply for this job
-                </a> -->
             </div>
         </div>
-
-
-
-        <!-- <p class="text-md">{{ props.listing.description }}</p> -->
-
-        <!-- <div class="flex items-center justify-end mt-8">
-            <a :href="'http://'+props.listing.apply_link" class="shadow-md text-lg font-semibold bg-[color:var(--p-blue-md)] text-white py-1 px-4 rounded-md">Apply for this job</a>
-        </div> -->
     </div>
 </template>

@@ -5,7 +5,29 @@ const store = createStore({
         site_title: 'FLEX JOB LISTINGS',
         api_url_base: 'http://localhost:8000',
 
-        job_listing: {},
+        listing: {
+            title: '',
+            type: '1',
+            apply_link: 'https://',
+            description: '',
+            author_uuid: '',
+            company_id: '',
+            industry_id: '',
+            uuid: '',
+            company: {
+                author: '',
+                name: '',
+                address: '',
+                city: '',
+                state: '',
+                zip: '',
+                email: '',
+                url: '',
+                logo: '',
+                industry_id: '',
+                description: '',
+            }
+        },
 
         post_job_item: {
             label: 'POST A JOB FOR $99',
@@ -16,17 +38,18 @@ const store = createStore({
     getters: {},
 
     mutations: {
-        set_job_listing(state, listing) {
-            state.job_listing = listing
+
+        set_listing_value(state, data) {
+            state.listing[data.field] = data.value
         },
 
-        set_company(state, company) {
-            state.job_listing.company = company
+        set_company_value(state, data) {
+            state.listing.company[data.field] = data.value
+        },
+        set_company(state, data) {
+            state.listing.company = data
         },
 
-        set_company_logo(state, logo) {
-            state.job_listing.company.logo = logo
-        }
     },
 
     actions: {
@@ -34,18 +57,19 @@ const store = createStore({
             context.commit('set_job_listing', listing)
         },
 
-        set_company(context, company) {
-            context.commit('set_company', company)
+        SET_LISTING_VALUE(context, data) {
+            context.commit('set_listing_value', data)
         },
 
-        set_company_logo(context, logo) {
-            context.commit('set_company_logo', logo)
-        }
+        SET_COMPANY(context, data) {
+            context.commit('set_company', data)
+        },        
+
+        SET_COMPANY_VALUE(context, data) {
+            context.commit('set_company_value', data)
+        },
+
     }
-
-
-
-    
 })
 
 export default store

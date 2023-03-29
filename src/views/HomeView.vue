@@ -1,6 +1,8 @@
 <script setup>
 
-    import { ref, defineProps } from 'vue'
+    import { ref, defineEmits } from 'vue'
+    import { useRoute } from 'vue-router'
+    
     
     import HeroHome from '#/HeroHome.vue'
     import SearchBoxHome from '#/SearchBoxHome.vue'
@@ -9,6 +11,12 @@
     import { useStore } from 'vuex'
 
     const store = useStore()
+    const route = useRoute()
+    const emit = defineEmits(['emailVerified'])
+
+    if(!!route.query.verified) {
+        emit('emailVerified')
+    }
 
     const results = ref({})
     const resultsHeading = ref('Recent Listings')
@@ -17,12 +25,9 @@
         let { data } = await axios.get(`${store.state.api_url_base}/api/listings?page=${page}`)
         results.value = data
         resultsHeading.value = 'Recent Listings'
-
     }
 
     function newResults(d) {
-        console.log(d)
-        console.log('event captured')
         results.value = d.data
         resultsHeading.value = `We found ${d.data.total} listing(s) for "${d.term}"`
     }

@@ -32,6 +32,13 @@ async function getLoggedInUser() {
 function notifyCompanyAdded() {
     toast('New Company Added', { autoClose: 2000 })
 }
+function notifyListingUpdated() {
+    toast('Listing Updated', { autoClose: 2000 })
+}
+
+function notifyEmailVerified() {
+    toast('Email Successfully Verified', { autoClose: 2000 })
+}
 getLoggedInUser()
 
 </script>
@@ -44,6 +51,8 @@ getLoggedInUser()
     <RouterView
         @user:login="setLoggedInUser"
         @company:added="notifyCompanyAdded"
+        @listing:updated="notifyListingUpdated"
+        @emailVerified="notifyEmailVerified"
         class="flex-1"
     />
 </template>

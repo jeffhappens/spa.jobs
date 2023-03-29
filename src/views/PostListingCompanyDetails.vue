@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, onMounted } from 'vue'
+    import { ref, computed } from 'vue'
     import { useRouter } from 'vue-router'
     import { useStore } from 'vuex'
 
@@ -26,19 +26,9 @@
     const store = useStore()
     const user = JSON.parse(localStorage.getItem('user'))
 
-    let newLogo = ref(null)
-
     async function handleProcessFile(e, file) {
         const {data} = await axios.get(`${store.state.api_url_base}/api/logo/${file.serverId}`)
-
-        store.dispatch('set_company_logo', `tmp/${data.folder}/${data.file}`)
-        
-        console.log(data)
-        newLogo.value = `tmp/${data.folder}/${data.file}`
-    }
-
-    function handleUpdateFiles() {
-        newLogo.value = null
+        updateState('logo', `tmp/${data.folder}/${data.file}`)
     }
 
     const serverOptions = {
@@ -52,47 +42,27 @@
         }
     }
 
+    const states = ref()
+    const industries = ref()
     const companies = ref()
 
-    const company = ref({
-        name: '',
-        hq: '',
-        url: '',
-        email: ''
-    })
-
-    function updateSelectedCompany($event) {
-        const p = companies.value.find(v => {
-            return v.id === Number($event.target.value)
-        })
-        company.value = p
+    async function getStates() {
+        const { data } = await axios.get(`${store.state.api_url_base}/api/states`)
+        states.value = data
     }
+    getStates()
 
-    if ( Object.keys(store.state.job_listing).length ) {
-        company.value = store.state.job_listing.company
-
+    async function getIndustries() {
+        const { data } = await axios.get(`${store.state.api_url_base}/api/industries`)
+        industries.value = data
     }
+    getIndustries()
 
-    async function setCompany() {
 
-        await store.dispatch('set_company', company.value)
-        router.push({ name: 'post-preview' })
+    function updateState(field, value) {
+        store.dispatch('SET_COMPANY_VALUE', { field, value })
     }
-
-    async function getCompanies() {
-
-        const { data } = await axios.get(`${store.state.api_url_base}/api/companies/${user.uuid}`)
-        companies.value = data
-    }
-    getCompanies()
-
-    async function updateTempListing() {
-        const { data } = await axios.post(`${store.state.api_url_base}/api/updatetemplisting`, {
-            uuid: user.uuid,
-            company_id: company.value.id
-        })
-        router.push({ name: 'post-preview' })
-    }
+    updateState('author', user.uuid)
 </script>
 
 
@@ -109,66 +79,144 @@
 
                 <div class="bg-white p-6 rounded-lg shadow-md flex-1">
 
-                        <div class="mb-8">
+                    <div class="mb-4">
+                        <Label
+                                for="title"
+                                helpText="Company name as you would like it to appear."
+                                value="Company Name" />
 
-                            <Label helpText="Select a company from the list, or create a new one in the form below." value="Choose a company" />
-
-                            <select
-                                class="bg-gray-50 border border-gray-300 shadow-sm w-1/3 text-gray-700"
-                                @change="updateSelectedCompany">
-                                <option value="">Select a Company</option>
-                                <option
-                                    v-for="company in companies"
-                                    :key="company.id"
-                                    :value="company.id">
-                                    {{ company.name }}
-                                </option>
-                            </select>
+                            <TextInput
+                                v-model="store.state.listing.company.name"
+                                @update:modelValue="updateState('name', $event)"
+                            />
                         </div>
 
-
                         <div class="mb-4">
-                            <Label for="title" helpText="Company name as you would like it to appear." value="Company Name" />
-                            <TextInput v-model="company.name" />
+                            <Label
+                                for="title"
+                                helpText="Selecting an industry will help job seekers find your listing."
+                                value="Industry" />
+
+                            <Select
+                                v-model="store.state.listing.company.industry_id"
+                                @update:modelValue="updateState('industry_id', $event)">
+                                <option value="">Select an Industry</option>
+
+                                <option
+                                    v-for="industry in industries"
+                                    :key="industry.id"
+                                    :value="industry.id">
+                                    {{ industry.label }}
+                                </option>
+                            </Select>
+
+
                         </div>
 
                         <div class="mb-4 flex gap-5">
 
                             <div class="w-1/2">
-                                <Label for="title" helpText="e.g. 1600 Pennsylvania Ave." value="Street Address" />
-                                <TextInput v-model="company.address" />
+                                <Label
+                                    for="title"
+                                    helpText=""
+                                    value="Street Address" />
+
+                                <TextInput
+                                    v-model="store.state.listing.company.address"
+                                    @update:modelValue="updateState('address', $event)"
+
+                                />
                             </div>
-                            <div class="flex-1">
-                                <Label for="title" helpText="e.g. Washington, DC." value="City" />
-                                <TextInput v-model="company.city" />
+
+                            <div class="w-1/4">
+                                <Label
+                                    for="title"
+                                    helpText=""
+                                    value="City" />
+
+                                <TextInput
+                                    v-model="store.state.listing.company.city"
+                                    @update:modelValue="updateState('city', $event)"
+                                />
                             </div>
-                            <div>
-                                <Label for="title" helpText="e.g. Washington, DC." value="State" />
-                                <TextInput v-model="company.state" />
+
+                            <div class="w-1/6">
+                                <Label
+                                    for="title"
+                                    helpText=""
+                                    value="State" />
+
+                                <Select
+                                    class="bg-gray-50 border border-gray-300 shadow-sm w-full text-gray-700"
+                                    v-model="store.state.listing.company.state"
+                                    @update:modelValue="updateState('state', $event)"
+                                >
+                                    <option
+                                        v-for="state in states"
+                                        :key="state.id"
+                                        :value="state.abbr">
+                                        {{ state.abbr }}
+                                    </option>
+                                </Select>
+                            </div>
+                            <div class="w-1/6">
+                                <Label
+                                    for="title"
+                                    helpText=""
+                                    value="Zip Code" />
+
+                                <TextInput
+                                    v-model="store.state.listing.company.zip"
+                                    @update:modelValue="updateState('zip', $event)"
+                                />
                             </div>
                         </div>
                         
 
                         <div class="flex gap-5 mb-4">
+
                             <div class="w-1/2">
-                                <Label for="title" helpText="The email address where we can send you your reciept" value="Email" />
-                                <TextInput v-model="company.email" />
+                                <Label
+                                    for="title"
+                                    helpText="The email address where we can send you your reciept"
+                                    value="Email" />
+
+                                <TextInput
+                                    v-model="store.state.listing.company.email"
+                                    @update:modelValue="updateState('email', $event)" />
+
                             </div>
 
                             <div class="w-1/2">
-                                <Label for="title" helpText="https://www.example.com" value="Company Website URL" />
-                                <TextInput v-model="company.url" />
+                                <Label
+                                    for="title"
+                                    helpText="https://www.example.com"
+                                    value="Company Website URL" />
+
+                                <TextInput
+                                    v-model="store.state.listing.company.url"
+                                    @update:modelValue="updateState('url', $event)" />
                             </div>
 
                         </div>
 
-                        <!-- -->
                         <div class="mb-4">
-                            <Label value="Company Logo" for="logo" />
+                            <Label
+                                for="description"
+                                helpText="Tell job seekers a little bit about your company and what it's like to work there."
+                                value="Company Summary" />
+                            <textarea v-model="store.state.listing.company.description" class="text-gray-600 border border-gray-300 w-full h-36"></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <Label
+                                for="logo"
+                                value="Company Logo" />
 
                             <div class="flex items-center gap-5">
-                                <div class="w-32" v-if="store.state.job_listing.company.logo">
-                                    <img class="rounded-md" :src="`${store.state.api_url_base}/${store.state.job_listing.company.logo}`" />
+
+                                <div class="w-32" v-if="store.state.listing.company?.logo">
+                                    <img class="rounded-md" :src="`${store.state.api_url_base}/${store.state.listing.company.logo}`" />
                                 </div>
 
 
@@ -179,17 +227,14 @@
                                     imagePreviewHeight="200"
                                     image-crop-aspect-ratio="1:1"
                                     acceptedFileTypes="image/jpeg, image/png"
-                                    @processfile="handleProcessFile"
-                                    @removefile="handleUpdateFiles"
-
-                                />
+                                    @processfile="handleProcessFile" />
                             </div>
 
                         </div>
 
                         <div class="flex gap-2">
                             <router-link :to="{ name: 'post-job-details' }" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-amber-400">Previous</router-link>
-                            <button @click="setCompany" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-sky-400">Continue to Listing Preview</button>
+                            <router-link :to="{ name: 'post-preview' }" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-sky-400">Continue to Listing Preview</router-link>
                         </div>
 
                 </div>

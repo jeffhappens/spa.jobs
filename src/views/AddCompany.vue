@@ -7,7 +7,7 @@
     import SidebarAccount from '../components/SidebarAccount.vue'
 
 
-    import { useRouter } from 'vue-router'
+    import { useRouter, useRoute } from 'vue-router'
     import toast from 'vue3-toastify'
     import Cookies from 'js-cookie'
     import FormLabel from '../components/form/Label.vue'
@@ -18,8 +18,9 @@
     import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type"
 
 
-    const router = useRouter();
+    const router = useRouter()
     const store = useStore()
+    const route = useRoute()
     const emit = defineEmits('company:added')
 
     const FilePond = vueFilePond(
@@ -36,7 +37,7 @@
     })
 
     const company = ref({
-        user_id: user.uuid,
+        author: user.uuid,
         name: '',
         address: '',
         city: '',
@@ -70,7 +71,6 @@
     }
     
     function handleProcessFile(e, file) {
-        // console.log(file.serverId.split('/'))
         companyLogo.value = file.serverId.split('/')
         fileUploading.value = false
         buttonText.value = 'Add Company'
@@ -90,7 +90,8 @@
             })
             emit('company:added')
 
-            router.push({ path: '/account/companies' })
+            // router.push({ path: '/account/companies' })
+            router.back()
             
 
 
@@ -100,6 +101,12 @@
     }
 
     getIndustries()
+
+    function redirectBack() {
+        router.back()
+    }
+
+    
     
 </script>
 <template>
@@ -116,6 +123,7 @@
                 <section class="flex-1 bg-white p-6 rounded-lg shadow-lg">
 
                     <form @submit.prevent="addCompany">
+                    
                         
                         <div class="mb-4">
                             <FormLabel value="Company Name" for="company_name" />

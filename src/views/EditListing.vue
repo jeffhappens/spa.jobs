@@ -1,25 +1,27 @@
 <script setup>
+    import { ref, defineEmits } from 'vue'
+    import { useRoute, useRouter  } from 'vue-router';
+    import { useStore  } from 'vuex';
 
-    import { ref, onMounted } from 'vue'
-    import { useRouter } from 'vue-router'
-    import { useStore } from 'vuex'
-
-    import MainContentArea from "#/MainContentArea.vue";
-    import PageHeading from '#/PageHeading.vue'
-    import Container from '#/Container.vue'
-    import Label from '#/form/Label.vue'
-    import Select from '#/form/Select.vue'
-    import TextInput from '#/form/TextInput.vue'
-
-    import Stepper from '#/form/Stepper.vue'
+    import Cookies from 'js-cookie'
 
     import { QuillEditor } from '@vueup/vue-quill'
     import '@vueup/vue-quill/dist/vue-quill.snow.css';
     
+    import Label from '../components/form/Label.vue';
+    import TextInput from '../components/form/TextInput.vue';
+    import Select from '../components/form/Select.vue'
+    import MainContentArea from '../components/MainContentArea.vue'
+    import PageHeading from '../components/PageHeading.vue'
+    import Container from '../components/Container.vue'
+    import SidebarAccount from '../components/SidebarAccount.vue'
+
+    const user = JSON.parse(localStorage.getItem('user'))
+
+    const route = useRoute()
     const router = useRouter()
     const store = useStore()
-    const user = JSON.parse(localStorage.getItem('user'))
-    const companies = ref()
+    const emit = defineEmits(['listing:updated'])
 
     // Set up the Quill editor
     const quillOptions = {
@@ -35,56 +37,44 @@
         readOnly: false,
         theme: 'snow'
     }
-    
-    
-    
-    
-    
+
+    const listing = ref()
+    const companies = ref()
+
+    async function updateListing() {
+        const { data } = await axios.post(`${store.state.api_url_base}/api/listing/add`, listing.value )
+        listing.value = data
+        emit('listing:updated')
+        router.push({ name: 'my-listings' })
+    }
+
+    async function getListing() {
+        const { data } = await axios.get(`${store.state.api_url_base}/api/listing/edit/${route.params.uuid}`)
+        listing.value = data
+    }
+    getListing()
+
     async function getCompanies() {
         const { data } = await axios.get(`${store.state.api_url_base}/api/companies/${user.uuid}`)
         companies.value = data
+
     }
     getCompanies()
-    
-    
-    
-    
-    
-    function setCompany(id) {
-        const company = companies.value.find(v => {
-            return v.id == id
-        })
-        store.dispatch('SET_COMPANY', company)
-        updateState('company_id', company.id)
-        updateState('industry_id', company.industry_id)
-    }
-    
-    
-    
-    
-    
-    function updateState(field, value) {
-        store.dispatch('SET_LISTING_VALUE', { field, value })
-    }
-    updateState('author_uuid', user.uuid)
 
 </script>
-
 <template>
-
     <MainContentArea>
-
-        <PageHeading text="Post a Job Listing" />
+        <PageHeading text="Edit Listing " />
 
         <Container>
+    
+            <div class="flex items-start gap-5">
 
-            <div class="mb-6">
+                <SidebarAccount />
 
-                <Stepper />
+                <section v-if="listing" class="flex-1 bg-white p-6 rounded-lg shadow-lg">
 
-                <div class="bg-white p-6 rounded-lg shadow-md flex-1">
-                    
-                    <form @submit.prevent="">
+                    <form @submit.prevent="updateListing">
 
                         <div class="mb-8">
                             
@@ -98,7 +88,7 @@
                                 <Select
                                     v-if="companies?.length"
                                     class="w-1/2"
-                                    v-model="store.state.listing.company_id"
+                                    v-model="listing.company_id"
                                     @update:modelValue="setCompany($event)">
                                     <option value="">Select a Company</option>
 
@@ -127,8 +117,8 @@
                                 value="Job Title" />
 
                             <TextInput
-                                v-model="store.state.listing.title"
-                                @update:modelValue="updateState('title', $event)"
+                                v-model="listing.title"
+                                @update:modelValue="listing.title = $event"
                                 required
                             />
 
@@ -142,8 +132,8 @@
                                     value="Job Type" />
 
                                 <Select
-                                    v-model="store.state.listing.type"
-                                    @update:modelValue="updateState('type', $event)">
+                                    v-model="listing.type"
+                                    @update:modelValue="listing.type = $event">
 
                                     <option value="1">Full Time</option>
                                     <option value="2">Part Time</option>
@@ -159,8 +149,8 @@
                                     value="Application Link or Email" />
 
                                 <TextInput
-                                    v-model="store.state.listing.apply_link"
-                                    @update:modelValue="updateState('apply_link', $event)"
+                                    v-model="listing.apply_link"
+                                    @update:modelValue="listing.apply_link = $event"
                                 />
                             </div>
 
@@ -177,40 +167,30 @@
                             <QuillEditor
                                 theme="snow"
                                 :options="quillOptions"
-                                v-model:content="store.state.listing.description"
+                                v-model:content="listing.description"
                                 contentType="html"
                             />
 
                             <div class="flex gap-2">
-                                <router-link
-                                    :to="{ name: 'post-preview' }"
-                                    class="my-6 px-4 py-2 text-white font-semibold rounded-md bg-sky-400">
-                                    Save &amp; Continue
-                                </router-link>
+                                <button type="submit" class="my-6 px-4 py-2 text-white font-semibold rounded-md bg-sky-400">
+                                    Update Listing
+                                </button>
                             </div>
 
                         </div>
                     </form>
-                </div>
+
+
+
+                    
+
+
+
+
+
+                </section>
             </div>
         </Container>
     </MainContentArea>
+    
 </template>
-<style>
-    .ql-editor {
-        @apply text-base;
-    }
-    .ql-editor p {
-        @apply mb-3;
-    }
-    .ql-editor ul,
-    .ql-editor ol {
-        @apply mt-2 mb-4 px-6;
-    }
-    .editor_content ol {
-        @apply list-decimal;
-    }
-    .editor_content ul {
-        @apply list-disc;
-    }
-</style>

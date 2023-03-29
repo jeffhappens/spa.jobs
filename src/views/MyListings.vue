@@ -19,7 +19,6 @@
     async function getListings() {
         const { data } = await axios.get(`${store.state.api_url_base}/api/mylistings`)
         listings.value = data
-        console.log(data)
     }
     getListings()
 </script>

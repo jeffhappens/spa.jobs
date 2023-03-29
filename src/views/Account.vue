@@ -57,9 +57,9 @@
 
                     <div class="bg-white p-4 mb-6 w-full shadow-md text-gray-800 flex gap-4 rounded-lg">
 
-                        <div>
+                        <!-- <div>
                             <img class="inline-block h-16 w-16 rounded-full ring-2 ring-gray-300" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
-                        </div>
+                        </div> -->
 
                         <ul class="flex-1">
                             <li class="text-xl font-semibold">{{ user.name }}</li>
@@ -67,9 +67,9 @@
                             <li class="text-sm">Joined on: {{ new Intl.DateTimeFormat('en-US').format( new Date(user.created_at) ) }}</li>
                         </ul>
                         
-                        <div>
+                        <!-- <div>
                             <font-awesome-icon class="text-xl text-gray-600" icon="fa-solid fa-pen-to-square" />
-                        </div>
+                        </div> -->
                     </div>
                     
                     <div class="mb-6 shadow-md rounded-lg bg-white p-6">

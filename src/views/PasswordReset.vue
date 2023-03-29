@@ -8,8 +8,6 @@
 
     const success = ref(false)
 
-    console.log(route.query.email)
-
     async function onResetPassword() {
         await axios.post(`${store.state.api_url_base}/reset-password`, {
             token: route.params.token,

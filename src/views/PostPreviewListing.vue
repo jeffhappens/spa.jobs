@@ -20,16 +20,15 @@
     const user = JSON.parse(localStorage.getItem('user'))
 
     async function saveListing() {
-        const { data } = await axios.post(`${store.state.api_url_base}/api/listing/add`, store.state.job_listing)
+        const { data } = await axios.post(`${store.state.api_url_base}/api/listing/add`, store.state.listing)
+        
         const params = new URLSearchParams({
             client_reference_id: user.uuid,
             success_url: store.state.api_url_base,
             cancel_url: 'http://localhost:5173',
         })
-
         location.href = `https://buy.stripe.com/test_8wM041fpEbUZ8b6bII?${params}`
     }
-    
 </script>
 
 <template>
@@ -51,15 +50,15 @@
 
                         <div class="w-2/3 text-gray-700">
 
-                            <h2 class="text-3xl font-semibold">{{ store.state.job_listing.title }}</h2>
+                            <h2 class="text-3xl font-semibold">{{ store.state.listing.title }}</h2>
                             <p>
                                 <span class="font-semibold">Job Type:</span>
-                                {{ store.state.job_listing.type === 'ft' ? 'Full Time' : 'Part Time' }}
+                                {{ store.state.listing.type === 'ft' ? 'Full Time' : 'Part Time' }}
                             </p>
-                            <div class="editor_content mt-10" v-html="store.state.job_listing.description"></div>
+                            <div class="editor_content mt-10" v-html="store.state.listing.description"></div>
 
                             <div class="flex gap-2">
-                                <router-link :to="{ name: 'post-company-details' }" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-amber-400">Previous</router-link>
+                                <router-link :to="{ name: 'post-job-details' }" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-amber-400">Previous</router-link>
                                 <button @click="saveListing" class="mt-6 px-4 py-2 text-white font-semibold rounded-md bg-sky-400">Continue to Payment</button>
                             </div>
                         </div>
@@ -67,21 +66,21 @@
                         <div class="flex-1 text-gray-700 shadow-md p-4 sticky top-28 self-start">
                             
                             <div class="text-center mb-2">
-                                <img class="w-32 mx-auto rounded-md" :src="`${store.state.api_url_base}/${store.state.job_listing.company.logo}`" />
-                                <h3 class="text-xl font-semibold">{{ store.state.job_listing.company.name }}</h3>
+                                <img class="w-32 mx-auto rounded-md" :src="`${store.state.api_url_base}/${store.state.listing.company.logo}`" />
+                                <h3 class="text-xl font-semibold">{{ store.state.listing.company.name }}</h3>
                                 <p class="text-sm">
                                     <font-awesome-icon icon="fa-solid fa-location-dot" />
-                                    {{ store.state.job_listing.company.city }}, {{ store.state.job_listing.company.state }}
+                                    {{ store.state.listing.company.city }}, {{ store.state.listing.company.state }}
                                 </p>
                             </div>
 
                             <div class="p-4 text-center">
                                 <ul>
                                     <li>
-                                        <router-link class="text-sky-500 font-semibold" :to="`/company/${store.state.job_listing.company.uuid}/${store.state.job_listing.company.slug}`">Company Profile &amp; Listings</router-link>
+                                        <router-link class="text-sky-500 font-semibold" :to="`/company/${store.state.listing.company.uuid}/${store.state.listing.company.slug}`">Company Profile &amp; Listings</router-link>
                                     </li>
                                     <li>
-                                        <a target="_blank" class="text-sky-500 font-semibold" :href="store.state.job_listing.company.url">
+                                        <a target="_blank" class="text-sky-500 font-semibold" :href="store.state.listing.company.url">
                                             <font-awesome-icon icon="fa-solid fa-link" />
                                             Company Website
                                         </a>

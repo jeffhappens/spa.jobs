@@ -12,12 +12,12 @@
             active: route.name === 'post-job-details',
             complete: false 
         },
-        {
-            label: 'About your company',
-            link: 'post-company-details',
-            active: route.name === 'post-company-details',
-            complete: false
-        },
+        // {
+        //     label: 'About your company',
+        //     link: 'post-company-details',
+        //     active: route.name === 'post-company-details',
+        //     complete: false
+        // },
         {
             label: 'Preview Listing',
             link: 'post-preview',
@@ -47,28 +47,32 @@
 
 <template>
 
-    <div class="flex justify-between bg-white p-4 mb-6 rounded-lg shadow-md sticky top-0 z-10">
+    <div class="bg-white rounded-lg p-4 mb-5 shadow-md sticky top-0 z-10">
+        <p class="text-black text-xl text-center mb-6">You're just 3 easy steps away from finding your next new hire!</p>
 
-        <div
-            v-for="(step, index) in steps"
-            :key="step.label"
-            class="flex items-center gap-3">
+        <div class="flex justify-around">
 
             <div
-                class="h-10 w-10 rounded-full text-white text-lg flex items-center justify-center"
-                :class="setStepperClass(step)">
-                
-                <h2 v-if="!step.complete">{{ index + 1 }}</h2>
-                <h2 v-else class="flex items-center justify-center">
-                    <span class="material-symbols-outlined">done</span>
-                </h2>
-            </div>
+                v-for="(step, index) in steps"
+                :key="step.label"
+                class="flex items-center gap-3">
 
-            <p :class="{ 'text-lg text-gray-700' : step.active, 'text-gray-300' : !step.active }">
-                <router-link class="font-semibold" :to="{ name: step.link }">
-                    {{ step.label }}
-                </router-link>
-            </p>
+                <div
+                    class="h-10 w-10 rounded-full text-white text-lg flex items-center justify-center"
+                    :class="setStepperClass(step)">
+                    
+                    <h2 v-if="!step.complete">{{ index + 1 }}</h2>
+                    <h2 v-else class="flex items-center justify-center">
+                        <span class="material-symbols-outlined">done</span>
+                    </h2>
+                </div>
+
+                <p :class="{ 'text-lg text-gray-700' : step.active, 'text-gray-300' : !step.active }">
+                    <router-link class="font-semibold" :to="{ name: step.link }">
+                        {{ step.label }}
+                    </router-link>
+                </p>
+            </div>
         </div>
     </div>
     

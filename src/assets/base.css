@@ -94,12 +94,12 @@ body {
     @apply text-base;
 }
 .editor_content p {
-    @apply mb-2;
+    @apply mb-3;
 }
 
 .editor_content ul,
 .editor_content ol {
-    @apply ml-8 py-2;
+    @apply mt-2 mb-4 px-6;
 }
 .editor_content ol {
     @apply list-decimal;

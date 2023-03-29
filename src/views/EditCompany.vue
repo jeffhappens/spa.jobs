@@ -46,7 +46,6 @@
     async function handleProcessFile(e, file) {
 
         const {data} = await axios.get(`${store.state.api_url_base}/api/logo/${file.serverId}`)
-        console.log(data)
         newLogo.value = `tmp/${data.folder}/${data.file}`
     }
     function handleUpdateFiles() {
@@ -132,9 +131,17 @@
 
                         </div>
 
-                        <div class="mb-4">
-                            <Label for="address" value="Email" />
-                            <TextInput name="address" v-model="company.email" @update:modelValue="$event = company.email" />
+                        <div class="flex gap-5">
+
+                            <div class="mb-4 w-1/2">
+                                <Label for="address" value="Email" />
+                                <TextInput name="address" v-model="company.email" @update:modelValue="$event = company.email" />
+                            </div>
+
+                            <div class="mb-4 w-1/2">
+                                <Label for="url" value="Website URL" />
+                                <TextInput name="url" v-model="company.url" @update:modelValue="company.url = $event" />
+                            </div>
                         </div>
 
                         
