@@ -37,6 +37,8 @@
 
     const buttonText = ref('Update Company')
 
+    const states = ref()
+
     const formDisabled = ref(false)
 
     const FilePond = vueFilePond(
@@ -63,6 +65,12 @@
         }
     }
 
+    async function getStates() {
+        const { data } = await axios.get(`${store.state.api_url_base}/api/states`)
+        states.value = data
+    }
+    getStates()
+
     async function getCompany() {
         const { data } = await axios.get(`${store.state.api_url_base}/api/companies/edit/${route.params.id}`)
         
@@ -78,8 +86,6 @@
             })
             emit('company:updated')
             router.push({ path: '/account/companies' })
-            
-
 
         } catch(error) {
             //
@@ -122,7 +128,12 @@
                             </div>
                             <div class="mb-4 w-1/4">
                                 <Label for="address" value="State" />
-                                <TextInput name="address" v-model="company.state" @update:modelValue="$event = company.state" />
+                                <Select v-model="company.state" class="" @update:modelValue="company.state = $event">
+                                    <option value="">Select a State</option>
+                                    <option v-for="state in states" :key="state.id" :value="state.abbr">
+                                        {{ state.abbr }}
+                                    </option>
+                                </Select>
                             </div>
                             <div class="mb-4 w-1/4">
                                 <Label for="address" value="Zip Code" />

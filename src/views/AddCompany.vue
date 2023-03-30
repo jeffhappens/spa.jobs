@@ -22,6 +22,7 @@
     const store = useStore()
     const route = useRoute()
     const emit = defineEmits('company:added')
+    const states = ref()
 
     const FilePond = vueFilePond(
         FilePondPluginFileValidateType,
@@ -69,6 +70,12 @@
         let { data } = await axios.get(`${store.state.api_url_base}/api/industries`)
         industries.value = data
     }
+
+    async function getStates() {
+        const { data } = await axios.get(`${store.state.api_url_base}/api/states`)
+        states.value = data
+    }
+    getStates()
     
     function handleProcessFile(e, file) {
         companyLogo.value = file.serverId.split('/')
@@ -89,25 +96,13 @@
                 logo: companyLogo.value
             })
             emit('company:added')
-
-            // router.push({ path: '/account/companies' })
             router.back()
-            
-
-
         } catch(error) {
             //
         }
     }
 
     getIndustries()
-
-    function redirectBack() {
-        router.back()
-    }
-
-    
-    
 </script>
 <template>
 
@@ -142,7 +137,12 @@
                             </div>
                             <div class="mb-4 w-1/4">
                                 <FormLabel value="State" for="company_state" />
-                                <TextInput name="company_state" v-model="company.state" @update:modelValue="company.state = $event" />
+                                <Select v-model="company.state" class="" @update:modelValue="company.state = $event">
+                                    <option value="">Select a State</option>
+                                    <option v-for="state in states" :key="state.id" :value="state.abbr">
+                                        {{ state.abbr }}
+                                    </option>
+                                </Select>
                             </div>
                             <div class="mb-4 w-1/4">
                                 <FormLabel value="Zip Code" for="company_zip" />
