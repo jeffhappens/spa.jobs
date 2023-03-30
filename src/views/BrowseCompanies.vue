@@ -43,7 +43,7 @@
                                     slug: company.slug
                                 }
                             }">
-                                <h2 class="text-2xl font-semibold text-gray-700">{{ company.name }}</h2>
+                                <h2 class="text-2xl font-semibold text-gray-700 hover:underline">{{ company.name }}</h2>
                             </router-link>
                             <p>
                                 {{ company.city }}, {{ company.state }}

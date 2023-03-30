@@ -18,12 +18,16 @@
 
     const deletetext = ref('')
     const deleteButtonDisabled = computed( () => {
-        return deletetext !== 'DELETE' 
+        return deletetext.value !== 'DELETE' 
     })
 
     const clearPasswordFields = () => {
         newPassword.value = ''
         currentPassword.value = ''
+    }
+
+    function deleteAccount() {
+        alert('Delete Account Fired')
     }
 
     async function changePassword() {
@@ -57,19 +61,12 @@
 
                     <div class="bg-white p-4 mb-6 w-full shadow-md text-gray-800 flex gap-4 rounded-lg">
 
-                        <!-- <div>
-                            <img class="inline-block h-16 w-16 rounded-full ring-2 ring-gray-300" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
-                        </div> -->
-
                         <ul class="flex-1">
                             <li class="text-xl font-semibold">{{ user.name }}</li>
                             <li class="font-semibold mb-1">{{ user.email }}</li>
                             <li class="text-sm">Joined on: {{ new Intl.DateTimeFormat('en-US').format( new Date(user.created_at) ) }}</li>
                         </ul>
                         
-                        <!-- <div>
-                            <font-awesome-icon class="text-xl text-gray-600" icon="fa-solid fa-pen-to-square" />
-                        </div> -->
                     </div>
                     
                     <div class="mb-6 shadow-md rounded-lg bg-white p-6">
@@ -95,7 +92,7 @@
                         </form>
                     </div>
 
-                    <div class="shadow-md bg-white border-2 border-red-400 p-6 rounded-lg">
+                    <div class="shadow-md bg-white border-4 border-red-400 p-6 rounded-lg">
 
                         <h4 class="mb-3 text-xl font-semibold text-gray-600">Delete your account</h4>
                         <div class="text-gray-600 mb-4">
@@ -108,12 +105,12 @@
 
                         <button
                             :disabled="deleteButtonDisabled"
-
                             :class="{
                                 'bg-red-200' : deleteButtonDisabled,
                                 'bg-red-600' : !deleteButtonDisabled,
                             }"
-                            class="mt-4 p-2 text-white">
+                            class="mt-4 p-2 text-white"
+                            @click="deleteAccount">
                             Delete My Account
                         </button>
                     </div>

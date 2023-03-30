@@ -36,8 +36,7 @@
                     v-for="industry in industries"
                     :key="industry.id"
                     @click="navigateTo(`/industries/${industry.slug}`)"
-
-                    class="cursor-pointer transition bg-white hover:bg-gray-50 p-4 mb-4 shadow-md flex items-center justify-between gap-5">
+                    class="rounded-lg cursor-pointer transition bg-white hover:bg-sky-50 p-4 mb-4 shadow-md flex items-center justify-between gap-5">
 
                     <h2 class="text-gray-700 text-xl font-semibold">{{ industry.label }}</h2>
                     <BadgeRound :text="industry.listings_count" />

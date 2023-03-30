@@ -30,7 +30,7 @@
             <div class="flex gap-5">
 
                 <div class="flex-1">
-                    <h2 class="text-5xl mb-2 text-gray-700">{{ company.name }}</h2>
+                    <h2 class="text-4xl font-semibold mb-2 text-gray-700">{{ company.name }}</h2>
                     <div class="mb-8">
                         <p class="text-gray-700">
                             <span class="font-semibold">Location:</span>
@@ -46,13 +46,13 @@
                         </p>
                     </div>
 
-                    <h3 class="font-semibold text-gray-800 text-2xl">About the Company</h3>
+                    <h3 class="font-semibold text-gray-800 text-xl">About the Company</h3>
 
-                    <p class="text-gray-700 text-lg">{{ company.description }}</p>
+                    <p class="text-gray-700">{{ company.description }}</p>
                 </div>
                 
                 <div class="w-1/3">
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-2 ml-2">Current Listings</h3>
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-2 ml-2">Current Listings</h3>
 
                     <div v-if="!company.listings.length">
                         <p class="text-gray-700">There are no current listings</p>
