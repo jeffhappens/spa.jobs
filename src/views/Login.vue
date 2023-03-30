@@ -34,6 +34,7 @@
             await axios.post(`${store.state.api_url_base}/login`, user.value)
         } catch(error) {
             loginError.value = error.response.data.message
+            loading.value = false
             return false
         }
         const me = await axios.get(`${store.state.api_url_base}/api/user`)

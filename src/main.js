@@ -9,9 +9,9 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /* import specific icons */
-import { faBuilding, faChevronRight, faCirclePlus, faLink, faLocationDot, faPenToSquare, faPlus, faSatelliteDish, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faBuilding, faChevronRight, faCirclePlus, faLink, faLocationDot, faPenToSquare, faPlus, faSatelliteDish, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faChevronRight, faPenToSquare, faLink, faLocationDot, faSatelliteDish, faXmark, faPlus, faBuilding)
+library.add(faChevronRight, faPenToSquare, faLink, faLocationDot, faSatelliteDish, faXmark, faPlus, faBuilding, faTriangleExclamation)
 
 
 window.axios = axios

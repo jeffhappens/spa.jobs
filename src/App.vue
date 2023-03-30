@@ -40,7 +40,6 @@ function notifyEmailVerified() {
     toast('Email Successfully Verified', { autoClose: 2000 })
 }
 getLoggedInUser()
-
 </script>
 
 <template class="text-gray-700">
@@ -53,6 +52,7 @@ getLoggedInUser()
         @company:added="notifyCompanyAdded"
         @listing:updated="notifyListingUpdated"
         @emailVerified="notifyEmailVerified"
+        @ready="allowTabbingIntoEditor"
         class="flex-1"
     />
 </template>

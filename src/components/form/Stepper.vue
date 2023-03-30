@@ -12,12 +12,6 @@
             active: route.name === 'post-job-details',
             complete: false 
         },
-        // {
-        //     label: 'About your company',
-        //     link: 'post-company-details',
-        //     active: route.name === 'post-company-details',
-        //     complete: false
-        // },
         {
             label: 'Preview Listing',
             link: 'post-preview',
@@ -47,7 +41,7 @@
 
 <template>
 
-    <div class="bg-white rounded-lg p-4 mb-5 shadow-md sticky top-0 z-10">
+    <div class="bg-white rounded-lg p-4 mb-5 shadow-md  top-0 z-10">
         <p class="text-black text-xl text-center mb-6">You're just 3 easy steps away from finding your next new hire!</p>
 
         <div class="flex justify-around">
