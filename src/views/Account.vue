@@ -1,6 +1,7 @@
 <script setup>
     import { ref, computed } from 'vue'
     import { useStore } from 'vuex'
+    import { useRouter } from 'vue-router'
     import { toast } from 'vue3-toastify'
     import MainContentArea from '../components/MainContentArea.vue'
     import Container from '../components/Container.vue'
@@ -10,7 +11,11 @@
     import SidebarAccount from '../components/SidebarAccount.vue'
 
     const store = useStore()
+    const router = useRouter()
     const user = JSON.parse(localStorage.getItem('user'))
+
+
+    const emit = defineEmits(['user:logout'])
     
     const validationError = ref('')
     const currentPassword = ref('')
@@ -30,6 +35,16 @@
         alert('Delete Account Fired')
     }
 
+    async function userLogout() {
+        await axios.post(`${store.state.api_url_base}/logout`)
+        localStorage.removeItem('user')
+        emit('user:logout')
+        setTimeout(() => {
+            location.href = '/'
+
+        }, 3000)
+    }
+
     async function changePassword() {
         validationError.value = ''
         try {
@@ -37,8 +52,10 @@
                 'password' : currentPassword.value,
                 'newPassword': newPassword.value
             })
-            clearPasswordFields()
-            toast('Your password has been updated.', { autoClose: 2000 })
+            // clearPasswordFields()
+            toast('Your password has been updated. Logging you out.', { autoClose: 2000 })
+            userLogout()
+            
         } catch(error) {
             validationError.value = error.response.data.message
         }
@@ -87,7 +104,10 @@
                                 <TextInput v-model="newPassword" />
                             </div>
 
-                            <button class="mt-4 p-2 bg-[color:var(--p-blue-md)] text-white">Save Changes</button>
+                            <div class="flex items-center gap-5 mt-6">
+                                <button class="p-2 bg-[color:var(--p-blue-md)] text-white">Change Password</button>
+                                <p class="text-amber-600">You will be logged out of your account after you change your password.</p>
+                            </div>
 
                         </form>
                     </div>
