@@ -7,7 +7,7 @@ const store = createStore({
 
         listing: {
             title: '',
-            type: '1',
+            type_id: '1',
             apply_link: 'https://',
             description: '',
             author_uuid: '',

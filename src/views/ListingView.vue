@@ -31,10 +31,7 @@
         } catch(err) {
             return false
         }
-
     }
-
-    
 </script>
 
 <template>
@@ -58,7 +55,7 @@
                         
                     </p>
 
-                    <p class="text-sm font-semibold">Type: Full Time</p>
+                    <p class="text-sm font-semibold">Type: {{ listing.type.label }}</p>
 
                     <div class="editor_content mt-12" v-html="listing.description"></div>
 

@@ -142,7 +142,7 @@
                                     value="Job Type" />
 
                                 <Select
-                                    v-model="store.state.listing.type"
+                                    v-model="store.state.listing.type_id"
                                     @update:modelValue="updateState('type', $event)">
 
                                     <option value="1">Full Time</option>
