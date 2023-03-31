@@ -10,6 +10,7 @@
     import Select from '#/form/Select.vue'
     import TextInput from '#/form/TextInput.vue'
     import ErrorMessage from '#/form/ErrorMessage.vue'
+    import AddCompany from '#/form/AddCompany.vue'
 
     import Stepper from '#/form/Stepper.vue'
     import { QuillEditor } from '@vueup/vue-quill'
@@ -58,14 +59,14 @@
 
     const errors = ref()
 
-    function checkValidation(field) {
-        if(errors.value[field]) {
-            if(store.state.listing[field] !== '') {
-                delete errors.value[field]
-            }
+    // function checkValidation(field) {
+    //     if(errors.value[field]) {
+    //         if(store.state.listing[field] !== '') {
+    //             delete errors.value[field]
+    //         }
             
-        }
-    }
+    //     }
+    // }
 
     async function validateListing() {
         try {
@@ -110,46 +111,15 @@
                     
                     <form @submit.prevent="">
 
-                        <div class="flex items-center gap-2 text-[color:var(--p-orange)] mb-4">
-                            <font-awesome-icon icon="fa-solid fa-triangle-exclamation" />
-                            <p>All fields are required</p>
+                        <div class="mb-8">
+                            <AddCompany :errors="errors" :companies="companies" />
                         </div>
 
-                        <div class="mb-8">
-                            
-                            <Label
-                                for="companies"
-                                helpText="Choose a company for this listing, or use the Add Company button to add a new one."
-                                value="Company" />
 
-                            <div class="flex items-start justify-between">
 
-                                <div class="flex-1">
-
-                                    <Select
-                                        v-if="companies?.length"
-                                        class="w-1/2"
-                                        :class="{ 'border border-red-500' : errors?.company_id }"
-                                        v-model="store.state.listing.company_id"
-                                        @update:modelValue="setCompany($event)">
-                                        <option value="">Select a Company</option>
-
-                                        <option
-                                            v-for="company in companies"
-                                            :key="company.id"
-                                            :value="company.id">
-                                            {{ company.name }}
-                                        </option>
-                                    </Select>
-                                    <ErrorMessage v-if="errors?.company_id" text="Please select a company" />
-                                </div>
-
-                                <div class="flex items-center gap-2">
-
-                                    <font-awesome-icon class="text-sky-600 text-2xl" icon="fa-solid fa-plus" />
-                                    <router-link class="text-sky-600 font-semibold" :to="{ name: 'add-company' }">ADD COMPANY</router-link>
-                                </div>
-                            </div>
+                        <div class="flex items-center gap-1 text-[color:var(--p-orange)] mb-4">
+                            <font-awesome-icon icon="fa-solid fa-triangle-exclamation" />
+                            <p>All fields are required</p>
                         </div>
 
 
@@ -163,7 +133,6 @@
                             <TextInput
                                 v-model="store.state.listing.title"
                                 @update:modelValue="updateState('title', $event)"
-                                @blur="validateListing"
                                 :class="{ 'border border-red-500' : errors?.title }"
                             />
                             <ErrorMessage v-if="errors?.title" text="Please provide a Job Title" />
@@ -196,7 +165,6 @@
                                 <TextInput
                                     v-model="store.state.listing.apply_link"
                                     @update:modelValue="updateState('apply_link', $event)"
-                                    @blur="checkValidation('apply_link')"
                                     :class="{ 'border border-red-500' : errors?.apply_link }"
                                 />
                                 <ErrorMessage v-if="errors?.apply_link" text="Please provide a link to your application" />
@@ -218,23 +186,19 @@
                                     :options="quillOptions"
                                     v-model:content="store.state.listing.description"
                                     contentType="html"
-                                    @blur="checkValidation('description')"
                                     @ready="allowTabbingIntoEditor()"
                                 />
                             </div>
                             <ErrorMessage v-if="errors?.description" text="Please provide a Job Description" />
 
-                            <div class="flex gap-2">
+                            <div class="flex items-center gap-2">
                                 <button
                                     @click="validateListing"
-                                    class="my-6 px-4 py-2 text-white font-semibold rounded-md bg-sky-400">
+                                    class="px-4 py-2 text-white font-semibold rounded-md bg-sky-400">
                                     Continue to Preview
                                 </button>
-                                <!-- <router-link
-                                    :to="{ name: 'post-preview' }"
-                                    class="my-6 px-4 py-2 text-white font-semibold rounded-md bg-sky-400">
-                                    Continue to Preview
-                                </router-link> -->
+
+                                <ErrorMessage v-if="errors" text="Whoops! It looks like there are some fields that still needs to be completed" />
                             </div>
 
                         </div>

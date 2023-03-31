@@ -2,6 +2,10 @@
     import { ref } from 'vue'
     import { useStore } from 'vuex'
 
+    import Label from '#/form/Label.vue'
+    import TextInput from '#/form/TextInput.vue'
+    import ErrorMessage from '#/form/ErrorMessage.vue'
+
     const store = useStore()
 
     const nn = ref(false)
@@ -11,10 +15,15 @@
         password: '',
         password_confirmation: ''
     })
+    const errors = ref()
 
     async function onRegister() {
-        await axios.post(`${store.state.api_url_base}/register`, user.value )
-        nn.value = true // Show success message
+        try {
+            await axios.post(`${store.state.api_url_base}/register`, user.value )
+            nn.value = true // Show success message
+        } catch(err) {
+            errors.value = err.response.data.errors
+        }
     }
 </script>
 
@@ -40,22 +49,62 @@
                 <form @submit.prevent="onRegister">
 
                     <div class="mb-4">
-                        <label for="name" class="mb-1 block font-semibold text-lg text-gray-700">Full Name</label>
-                        <input v-model="user.name" type="text" name="name" class="w-full p-2 border border-gray-300 text-lg text-gray-600" />
+                        <Label
+                            for="name"
+                            helpText="e.g. King Charles III"
+                            value="Full Name" />
+
+                        <TextInput
+                            name="name"
+                            :class="{ 'border-2 border-red-500' : errors?.name }"
+                            v-model="user.name"
+                            @update:modelValue="user.name = $event" />
+
+                        <ErrorMessage v-if="errors?.name" :text="errors.name[0]" />
                     </div>
 
                     <div class="mb-4">
-                        <label for="email" class="mb-1 block font-semibold text-lg text-gray-700">Email Address</label>
-                        <input v-model="user.email" type="text" name="email" class="w-full p-2 border border-gray-300 text-lg text-gray-600" />
+                        <Label
+                            for="email"
+                            helpText=""
+                            value="Email Address" />
+
+                        <TextInput
+                            name="email"
+                            :class="{ 'border-2 border-red-500' : errors?.email }"
+                            v-model="user.email"
+                            @update:modelValue="user.email = $event" />
+
+                        <ErrorMessage v-if="errors?.email" :text="errors.email[0]" />
                     </div>
 
-                    <div class="mb-8">
-                        <label for="password" class="mb-1 block font-semibold text-lg text-gray-700">Password</label>
-                        <input v-model="user.password" type="password" name="password" class="w-full p-2 border border-gray-300 text-lg text-gray-600" />
+                    <div class="mb-4">
+                        <Label
+                            for="password"
+                            helpText="Passwords must be at least 8 characters in length"
+                            value="Password" />
+
+                        <TextInput
+                            type="password"
+                            name="password"
+                            :class="{ 'border-2 border-red-500' : errors?.password }"
+                            @update:modelValue="user.password = $event" />
+
+                        <ErrorMessage v-if="errors?.password" :text="errors.password[0]" />
                     </div>
                     <div class="mb-8">
-                        <label for="password_confirmation" class="mb-1 block font-semibold text-lg text-gray-700">Password Again</label>
-                        <input v-model="user.password_confirmation" type="password" name="password_confirmation" class="w-full p-2 border border-gray-300 text-lg text-gray-600" />
+                        <Label
+                            for="password_confirmation"
+                            helpText="Passwords must match"
+                            value="Password Again" />
+
+                        <TextInput
+                            type="password"
+                            name="password_confirmation"
+                            :class="{ 'border-2 border-red-500' : errors?.password }"
+                            @update:modelValue="user.password_confirmation = $event" />
+
+                        <ErrorMessage v-if="errors?.password" :text="errors.password[0]" />
                     </div>
 
                     <div class="flex items-center justify-between">

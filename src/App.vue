@@ -11,16 +11,15 @@ const user = ref()
 
 function setLoggedInUser(u) {
     user.value = u
-    toast(`Welcome back ${u.name}!`, { autoClose: 2000 })
+    notify(`Welcome back ${u.name}!`)
 }
 
 function logoutUser() {
     user.value = getLoggedInUser()
-    toast('You are logged out', { autoClose: 2000 })
+    notify('You are logged out')
 }
 
 async function getLoggedInUser() {
-
     try {
         const { data } = await axios.get(`${store.state.api_url_base}/api/user`)
         localStorage.setItem('user', JSON.stringify(data))
@@ -29,16 +28,11 @@ async function getLoggedInUser() {
         localStorage.removeItem('user')
     }
 }
-function notifyCompanyAdded() {
-    toast('New Company Added', { autoClose: 2000 })
-}
-function notifyListingUpdated() {
-    toast('Listing Updated', { autoClose: 2000 })
+
+function notify(message) {
+    toast(message, { autoClose: 2000 })
 }
 
-function notifyEmailVerified() {
-    toast('Email Successfully Verified', { autoClose: 2000 })
-}
 getLoggedInUser()
 </script>
 
@@ -49,9 +43,9 @@ getLoggedInUser()
     />
     <RouterView
         @user:login="setLoggedInUser"
-        @company:added="notifyCompanyAdded"
-        @listing:updated="notifyListingUpdated"
-        @emailVerified="notifyEmailVerified"
+        @company:added="notify('New Company Added')"
+        @listing:updated="notify('Listing updated')"
+        @emailVerified="notify('Email Successfully Verified')"
         @ready="allowTabbingIntoEditor"
         class="flex-1"
     />

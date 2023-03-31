@@ -194,3 +194,22 @@
     </MainContentArea>
     
 </template>
+
+<style>
+    .ql-editor {
+        @apply text-base;
+    }
+    .ql-editor p {
+        @apply mb-3;
+    }
+    .ql-editor ul,
+    .ql-editor ol {
+        @apply mt-2 mb-4 px-6;
+    }
+    .editor_content ol {
+        @apply list-decimal;
+    }
+    .editor_content ul {
+        @apply list-disc;
+    }
+</style>
