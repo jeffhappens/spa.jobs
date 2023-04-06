@@ -6,12 +6,15 @@ import store from './store'
 
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
+
+
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /* import specific icons */
-import { faBuilding, faChevronRight, faCirclePlus, faLink, faLocationDot, faPenToSquare, faPlus, faSatelliteDish, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faBuilding, faChevronRight, faCirclePlus, faLink, faLocationDot, faMessage, faPaperPlane, faPenToSquare, faPlus, faSatelliteDish, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faTwitter, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 
-library.add(faChevronRight, faPenToSquare, faLink, faLocationDot, faSatelliteDish, faXmark, faPlus, faBuilding, faTriangleExclamation)
+library.add(faChevronRight, faPenToSquare, faLink, faLocationDot, faSatelliteDish, faXmark, faPlus, faBuilding, faTriangleExclamation, faTriangleExclamation, faPaperPlane, faMessage, faTwitter, faFacebook, faLinkedin)
 
 
 window.axios = axios

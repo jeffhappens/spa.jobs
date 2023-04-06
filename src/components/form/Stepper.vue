@@ -42,7 +42,8 @@
 <template>
 
     <div class="bg-white rounded-lg p-4 mb-5 shadow-md  top-0 z-10">
-        <p class="text-black text-xl text-center mb-6">You're just 3 easy steps away from finding your next new hire!</p>
+        <p class="text-black font-semibold text-xl text-center">You're just 3 easy steps away from finding your next new hire!</p>
+        <p class="text-black  text-center mb-6">Job listings run for 30 days and you can easily renew your listing from your account when it expires.</p>
 
         <div class="flex justify-around">
 

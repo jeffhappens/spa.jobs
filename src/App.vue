@@ -5,6 +5,7 @@ import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css';
 import Navigation from './components/Navigation.vue'
 import Cookies from 'js-cookie'
+import SiteFooter from '#/SiteFooter.vue'
 
 const store = useStore()
 const user = ref()
@@ -45,8 +46,10 @@ getLoggedInUser()
         @user:login="setLoggedInUser"
         @company:added="notify('New Company Added')"
         @listing:updated="notify('Listing updated')"
-        @emailVerified="notify('Email Successfully Verified')"
+        @emailVerified="notify('Email Successfully Verified. You are now logged in.')"
         @ready="allowTabbingIntoEditor"
         class="flex-1"
     />
+
+    <SiteFooter />
 </template>

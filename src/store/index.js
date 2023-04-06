@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 
 const store = createStore({
     state: {
-        site_title: 'FLEX JOB LISTINGS',
+        site_title: 'FJL',
         api_url_base: 'http://localhost:8000',
 
         listing: {

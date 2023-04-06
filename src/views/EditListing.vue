@@ -3,6 +3,8 @@
     import { useRoute, useRouter  } from 'vue-router';
     import { useStore  } from 'vuex';
 
+    import { setCompanyId } from '@/services/listing.js'
+
     import Cookies from 'js-cookie'
 
     import { QuillEditor } from '@vueup/vue-quill'
@@ -15,6 +17,7 @@
     import PageHeading from '../components/PageHeading.vue'
     import Container from '../components/Container.vue'
     import SidebarAccount from '../components/SidebarAccount.vue'
+    import AddCompany from '#/form/AddCompany.vue'
 
     const user = JSON.parse(localStorage.getItem('user'))
 
@@ -40,6 +43,7 @@
 
     const listing = ref()
     const companies = ref()
+    const errors = ref()
 
     async function updateListing() {
         const { data } = await axios.post(`${store.state.api_url_base}/api/listing/add`, listing.value )
@@ -61,6 +65,38 @@
     }
     getCompanies()
 
+    function updateState(field, value) {
+        store.dispatch('SET_LISTING_VALUE', { field, value })
+    }
+
+    const applicationType = ref('url')
+
+    function changeApplicationLinkContext(type) {
+        const typeIsUrl = type === 'url'
+        const typeIsEmail = type === 'email'
+
+        if(typeIsEmail) {
+            updateState('apply_link', '')
+        }
+        if(typeIsUrl) {
+            updateState('apply_link', 'https://')
+        }
+        applicationType.value = type
+    }
+
+
+
+    // function setCompanyId(event) {
+    //     console.log(event)
+
+    //     const company = companies.value.find(v => {
+    //         return v.id == event
+    //     })
+    //     listing.value.company_id = Number(company.id)
+    //     listing.value.industry_id = Number(company.industry.id)
+
+    // }
+
 </script>
 <template>
     <MainContentArea>
@@ -77,35 +113,9 @@
                     <form @submit.prevent="updateListing">
 
                         <div class="mb-8">
+
+                            <AddCompany :errors="errors" :companies="companies" @setCompanyId="setCompanyId($event)" />
                             
-                            <Label
-                                for="companies"
-                                helpText="Choose a company for this listing, or use the button to the right to add a new one."
-                                value="Company" />
-
-                            <div class="flex items-center justify-between">
-
-                                <Select
-                                    v-if="companies?.length"
-                                    class="w-1/2"
-                                    v-model="listing.company_id"
-                                    @update:modelValue="setCompany($event)">
-                                    <option value="">Select a Company</option>
-
-                                    <option
-                                        v-for="company in companies"
-                                        :key="company.id"
-                                        :value="company.id">
-                                        {{ company.name }}
-                                    </option>
-                                </Select>
-
-                                <div class="flex items-center gap-2">
-
-                                    <font-awesome-icon class="text-sky-600 text-2xl" icon="fa-solid fa-plus" />
-                                    <router-link class="text-sky-600 font-semibold" :to="{ name: 'add-company' }">ADD COMPANY</router-link>
-                                </div>
-                            </div>
                         </div>
 
 
@@ -143,7 +153,38 @@
 
                             <!-- Apply Link -->
                             <div class="mb-4 w-1/2">
+
                                 <Label
+                                    for="title"
+                                    helpText="The url to your application, or you can use an email address."
+                                    value="Application Link or Email" />
+
+                                <TextInput
+                                    v-if="applicationType === 'url'"
+                                    v-model="store.state.listing.apply_link"
+                                    @update:modelValue="updateState('apply_link', $event)"
+                                    :class="{ 'border border-red-500' : errors?.apply_link }"
+                                />
+                                <p
+                                    v-if="applicationType === 'url'"
+                                    class="text-sky-600 text-sm hover:underline cursor-pointer"
+                                    @click="changeApplicationLinkContext('email')">
+                                    Use an email address instead
+                                </p>
+
+                                <TextInput
+                                    v-if="applicationType === 'email'"
+                                    v-model="store.state.listing.apply_link"
+                                    @update:modelValue="updateState('apply_link', $event)"
+                                    :class="{ 'border border-red-500' : errors?.apply_link }"
+                                />
+                                <p
+                                    v-if="applicationType === 'email'"
+                                    class="text-sky-600 text-sm hover:underline cursor-pointer"
+                                    @click="changeApplicationLinkContext('url')">
+                                    Use a url instead
+                                </p>
+                                <!-- <Label
                                     for="title"
                                     helpText="The url to your application, or an email address."
                                     value="Application Link or Email" />
@@ -151,7 +192,7 @@
                                 <TextInput
                                     v-model="listing.apply_link"
                                     @update:modelValue="listing.apply_link = $event"
-                                />
+                                /> -->
                             </div>
 
                         </div>

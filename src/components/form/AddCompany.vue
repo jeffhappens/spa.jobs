@@ -2,16 +2,44 @@
     import Label from '#/form/Label.vue'
     import Select from '#/form/Select.vue'
     import ErrorMessage from '#/form/ErrorMessage.vue'
-    import { ref, defineProps } from 'vue'
-    import { useRouter } from 'vue-router'
+    import { ref, defineProps, defineEmits } from 'vue'
+    import { useRouter, useRoute } from 'vue-router'
     import { useStore } from 'vuex'
 
+    // import { setCompanyId } from '@/services/listing.js'
+
     const router = useRouter()
+    const route = useRoute()
     const store = useStore()
+    const emit = defineEmits(['setCompanyId'])
+
+    const user = JSON.parse(localStorage.getItem('user'))
     const props = defineProps({
         companies: Array,
         errors: Array
     })
+
+    function setCompany(id) {
+        const editListing = route.name === 'edit-listing'
+        const postListing = route.name === 'post-job-details'
+
+        const company = props.companies.find(v => {
+            return v.id == id
+        })
+
+        if(editListing) {
+            emit('setCompanyId', id)
+        } else {
+            store.dispatch('SET_COMPANY', company)
+            updateState('company_id', company.id)
+            updateState('industry_id', company.industry_id)
+        }
+    }
+    
+    function updateState(field, value) {
+        store.dispatch('SET_LISTING_VALUE', { field, value })
+    }
+    
 </script>
 <template>
 

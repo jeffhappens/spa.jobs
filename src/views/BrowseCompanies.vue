@@ -1,23 +1,32 @@
 <script setup>
     import { ref } from 'vue'
     import { useStore } from 'vuex'
-    import Pagination from '../components/Pagination.vue'
-    import Container from '../components/Container.vue'
-    import PageHeading from '../components/PageHeading.vue'
-    import BadgeRound from '../components/BadgeRound.vue'
+    import Pagination from '#/Pagination.vue'
+    import Container from '#/Container.vue'
+    import PageHeading from '#/PageHeading.vue'
+    import BadgeRound from '#/BadgeRound.vue'
+    import ErrorMessage from '#/ErrorMessage.vue'
 
     const store = useStore()
 
-    const companies = ref({})
+    const errorMessage = ref({
+        status: false,
+        message: ''
+    })
 
+
+    // Companies
+    const companies = ref( getCompanies() )
     async function getCompanies(page = 1) {
-
-        const { data } = await axios.get(`${store.state.api_url_base}/api/companies?page=${page}`)
-        companies.value = data
-
+        try {
+            const { data } = await axios.get(`${store.state.api_url_base}/api/companies?page=${page}`)
+            companies.value = data
+        } catch(err) {
+            errorMessage.value.status = true
+            errorMessage.value.message = 'Whoops! We encountered a problem while trying to fetch companies.'
+        }
     }
     getCompanies()
-
 </script>
 
 <template>
@@ -26,6 +35,8 @@
         <Container>
 
             <Pagination v-if="companies.links?.length > 3" :data="companies" @paginate="getCompanies" />
+
+            <ErrorMessage v-if="errorMessage.status" :message="errorMessage" />
 
 
             <div v-for="company in companies.data" :key="company.id" class="bg-white p-4 mb-8 shadow-md rounded-lg flex gap-5">

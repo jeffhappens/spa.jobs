@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, onMounted } from 'vue'
+    import { ref } from 'vue'
     import { useRouter } from 'vue-router'
     import { useStore } from 'vuex'
     
@@ -59,15 +59,6 @@
 
     const errors = ref()
 
-    // function checkValidation(field) {
-    //     if(errors.value[field]) {
-    //         if(store.state.listing[field] !== '') {
-    //             delete errors.value[field]
-    //         }
-            
-    //     }
-    // }
-
     async function validateListing() {
         try {
             const { data } = await axios.post(
@@ -92,6 +83,24 @@
         toolbarPickers.forEach(v => {
             v.tabIndex = -1
         })
+    }
+
+    const applicationType = ref('url')
+
+    function changeApplicationLinkContext(type) {
+        const typeIsUrl = type === 'url'
+        const typeIsEmail = type === 'email'
+
+        console.log(type)
+
+        if(typeIsEmail) {
+            updateState('apply_link', '')
+        }
+        if(typeIsUrl) {
+            updateState('apply_link', 'https://')
+        }
+        applicationType.value = type
+        
     }
 </script>
 
@@ -159,21 +168,41 @@
                             <div class="mb-4 w-1/2">
                                 <Label
                                     for="title"
-                                    helpText="The url to your application, or an email address."
+                                    helpText="The url to your application, or you can use an email address."
                                     value="Application Link or Email" />
 
                                 <TextInput
+                                    v-if="applicationType === 'url'"
                                     v-model="store.state.listing.apply_link"
                                     @update:modelValue="updateState('apply_link', $event)"
                                     :class="{ 'border border-red-500' : errors?.apply_link }"
                                 />
+                                <p
+                                    v-if="applicationType === 'url'"
+                                    class="text-sky-600 text-sm hover:underline cursor-pointer"
+                                    @click="changeApplicationLinkContext('email')">
+                                    Use an email address instead
+                                </p>
+
+                                <TextInput
+                                    v-if="applicationType === 'email'"
+                                    v-model="store.state.listing.apply_link"
+                                    @update:modelValue="updateState('apply_link', $event)"
+                                    :class="{ 'border border-red-500' : errors?.apply_link }"
+                                />
+                                <p
+                                    v-if="applicationType === 'email'"
+                                    class="text-sky-600 text-sm hover:underline cursor-pointer"
+                                    @click="changeApplicationLinkContext('url')">
+                                    Use a url instead
+                                </p>
                                 <ErrorMessage v-if="errors?.apply_link" text="Please provide a link to your application" />
                             </div>
 
                         </div>
 
                         
-                        <div class="mb-4 text-gray-700">
+                        <div class="mb-6 text-gray-700">
                             <Label
                                 for="title"
                                 value="Job Description"
@@ -191,14 +220,14 @@
                             </div>
                             <ErrorMessage v-if="errors?.description" text="Please provide a Job Description" />
 
-                            <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-2 my-8">
                                 <button
                                     @click="validateListing"
                                     class="px-4 py-2 text-white font-semibold rounded-md bg-sky-400">
                                     Continue to Preview
                                 </button>
 
-                                <ErrorMessage v-if="errors" text="Whoops! It looks like there are some fields that still needs to be completed" />
+                                <ErrorMessage v-if="errors" class="mb-0" text="Whoops! It looks like there are some fields that still needs to be completed" />
                             </div>
 
                         </div>

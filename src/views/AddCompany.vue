@@ -10,9 +10,8 @@
     import { useRouter, useRoute } from 'vue-router'
     import toast from 'vue3-toastify'
     import Cookies from 'js-cookie'
-    import FormLabel from '../components/form/Label.vue'
-    import TextInput from '../components/form/TextInput.vue'
-    import Select from '../components/form/Select.vue'
+    import AddEditCompany from '../components/form/AddEditCompany.vue'
+
     import vueFilePond from 'vue-filepond'
     import 'filepond/dist/filepond.min.css'
     import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type"
@@ -24,76 +23,35 @@
     const emit = defineEmits('company:added')
     const states = ref()
 
-    const FilePond = vueFilePond(
-        FilePondPluginFileValidateType,
-    )
-
-    const fileUploading = ref(false)
-
     const user = JSON.parse(localStorage.getItem('user'))
-
-    const formDisabled = computed( () => {
-        // Disable the form if any required fields are missing OR a file is in the process of uploading
-        return fileUploading.value || !(company.value.name && company.value.address && company.value.industry_id && company.value.description)
-    })
 
     const company = ref({
         author: user.uuid,
-        name: '',
-        address: '',
-        city: '',
-        state: '',
-        zip: '',
-        email: '',
-        url: '',
-        industry_id: '',
-        description: ''
+        name: 'XYZ, LLC',
+        address: '123 Sesame St.',
+        city: 'Cambridge',
+        state: 'MD',
+        zip: '21613',
+        email: 'blatant3@gmail.com',
+        url: 'https://jeffreymills.me',
+        industry_id: '12',
+        description: '...'
     })
-    const companyLogo = ref(null)
 
-    const serverOptions = {
-        url: store.state.api_url_base,
-        process: {
-            url: '/api/company/logo/add',
-            headers: {
-                'X-XSRF-TOKEN': Cookies.get('XSRF-TOKEN')
-            },
-            withCredentials: true
-        }
-    }
-
-    let industries = ref({})
-
-    const buttonText = ref('Add Company')
-
-    async function getIndustries() {
-        let { data } = await axios.get(`${store.state.api_url_base}/api/industries`)
-        industries.value = data
-    }
-
-    async function getStates() {
-        const { data } = await axios.get(`${store.state.api_url_base}/api/states`)
-        states.value = data
-    }
-    getStates()
-    
-    function handleProcessFile(e, file) {
-        companyLogo.value = file.serverId.split('/')
-        fileUploading.value = false
-        buttonText.value = 'Add Company'
-    }
-
-    function handleAddFileStart() {
-        fileUploading.value = true
-        buttonText.value = 'File Uploading...'
-    }
-
-    async function addCompany() {
+    /**
+     * Sends a POST request to the API to add a new company with the company name and logo values in the company and companyLogo variables, respectively. If the request is successful, emits a 'company:added' event and navigates back to the previous page. If the request fails, does nothing (the error is handled by the catch block).
+     *
+     * @async
+     * @function addCompany
+     * @throws {Error}
+     * @returns {void}
+     */
+    async function addCompany(data) {
+        console.log(data)
         try {
-            // Add Company Http
             await axios.post(`${store.state.api_url_base}/api/company/add`, {
-                company: company.value,
-                logo: companyLogo.value
+                company: data[0],
+                logo: data[1].folder
             })
             emit('company:added')
             router.back()
@@ -101,116 +59,17 @@
             //
         }
     }
-
-    getIndustries()
 </script>
 <template>
-
     <MainContentArea>
         <PageHeading text="Add New Company" />
         <Container>
-
             <div class="flex items-start gap-5">
-
                 <SidebarAccount />
-
-
                 <section class="flex-1 bg-white p-6 rounded-lg shadow-lg">
-
-                    <form @submit.prevent="addCompany">
-                    
-                        
-                        <div class="mb-4">
-                            <FormLabel value="Company Name" for="company_name" />
-                            <TextInput name="company_name" v-model="company.name" @update:modelValue="company.name = $event" />
-                        </div>
-
-                        <div class="mb-4">
-                            <FormLabel value="Company Address" for="company_address" />
-                            <TextInput name="company_address" v-model="company.address" @update:modelValue="company.address = $event" />
-                        </div>
-
-                        <div class="flex gap-5">
-                            <div class="mb-4 w-1/2">
-                                <FormLabel value="City" for="company_city" />
-                                <TextInput name="company_city" v-model="company.city" @update:modelValue="company.city = $event" />
-                            </div>
-                            <div class="mb-4 w-1/4">
-                                <FormLabel value="State" for="company_state" />
-                                <Select v-model="company.state" class="" @update:modelValue="company.state = $event">
-                                    <option value="">Select a State</option>
-                                    <option v-for="state in states" :key="state.id" :value="state.abbr">
-                                        {{ state.abbr }}
-                                    </option>
-                                </Select>
-                            </div>
-                            <div class="mb-4 w-1/4">
-                                <FormLabel value="Zip Code" for="company_zip" />
-                                <TextInput name="company_zip" v-model="company.zip" @update:modelValue="company.zip = $event" />
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <FormLabel value="Email" for="company_email" />
-                            <TextInput name="company_email" v-model="company.email" @update:modelValue="company.email = $event" />
-                        </div>
-
-                        <div class="mb-4">
-                            <FormLabel value="Company URL" for="company_url" />
-                            <TextInput name="company_url" v-model="company.url" @update:modelValue="company.url = $event" />
-                        </div>
-
-                        <div class="mb-4">
-                            <FormLabel value="Industry" for="company_industry" />
-                            <Select
-                                name="company_industry"
-                                v-model="company.industry_id"
-                                @update:modelValue="company.industry_id = $event">
-
-                                <option value="">Select an industry</option>
-                                <option
-                                    v-for="industry in industries"
-                                    :key="industry.id"
-                                    :value="industry.id">
-                                    {{ industry.label }}
-                                </option>
-                            </Select>
-                        </div>
-
-                        <div class="mb-4">
-                            <FormLabel value="Description" for="description" />
-                            <textarea v-model="company.description" class="w-full border border-gray-300 shadow-sm h-36 text-gray-700" name="description"></textarea>
-                        </div>
-
-                        <div class="mb-4">
-                            <FormLabel value="Logo" for="logo" />
-                            <FilePond
-                                :server="serverOptions"
-                                :allowImageCrop="true"
-                                imagePreviewHeight="200"
-                                image-crop-aspect-ratio="1:1"
-                                acceptedFileTypes="image/jpeg, image/png"
-                                @addfilestart="handleAddFileStart"
-                                @processfile="handleProcessFile"
-
-                            />
-
-                        </div>
-
-                        <div class="mb-4">
-                            <button
-                                :disabled="formDisabled"
-                                type="submit"
-                                class="mt-4 p-2 bg-[color:var(--p-blue-md)] text-white disabled:opacity-30 disabled:cursor-not-allowed"
-                            >
-                                {{ buttonText }}
-                            </button>
-                        </div>
-                    </form>
-
+                    <AddEditCompany :company="company" @companyAdded="addCompany" />
                 </section>
             </div>
         </Container>
     </MainContentArea>
-    
 </template>

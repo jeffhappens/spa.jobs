@@ -60,7 +60,8 @@
                     <div class="editor_content mt-12" v-html="listing.description"></div>
 
                     <div class="my-6">
-                        <a :href="listing.apply_link" class="bg-sky-400 text-white px-6 py-2 rounded-sm">Apply for this Job</a>
+                        <a v-if="applyLinkWeb()" :href="listing.apply_link" class="bg-sky-400 text-white px-6 py-2 rounded-sm">Apply for this Job</a>
+                        <a v-else :href="`mailto:${listing.apply_link}`" class="bg-sky-400 text-white px-6 py-2 rounded-sm">Apply for this Job</a>
                     </div>
                     
                 </div>

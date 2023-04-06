@@ -53,8 +53,9 @@
 
                 
             </div>
-            <div>
-                <p class="text-gray-500 text-sm">Posted on {{ new Intl.DateTimeFormat('en-us').format() }}</p>
+            <div class="text-gray-500 text-sm">
+                <p class="mb-2">Posted on {{ listing.created_at }}</p>
+                <p v-if="route.name === 'my-listings'">Expires on {{ listing.expires_at }}</p>
             </div>
         </div>
     </div>

@@ -26,7 +26,13 @@
         return deletetext.value !== 'DELETE' 
     })
 
-    const clearPasswordFields = () => {
+    /**
+     * Clears the value of the newPassword and currentPassword variables.
+     *
+     * @function clearPasswordFields
+     * @returns {void} - This function does not return a value, but it clears the value of the newPassword and currentPassword variables.
+     */
+    const clearPasswordFields = ()  => {
         newPassword.value = ''
         currentPassword.value = ''
     }
@@ -35,6 +41,16 @@
         alert('Delete Account Fired')
     }
 
+
+    /**
+     * Logs out the user by making a POST request to the logout API endpoint, removing the user from local storage, emitting a user:logout event, and redirecting to the home page after a 3-second delay.
+     *
+     * @async
+     * @function userLogout
+     * @returns {Promise<void>} - This function does not return a value, but it logs out the user and redirects to the home page after a 3-second delay.
+     *
+     * @throws {Error} - If the API endpoint returns an error or if the axios library encounters an error while making the request.
+     */
     async function userLogout() {
         await axios.post(`${store.state.api_url_base}/logout`)
         localStorage.removeItem('user')
@@ -45,6 +61,16 @@
         }, 3000)
     }
 
+
+    /**
+     * Changes the user's password by making a POST request to the change-password API endpoint with the current password and new password, and logs out the user after displaying a success message.
+     *
+     * @async
+     * @function changePassword
+     * @returns {Promise<void>} - This function does not return a value, but it changes the user's password and logs out the user.
+     *
+     * @throws {Error} - If the API endpoint returns an error, if the axios library encounters an error while making the request, or if there is a validation error in the request data.
+     */
     async function changePassword() {
         validationError.value = ''
         try {
@@ -52,7 +78,6 @@
                 'password' : currentPassword.value,
                 'newPassword': newPassword.value
             })
-            // clearPasswordFields()
             toast('Your password has been updated. Logging you out.', { autoClose: 2000 })
             userLogout()
             

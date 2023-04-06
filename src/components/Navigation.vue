@@ -34,7 +34,7 @@
 
         <Container class="flex items-center justify-between h-20">
 
-            <div class="text-left rounded-md py-2 px-6">
+            <div class="text-left text-sky-600 rounded-md py-2 text-3xl">
                 <router-link to="/">{{ $store.state.site_title }}</router-link>
             </div>
             
