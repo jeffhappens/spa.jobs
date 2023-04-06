@@ -3,7 +3,7 @@ import { createStore } from 'vuex'
 const store = createStore({
     state: {
         site_title: 'FJL',
-        api_url_base: 'http://localhost:8000',
+        api_url_base: process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'http://flexjoblistings.com',
 
         listing: {
             title: '',
