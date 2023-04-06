@@ -27,14 +27,14 @@
 
     const company = ref({
         author: user.uuid,
-        name: 'XYZ, LLC',
-        address: '123 Sesame St.',
-        city: 'Cambridge',
-        state: 'MD',
-        zip: '21613',
-        email: 'blatant3@gmail.com',
-        url: 'https://jeffreymills.me',
-        industry_id: '12',
+        name: '',
+        address: '',
+        city: '',
+        state: '',
+        zip: '',
+        email: '',
+        url: '',
+        industry_id: '',
         description: '...'
     })
 
