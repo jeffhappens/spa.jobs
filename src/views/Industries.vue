@@ -61,7 +61,7 @@
                         name: 'industries-jobs',
                         slug: industry.slug
                     })"
-                    class="rounded-lg cursor-pointer transition bg-white hover:bg-sky-50 p-4 mb-4 shadow-md flex items-center justify-between gap-5">
+                    class="w-full md:w-auto rounded-lg cursor-pointer transition bg-white hover:bg-sky-50 p-4 mb-4 shadow-md flex items-center justify-between gap-5">
 
                     <h2 class="text-gray-700 text-xl font-semibold">{{ industry.label }}</h2>
                     <BadgeRound :text="industry.listings_count" />
