@@ -81,9 +81,9 @@
                     <router-link class="text-sm text-[color:var(--p-orange)] font-semibold" to="/forgot-password">I forgot my password</router-link>
                 </div>
 
-                <div class="md:flex items-center justify-between">
+                <div class="md:flex items-center justify-between text-center">
 
-                    <button class="py-2 px-10 bg-[color:var(--p-blue-md)] text-lg text-white font-semibold rounded-md flex justify-center w-full md:w-auto">
+                    <button class="py-2 px-10 bg-[color:var(--p-blue-md)] text-lg text-white font-semibold rounded-md flex justify-center w-full md:w-auto mb-4 md:mb-0">
                         <svg
                             v-if="loading"
                             aria-hidden="true"
