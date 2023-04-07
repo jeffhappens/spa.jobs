@@ -44,13 +44,13 @@
                 <input
                     v-model="searchParams.keyword"
                     type="text"
-                    class="w-full rounded-full px-6 py-4 text-md text-black border-0 focus:ring-0"
-                    placeholder="Search by Job Title, Keyword, or Company Name"
+                    class="w-3/4 rounded-full px-6 py-4 text-md text-black border-0 focus:ring-0"
+                    placeholder="Job Title, Keyword, or Company Name"
                 />
 
-                <div v-if="searchResults" class="flex items-center justify-end mr-2 cursor-pointer">
-                    <font-awesome-icon class="text-black text-4xl mr-2" icon="fa-solid fa-xmark" />
-                    <p class="text-black">Clear Results</p>
+                <div v-if="searchResults" class="flex-1 flex items-center justify-center mr-2 cursor-pointer">
+                    <font-awesome-icon class="text-black text-xl mr-1" icon="fa-solid fa-xmark" />
+                    <p class="text-black text-sm">Clear</p>
                 </div>
 
 
