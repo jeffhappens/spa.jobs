@@ -27,9 +27,9 @@
     <MainContentArea v-if="company">
         <PageHeading text="Company Profile" />
         <Container>
-            <div class="flex gap-5">
+            <div class="md:flex gap-5">
 
-                <div class="flex-1">
+                <div class="flex-1 mb-8">
                     <h2 class="text-4xl font-semibold mb-2 text-gray-700">{{ company.name }}</h2>
                     <div class="mb-8">
                         <p class="text-gray-700">
@@ -51,7 +51,7 @@
                     <p class="text-gray-700">{{ company.description }}</p>
                 </div>
                 
-                <div class="w-1/3">
+                <div class="md:w-1/3">
                     <h3 class="text-2xl font-semibold text-gray-700 mb-2 ml-2">Current Listings</h3>
 
                     <div v-if="!company.listings.length">
