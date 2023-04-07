@@ -47,7 +47,6 @@
      * @returns {void}
      */
     async function addCompany(data) {
-        console.log(data)
         try {
             await axios.post(`${store.state.api_url_base}/api/company/add`, {
                 company: data[0],
