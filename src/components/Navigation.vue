@@ -40,7 +40,7 @@
                 <router-link to="/">{{ $store.state.site_title }}</router-link>
             </div>
 
-            <nav class="hidden md:flex items-center justify-center gap-10 text-white">
+            <nav class="hidden lg:flex items-center justify-center gap-10 text-white">
 
                 <div v-for="navItem in navigationItems" :key="navItem.label">
                     <router-link
@@ -79,7 +79,7 @@
 
                 <div
                     @click="toggleMenu"
-                    class="md:hidden transition w-12 flex flex-col items-center justify-center text-sky-500 bg-gray-800 hover:bg-gray-700 p-2 cursor-pointer rounded-sm">
+                    class="lg:hidden transition w-12 flex flex-col items-center justify-center text-sky-500 bg-gray-800 hover:bg-gray-700 p-2 cursor-pointer rounded-sm">
                     
                     <font-awesome-icon v-if="!menuState" icon="fa-solid fa-bars" class="text-2xl" />
                     <font-awesome-icon v-else icon="fa-solid fa-xmark" class="text-2xl" />
@@ -93,7 +93,7 @@
 
 
         <!-- MOBILE MENU -->
-        <div v-if="menuState" class="py-6 bg-gray-900">
+        <div v-if="menuState" class="py-6 bg-gray-900 lg:hidden">
             <Container>
 
                 <div v-for="navItem in navigationItems" :key="navItem.label" class="mb-4">
