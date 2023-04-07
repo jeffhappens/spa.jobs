@@ -5,8 +5,9 @@
 <template>
     <footer class="bg-gray-900 py-6">
         <Container>
-            <div class="flex">
-                <div class="w-1/2">
+            <div class="md:flex">
+
+                <div class="w-full mb-4 md:mb-0 md:w-1/2">
                     <h2 class="text-2xl text-white mb-2">Flex Job Listings</h2>
                     <p class="mb-2">Flex Job listings is a curated job board of the best remote jobs for any industry.</p>
                     <p class="flex items-center gap-2">
@@ -14,8 +15,8 @@
                         <a href="" class="text-sky-600">Get in touch with us</a>
                     </p>
                 </div>
-                <div class="flex-1 flex flex-col items-end">
-                    <ul class="text-right mb-4">
+                <div class="flex-1 flex flex-col md:items-end">
+                    <ul class="md:text-right mb-4">
                         <!-- <li>About Flex Job Listings</li> -->
                         <!-- <li>Frequently Asked Questions</li> -->
                         <li>
