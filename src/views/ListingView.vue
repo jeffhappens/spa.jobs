@@ -40,9 +40,9 @@
         <PageHeading text="Job Listing" />
 
         <Container v-if="listing">
-            <div class="flex gap-10 justify-between items-start">
+            <div class="md:flex gap-10 justify-between items-start">
                 
-                <div class="text-gray-600 text-lg w-2/3">
+                <div class="text-gray-600 text-lg md:w-2/3">
 
                     <h2 class="text-3xl font-semibold">{{ listing.title }}</h2>
 
