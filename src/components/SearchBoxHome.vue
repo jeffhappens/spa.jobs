@@ -44,7 +44,7 @@
                 <input
                     v-model="searchParams.keyword"
                     type="text"
-                    class="w-4/5 rounded-full px-6 py-4 text-xl text-black border-0 focus:ring-0"
+                    class="w-full rounded-full px-6 py-4 text-md text-black border-0 focus:ring-0"
                     placeholder="Search by Job Title, Keyword, or Company Name"
                 />
 
