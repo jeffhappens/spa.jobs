@@ -66,11 +66,11 @@
                     
                 </div>
 
-                <div class="flex-1 flex gap-3 text-gray-600 bg-white p-2">
+                <div class="flex-1 flex items-start gap-4 text-gray-600 bg-white p-2">
                     
                     <img class="w-1/4" :src="`${store.state.api_url_base}/${listing.company.logo}`" />
 
-                    <div>
+                    <div class="flex-1">
                         <p class="text-lg font-semibold">{{ listing.company.name }}</p>
                         <p>
                             <font-awesome-icon icon="fa-solid fa-location-dot" />
