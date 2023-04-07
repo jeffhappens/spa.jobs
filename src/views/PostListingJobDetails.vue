@@ -147,8 +147,11 @@
                             <ErrorMessage v-if="errors?.title" text="Please provide a Job Title" />
                         </div>
 
-                        <div class="flex gap-5">
-                            <div class="w-1/2">
+                        
+                        <div class="md:flex gap-5">
+
+                            <!-- Job Type -->
+                            <div class="mb-4 md:mb-0 md:w-1/2">
                                 <Label
                                     for="job_type"
                                     helpText="Full-time, Part-time, Contract"
@@ -165,7 +168,7 @@
                             </div>
 
                             <!-- Apply Link -->
-                            <div class="mb-4 w-1/2">
+                            <div class="mb-4 md:w-1/2">
                                 <Label
                                     for="title"
                                     helpText="The url to your application, or you can use an email address."
@@ -223,7 +226,7 @@
                             <div class="flex items-center gap-2 my-8">
                                 <button
                                     @click="validateListing"
-                                    class="px-4 py-2 text-white font-semibold rounded-md bg-sky-400">
+                                    class="w-full px-4 py-2 text-white font-semibold rounded-md bg-sky-400 md:w-auto">
                                     Continue to Preview
                                 </button>
 
