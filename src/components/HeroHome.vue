@@ -14,7 +14,7 @@ const description = ref('Flex Job listings is a curated job board of the best re
 </script>  
 <template>
     <div class="bg-[color:var(--p-blue-drk)] text-white hero">
-        <div class="max-w-screen-md mx-auto text-center px-16 py-32">
+        <div class="max-w-screen-md mx-auto text-center px-12 py-32">
             
             <h2 class="font-bold text-5xl md:text-6xl mb-6">{{ heading[2] }}</h2>
             
