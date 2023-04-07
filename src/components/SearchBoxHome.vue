@@ -35,7 +35,7 @@
 
         <form
             @submit.prevent="updateResults"
-            class="p-3 md:p-4 flex items-center gap-5 shadow-lg absolute top-1/2 left-1/2 z-10 transform -translate-x-1/2 -translate-y-1/2 bg-gray-100 bg-opacity-80 w-11/12 rounded-full">
+            class="p-3 md:p-4 flex items-center gap-5 shadow-lg absolute top-1/2 left-1/2 z-10 transform -translate-x-1/2 -translate-y-1/2 bg-gray-100 bg-opacity-80 w-11/12 md:w-3/4 rounded-full">
 
             <div
                 @click="clearResults"
@@ -44,7 +44,7 @@
                 <input
                     v-model="searchParams.keyword"
                     type="text"
-                    class="w-11/12 rounded-full px-6 py-4 text-md text-black border-0 focus:ring-0"
+                    class="w-11/12 rounded-full px-6 py-4 text-md md:text-xl text-black border-0 focus:ring-0"
                     placeholder="Job Title, Keyword, or Company"
                 />
 

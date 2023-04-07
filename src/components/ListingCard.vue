@@ -8,16 +8,20 @@
 
     <div class="bg-white mb-8 p-4 text-black shadow-md rounded-xl">
 
+        <!-- Industry Label -->
         <div class="flex justify-between">
+
             <p class="text-gray-600 mb-3">{{ props.listing.industry?.label }}</p>
+
             <p v-if="route.name === 'my-listings'">
                 <router-link :to="{ name: 'edit-listing', params: { uuid: props.listing.uuid } }">
                     <font-awesome-icon icon="fa-solid fa-pen-to-square" class="text-xl" />
                 </router-link>
             </p>
+
         </div>
         
-        <div class="flex justify-between align-start">
+        <div class="block md:flex justify-between align-start">
 
             <div>
                 <h4 class="text-2xl">
