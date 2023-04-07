@@ -16,7 +16,9 @@
 </script>
 <template>
     <main class="flex justify-center items-center bg-gray-100 bg">
+        
         <div class="shadow-md w-10/12 md:w-3/5 rounded-xl bg-white bg-opacity-90 p-8 my-6">
+
             <div class="mb-8 text-gray-700">
                 <h2 class="text-3xl font-semibold">Recover your password</h2>
                 <p>Enter the email address you signed up with and we will send you instructions on how to recover your password.</p>

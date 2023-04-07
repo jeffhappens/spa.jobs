@@ -50,7 +50,7 @@
             <div
                 v-for="(step, index) in steps"
                 :key="step.label"
-                class="flex items-center gap-3">
+                class="flex flex-col justify-center items-center gap-3">
 
                 <div
                     class="h-10 w-10 rounded-full text-white text-lg flex items-center justify-center"
@@ -62,7 +62,9 @@
                     </h2>
                 </div>
 
-                <p :class="{ 'text-lg text-gray-700' : step.active, 'text-gray-300' : !step.active }">
+                <p
+                    class="text-sm text-center"
+                    :class="{ 'text-lg text-gray-700' : step.active, 'text-gray-300' : !step.active }">
                     <router-link class="font-semibold" :to="{ name: step.link }">
                         {{ step.label }}
                     </router-link>
