@@ -108,9 +108,11 @@
                         <ErrorMessage v-if="errors?.password" :text="errors.password[0]" />
                     </div>
 
-                    <div class="flex items-center justify-between">
-                        <button class="py-2 px-10 bg-[color:var(--p-blue-md)] text-lg text-white font-semibold rounded-md">Create Account</button>
-                        <router-link class="text-sky-500 font-semibold" to="/login">I have an account</router-link>
+                    <div class="block md:flex items-center justify-between">
+                        <button class="w-full md:w-auto py-2 px-10 bg-[color:var(--p-blue-md)] text-lg text-white font-semibold rounded-md">Create Account</button>
+                        <div class="text-center my-4 md:text-start md:my-0">
+                            <router-link class="text-sky-500 font-semibold" to="/login">I have an account</router-link>
+                        </div>
                     </div>
 
                 </form>
