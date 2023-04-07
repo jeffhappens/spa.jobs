@@ -12,7 +12,7 @@
                     <p class="mb-2">Flex Job listings is a curated job board of the best remote jobs for any industry.</p>
                     <p class="flex items-center gap-2">
                         <font-awesome-icon icon="fa-solid fa-message" />
-                        <a href="" class="text-sky-600">Get in touch with us</a>
+                        <a href="mailto:info@flexjoblistings.com" class="text-sky-600">Get in touch with us</a>
                     </p>
                 </div>
                 <div class="flex-1 flex flex-col md:items-end">
