@@ -9,6 +9,7 @@
     import ListingCard from '#/ListingCard.vue'
     import Pagination from '#/Pagination.vue'
     import ErrorMessage from '#/ErrorMessage.vue'
+    import Container from '#/Container.vue'
     import { useStore } from 'vuex'
 
     const store = useStore()
@@ -72,14 +73,15 @@
         <SearchBoxHome  @resultsUpdated="newResults" @resultsCleared="getResults" />
 
         <div class="bg-gray-50 pt-24">
-            <div class="rounded-lg w-3/4 mx-auto">
+            <!-- <div class="rounded-lg w-3/4 mx-auto"> -->
+            <Container class="rounded-lg">
 
                 <ErrorMessage v-if="error.status" :message="error" />
 
                 <div v-else>
                 
                 
-                    <h2 class="text-4xl p-3 mb-10 text-center text-[color:var(--p-blue-drk)] font-semibold">{{ resultsHeading }}</h2>
+                    <h2 class="text-3xl md:text-4xl p-3 mb-10 text-center text-[color:var(--p-blue-drk)] font-semibold">{{ resultsHeading }}</h2>
 
                     <p v-if="!results.total" class="text-xl text-center text-[color:var(--p-blue-drk)]">There arent any listings yet. Be the first to post a listing!</p>
                     
@@ -94,7 +96,7 @@
                     </div>
                 </div>
 
-            </div>
+            </Container>
         </div>
         
     </div>
