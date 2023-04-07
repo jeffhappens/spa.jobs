@@ -83,7 +83,7 @@
                 
                     <h2 class="text-3xl md:text-4xl p-3 mb-10 text-center text-[color:var(--p-blue-drk)] font-semibold">{{ resultsHeading }}</h2>
 
-                    <p v-if="!results.total" class="text-xl text-center text-[color:var(--p-blue-drk)]">There arent any listings yet. Be the first to post a listing!</p>
+                    <p v-if="!results.total" class="text-lg md:text-xl text-center text-[color:var(--p-blue-drk)]">There arent any listings yet. Be the first to post a listing!</p>
                     
                     <Pagination v-if="results.total > 10" :data="results" @paginate="getResults" />
                     
