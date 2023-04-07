@@ -96,7 +96,7 @@
         <div v-if="menuState" class="py-6 bg-gray-900">
             <Container>
 
-                <div v-for="navItem in navigationItems" :key="navItem.label" class="mb-2">
+                <div v-for="navItem in navigationItems" :key="navItem.label" class="mb-4">
                     <router-link
                         @click="toggleMenu"
                         :to="navItem.destination"
