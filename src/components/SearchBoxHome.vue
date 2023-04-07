@@ -33,9 +33,13 @@
 
     <div class="relative flex flex-col">
 
-        <form @submit.prevent="updateResults" class="p-4 flex items-center gap-5 shadow-lg absolute top-1/2 left-1/2 z-10 transform -translate-x-1/2 -translate-y-1/2 bg-gray-100 bg-opacity-80 w-3/4 rounded-full">
-        
-            <div @click="clearResults" class="flex items-center justify-between bg-white flex-1 p-2 rounded-full shadow-sm">
+        <form
+            @submit.prevent="updateResults"
+            class="p-3 md:p-4 flex items-center gap-5 shadow-lg absolute top-1/2 left-1/2 z-10 transform -translate-x-1/2 -translate-y-1/2 bg-gray-100 bg-opacity-80 w-11/12 rounded-full">
+
+            <div
+                @click="clearResults"
+                class="flex items-center justify-between bg-white flex-1 p-0 md:p-2 rounded-full shadow-sm">
                 
                 <input
                     v-model="searchParams.keyword"

@@ -18,21 +18,19 @@ const description = ref('Flex Job listings is a curated job board of the best re
 
     <div class="bg-[color:var(--p-blue-drk)] text-white hero">
 
-        <!-- <div class="max-w-screen-md mx-auto text-center px-10 py-32"> -->
-            <Container>
-                <div class="py-32 text-center">
-                    <h2 class="font-bold text-5xl md:text-6xl mb-6">{{ heading[2] }}</h2>
-                    <p class="text-lg">{{ description }}</p>
-                    <div class="mt-10">
-                        <router-link
-                            :to="store.state.post_job_item.destination"
-                            class="text-xl font-semibold py-4 px-8 rounded-full bg-[color:var(--p-orange)]">
-                            {{ store.state.post_job_item.label }}
-                        </router-link>
-                    </div>
+        <Container>
+            <div class="py-32 text-center">
+                <h2 class="font-bold text-5xl md:text-6xl mb-6">{{ heading[2] }}</h2>
+                <p class="text-lg">{{ description }}</p>
+                <div class="mt-10">
+                    <router-link
+                        :to="store.state.post_job_item.destination"
+                        class="text-xl font-semibold py-4 px-8 rounded-full bg-[color:var(--p-orange)]">
+                        {{ store.state.post_job_item.label }}
+                    </router-link>
                 </div>
-            </Container>
-        <!-- </div> -->
+            </div>
+        </Container>
     </div>
 </template>
 
