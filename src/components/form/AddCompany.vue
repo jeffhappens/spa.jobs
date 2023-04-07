@@ -46,9 +46,9 @@
     <div v-if="companies?.length">
         <Label for="" helpText="Select the company for this job." value="Your Company" />
 
-        <div class="flex items-center gap-5">
+        <div class="md:flex items-center gap-5">
             <Select
-                class="w-1/3"
+                class="md:w-1/3"
                 :class="{ 'border border-red-600' : errors?.company_id }"
                 v-model="store.state.listing.company_id"
                 @update:modelValue="setCompany($event)">
