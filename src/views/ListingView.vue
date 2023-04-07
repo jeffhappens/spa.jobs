@@ -66,26 +66,33 @@
                     
                 </div>
 
-                <div class="flex-1 flex flex-col items-center justify-center text-gray-600 bg-white p-4">
-                    <img class="w-1/2 mb-2" :src="`${store.state.api_url_base}/${listing.company.logo}`" />
-                    <p class="text-xl">{{ listing.company.name }}</p>
-                    <p>
-                        <font-awesome-icon icon="fa-solid fa-location-dot" />
-                        {{ listing.company.city }}, {{ listing.company.state }}
-                    </p>
-                    <p class="mb-4 flex items-center gap-2">
-                        <font-awesome-icon icon="fa-solid fa-building" />
-                        <router-link :to="{ name: 'company', params: { uuid: listing.company.uuid, slug: listing.company.slug } }">Company Profile &amp; Listings</router-link>
-                    </p>
-                    <p class="mb-4 flex items-center gap-2">
-                        <font-awesome-icon icon="fa-solid fa-link" />
-                        <a :href="listing.company.url">Website</a>
-                    </p>
+                <div class="flex-1 flex gap-3 text-gray-600 bg-white p-2">
+                    
+                    <img class="w-1/4" :src="`${store.state.api_url_base}/${listing.company.logo}`" />
 
-                    <div class="my-6">
+                    <div>
+                        <p class="text-lg font-semibold">{{ listing.company.name }}</p>
+                        <p>
+                            <font-awesome-icon icon="fa-solid fa-location-dot" />
+                            {{ listing.company.city }}, {{ listing.company.state }}
+                        </p>
+                        <p class="flex items-center gap-2">
+                            <font-awesome-icon icon="fa-solid fa-building" />
+                            <router-link :to="{ name: 'company', params: { uuid: listing.company.uuid, slug: listing.company.slug } }">Company Profile &amp; Listings</router-link>
+                        </p>
+
+                        <p class="flex items-center gap-2">
+                            <font-awesome-icon icon="fa-solid fa-link" />
+                            <a :href="listing.company.url">Website</a>
+                        </p>
+                    </div>
+
+
+
+                    <!-- <div class="my-6">
                         <a v-if="applyLinkWeb()" :href="listing.apply_link" class="bg-sky-400 text-white px-6 py-2 rounded-sm">Apply for this Job</a>
                         <a v-else :href="`mailto:${listing.apply_link}`" class="bg-sky-400 text-white px-6 py-2 rounded-sm">Apply for this Job</a>
-                    </div>
+                    </div> -->
                 </div>
 
 
