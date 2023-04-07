@@ -53,7 +53,7 @@
 
     <main class="flex justify-center items-center bg-gray-100 bg">
         
-        <div class="shadow-md w-2/5 rounded-xl bg-white bg-opacity-90 p-8">
+        <div class="shadow-md w-10/12 md:w-3/5 rounded-xl bg-white bg-opacity-90 p-8 my-6">
 
             <div class="mb-8 text-gray-700">
                 <h2 class="text-3xl font-semibold">Sign In</h2>
@@ -81,12 +81,13 @@
                     <router-link class="text-sm text-[color:var(--p-orange)] font-semibold" to="/forgot-password">I forgot my password</router-link>
                 </div>
 
-                <div class="flex items-center justify-between">
-                    <button class="py-2 px-10 bg-[color:var(--p-blue-md)] text-lg text-white font-semibold rounded-md flex">
+                <div class="md:flex items-center justify-between">
+
+                    <button class="py-2 px-10 bg-[color:var(--p-blue-md)] text-lg text-white font-semibold rounded-md flex justify-center w-full md:w-auto">
                         <svg
                             v-if="loading"
                             aria-hidden="true"
-                            class="w-6 h-6 mr-2 text-white animate-spin fill-[color:var(--p-blue-md)]"
+                            class="w-6 h-6 text-white animate-spin fill-[color:var(--p-blue-md)]"
                             viewBox="0 0 100 101"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg">
