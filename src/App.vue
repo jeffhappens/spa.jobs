@@ -39,6 +39,7 @@ getLoggedInUser()
 
 <template class="text-gray-700">
     <Navigation
+        class="hidden md:block"
         @user:logout="logoutUser"
         :user="user"
     />
