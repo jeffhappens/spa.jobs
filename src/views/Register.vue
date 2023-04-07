@@ -32,7 +32,8 @@
 
     <main class="flex justify-center items-center pt-4 bg-gray-100 bg">
 
-        <div class="shadow-md w-2/5 rounded-xl bg-white bg-opacity-90 p-8">
+        <!-- <div class="shadow-md w-2/5 rounded-xl bg-white bg-opacity-90 p-8"> -->
+        <div class="shadow-md w-10/12 md:w-3/5 rounded-xl bg-white bg-opacity-90 p-8 my-6">
 
             <div v-if="nn" class="text-gray-700">
                 <h2 class="text-3xl font-semibold">Thanks for signing up!</h2>
