@@ -25,9 +25,9 @@
         const params = new URLSearchParams({
             client_reference_id: user.uuid,
             success_url: store.state.api_url_base,
-            cancel_url: 'http://localhost:5173',
+            cancel_url: store.state.api_url_base,
         })
-        location.href = `https://buy.stripe.com/test_8wM041fpEbUZ8b6bII?${params}`
+        location.href = `${store.state.payment_link_url}?${params}`
     }
 </script>
 
