@@ -10,15 +10,17 @@
     const store = useStore()
     
     const navigationItems = ref([
-        // { label: 'HOME', destination: '/' },
         { label: 'BROWSE BY INDUSTRY', destination: '/industries' },
         { label: 'BROWSE BY COMPANY', destination: '/companies' },
     ])
 
-    // const postJobItem = ref({
-    //     label: 'POST A JOB FOR $99',
-    //     destination: '/post/job-details'
-    // })
+    const menuState = ref(false)
+    function toggleMenu() {
+
+        menuState.value = !menuState.value
+
+    }
+
 
     async function userLogout() {
         await axios.post(`${store.state.api_url_base}/logout`)
@@ -75,12 +77,57 @@
                     </p>
                 </div>
 
-                <div class="md:hidden flex flex-col items-center justify-center text-sky-500 bg-gray-800 p-2">
+                <div
+                    @click="toggleMenu"
+                    class="md:hidden transition flex flex-col items-center justify-center text-sky-500 bg-gray-800 hover:bg-gray-700 p-2 cursor-pointer rounded-sm">
                     <font-awesome-icon icon="fa-solid fa-bars" class="text-2xl" />
                     <p class="underline text-xs">MENU</p>
                 </div>
 
             </div>
         </Container>
+
+        <div v-if="menuState" class="py-6 bg-gray-900">
+            <Container>
+
+                
+
+                    <div v-for="navItem in navigationItems" :key="navItem.label" class="mb-2">
+                        <router-link
+                            :to="navItem.destination"
+                            class="transition hover:text-blue-500">
+                            {{ navItem.label }}
+                        </router-link>
+                    </div>
+                    <div class="my-4">
+                        <router-link
+                            :to="store.state.post_job_item.destination"
+                            class="font-semibold py-2 px-4 rounded-full bg-[color:var(--p-orange)]">
+                            {{ store.state.post_job_item.label }}
+                        </router-link>
+                    </div>
+                
+                <!-- <ul class="my-6">
+                    <li>
+                        <router-link
+                            class="text-sky-600 hover:underline"
+                            :to="{ name: 'industries' }">
+                            BROWSE BY INDUSTRY
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link
+                            class="text-sky-600 hover:underline"
+                            :to="{ name: 'industries' }">
+                            BROWSE BY INDUSTRY
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{ name: 'companies' }">BROWSE BY COMPANY</router-link>
+                    </li>
+                </ul> -->
+            
+            </Container>
+        </div>
     </div>
 </template>
