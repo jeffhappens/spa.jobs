@@ -6,7 +6,7 @@
 
 </script>
 <template>
-    <div class="bg h-20 mb-12 flex items-center shadow-md">
+    <div class="bg h-14 md:h-20 mb-12 flex items-center shadow-md">
         <Container class="flex justify-between items-center">
 
             <h2 class="text-xl md:text-3xl text-white text-shadow font-semibold">{{ text }}</h2>
