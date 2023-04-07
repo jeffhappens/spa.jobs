@@ -46,9 +46,9 @@
                 <div class="bg-white p-6 rounded-lg shadow-md">
 
                     
-                    <div class="flex items-start gap-5">
+                    <div class="md:flex items-start gap-5">
 
-                        <div class="w-2/3 text-gray-700">
+                        <div class="md:w-2/3 text-gray-700">
 
                             <h2 class="text-3xl font-semibold">{{ store.state.listing.title }}</h2>
                             <p>
