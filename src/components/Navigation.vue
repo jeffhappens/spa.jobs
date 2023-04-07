@@ -37,8 +37,9 @@
             <div class="text-left text-sky-600 rounded-md py-2 text-3xl">
                 <router-link to="/">{{ $store.state.site_title }}</router-link>
             </div>
-            
-            <nav class="flex items-center justify-center gap-10 text-white">
+
+            <nav class="hidden md:flex items-center justify-center gap-10 text-white">
+
                 <div v-for="navItem in navigationItems" :key="navItem.label">
                     <router-link
                         :to="navItem.destination"
@@ -53,7 +54,8 @@
                 </router-link>
             </nav>
             
-            <div class="flex justify-end items-center gap-5 text-right">
+            <div class="flex justify-end items-center gap-8 text-right">
+
                 <div v-if="user?.uuid" class="flex items-center gap-4">
                     
                     <div>
@@ -71,6 +73,11 @@
                         <router-link to="/login" class="hover:text-[color:var(--p-orange)] hover:underline underline-offset-2">Sign In</router-link> /
                         <router-link to="/register" class="hover:text-[color:var(--p-blue-md)] hover:underline underline-offset-2">Create Account</router-link>
                     </p>
+                </div>
+
+                <div class="md:hidden flex flex-col items-center justify-center text-sky-500 bg-gray-800 p-2">
+                    <font-awesome-icon icon="fa-solid fa-bars" class="text-2xl" />
+                    <p class="underline text-xs">MENU</p>
                 </div>
 
             </div>

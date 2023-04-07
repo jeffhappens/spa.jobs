@@ -11,10 +11,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /* import specific icons */
-import { faBuilding, faChevronRight, faCirclePlus, faLink, faLocationDot, faMessage, faPaperPlane, faPenToSquare, faPlus, faSatelliteDish, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faBuilding, faChevronRight, faLink, faLocationDot, faMessage, faPaperPlane, faPenToSquare, faPlus, faSatelliteDish, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 
-library.add(faChevronRight, faPenToSquare, faLink, faLocationDot, faSatelliteDish, faXmark, faPlus, faBuilding, faTriangleExclamation, faTriangleExclamation, faPaperPlane, faMessage, faTwitter, faFacebook, faLinkedin)
+library.add(faChevronRight, faPenToSquare, faLink, faLocationDot, faSatelliteDish, faXmark, faPlus, faBuilding, faTriangleExclamation, faTriangleExclamation, faPaperPlane, faMessage, faTwitter, faFacebook, faLinkedin, faBars)
 
 
 window.axios = axios
