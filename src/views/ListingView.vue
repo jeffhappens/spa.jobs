@@ -40,9 +40,9 @@
         <PageHeading text="Job Listing" />
 
         <Container v-if="listing">
-            <div class="md:flex gap-10 justify-between items-start">
+            <div class="lg:flex gap-10 justify-between items-start">
                 
-                <div class="text-gray-600 text-lg md:w-2/3">
+                <div class="text-gray-600 text-lg lg:w-2/3">
 
                     <h2 class="text-3xl font-semibold">{{ listing.title }}</h2>
 
@@ -60,17 +60,17 @@
                     <div class="editor_content mt-12" v-html="listing.description"></div>
 
                     <div class="my-6">
-                        <a v-if="applyLinkWeb()" :href="listing.apply_link" class="bg-sky-400 text-white px-6 py-2 rounded-sm">Apply for this Job</a>
-                        <a v-else :href="`mailto:${listing.apply_link}`" class="bg-sky-400 text-white px-6 py-2 rounded-sm">Apply for this Job</a>
+                        <a v-if="applyLinkWeb()" :href="listing.apply_link" class="bg-sky-400 text-white px-6 py-2 rounded-sm block text-center md:inline">Apply for this Job</a>
+                        <a v-else :href="`mailto:${listing.apply_link}`" class="bg-sky-400 text-white px-6 py-2 rounded-sm block text-center md:inline">Apply for this Job</a>
                     </div>
                     
                 </div>
 
-                <div class="flex-1 flex items-start gap-4 text-gray-600 bg-white p-2">
+                <div class="flex-1 flex items-start gap-4 text-gray-600 bg-white p-2 lg:flex-col lg:items-center max-w-sm">
                     
-                    <img class="w-1/4" :src="`${store.state.api_url_base}/${listing.company.logo}`" />
+                    <img class="w-1/4 md:w-3/4" :src="`${store.state.api_url_base}/${listing.company.logo}`" />
 
-                    <div class="flex-1">
+                    <div class="flex-1 md:flex md:flex-col md:items-center">
                         <p class="text-lg font-semibold">{{ listing.company.name }}</p>
                         <p>
                             <font-awesome-icon icon="fa-solid fa-location-dot" />
