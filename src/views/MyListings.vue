@@ -30,7 +30,7 @@
 
         <Container>
 
-            <div class="flex items-start gap-5">
+            <div class="md:flex items-start gap-5">
 
                 <SidebarAccount />
 

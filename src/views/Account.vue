@@ -95,7 +95,7 @@
 
         <Container>
 
-            <div class="flex-col md:flex items-start gap-5">
+            <div class="md:flex items-start gap-5">
 
                 <SidebarAccount />
 

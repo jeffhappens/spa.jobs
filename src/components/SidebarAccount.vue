@@ -10,10 +10,11 @@
     ]
 </script>
 <template>
-    <aside class="bg-white w-full mb-4 rounded-md shadow flex text-gray-800 text-xs">
+    <aside class="bg-white w-full mb-4 rounded-md shadow flex text-gray-800 text-xs md:flex-col md:w-24 md:py-2">
 
         <router-link
-            class="w-1/4 p-2 text-center flex flex-col border-r last:border-0"
+            class="w-1/4 md:w-full p-2 text-center flex flex-col border-r last:border-0 md:border-0"
+            :class="{ 'text-sky-600' : route.name === link.routeName }"
             v-for="link in links" :key="link"
             :to="{ name: link.routeName }">
             <font-awesome-icon :icon="`fa-solid ${link.icon}`" class="text-2xl mb-1" />
