@@ -33,6 +33,7 @@ const store = createStore({
 
         post_job_item: {
             label: 'POST A JOB FOR $99',
+            routeName: 'post-job-details',
             destination: '/post/job-details'
         }
     },

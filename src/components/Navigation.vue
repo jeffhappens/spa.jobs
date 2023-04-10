@@ -10,8 +10,8 @@
     const store = useStore()
     
     const navigationItems = ref([
-        { label: 'BROWSE BY INDUSTRY', destination: '/industries' },
-        { label: 'BROWSE BY COMPANY', destination: '/companies' },
+        { label: 'BROWSE BY INDUSTRY', routeName: 'industries' },
+        { label: 'BROWSE BY COMPANY', routeName: 'companies' },
     ])
 
     const menuState = ref(false)
@@ -37,20 +37,20 @@
         <Container class="flex items-center justify-between h-20">
 
             <div class="text-left text-sky-600 rounded-md py-2 text-3xl">
-                <router-link to="/">{{ $store.state.site_title }}</router-link>
+                <router-link :to="{ name: 'home' }">{{ $store.state.site_title }}</router-link>
             </div>
 
             <nav class="hidden lg:flex items-center justify-center gap-10 text-white">
 
                 <div v-for="navItem in navigationItems" :key="navItem.label">
                     <router-link
-                        :to="navItem.destination"
+                        :to="{ name: navItem.routeName }"
                         class="transition hover:text-blue-500">
                         {{ navItem.label }}
                     </router-link>
                 </div>
                 <router-link
-                    :to="store.state.post_job_item.destination"
+                    :to="{ name: store.state.post_job_item.routeName }"
                     class="font-semibold py-2 px-4 rounded-full bg-[color:var(--p-orange)]">
                     {{ store.state.post_job_item.label }}
                 </router-link>
@@ -64,7 +64,7 @@
                         <p class="font-semibold">{{ user.name }}</p>
                         <div class="flex items-center gap-2">
                             <p class="text-sm text-[color:var(--p-blue-md)] cursor-pointer hover:underline underline-offset-2">
-                                <router-link to="/account">Account</router-link>
+                                <router-link :to="{ name: 'account' }">Account</router-link>
                             </p>
                             <p @click="userLogout" class="text-sm text-[color:var(--p-orange)] cursor-pointer hover:underline underline-offset-2">Logout</p>
                         </div>
@@ -72,8 +72,8 @@
                 </div>
                 <div v-else>
                     <p>
-                        <router-link to="/login" class="hover:text-[color:var(--p-orange)] hover:underline underline-offset-2">Sign In</router-link> /
-                        <router-link to="/register" class="hover:text-[color:var(--p-blue-md)] hover:underline underline-offset-2">Create Account</router-link>
+                        <router-link :to="{ name: 'login' }" class="hover:text-[color:var(--p-orange)] hover:underline underline-offset-2">Sign In</router-link> /
+                        <router-link :to="{ name: 'register' }" class="hover:text-[color:var(--p-blue-md)] hover:underline underline-offset-2">Create Account</router-link>
                     </p>
                 </div>
 
@@ -99,7 +99,7 @@
                 <div v-for="navItem in navigationItems" :key="navItem.label" class="mb-4">
                     <router-link
                         @click="toggleMenu"
-                        :to="navItem.destination"
+                        :to="{ name: navItem.routeName }"
                         class="transition hover:text-blue-500">
                         {{ navItem.label }}
                     </router-link>
@@ -107,7 +107,7 @@
                 <div class="my-4">
                     <router-link
                         @click="toggleMenu"
-                        :to="store.state.post_job_item.destination"
+                        :to="{ name: store.state.post_job_item.routeName }"
                         class="font-semibold py-2 px-4 rounded-full bg-[color:var(--p-orange)]">
                         {{ store.state.post_job_item.label }}
                     </router-link>

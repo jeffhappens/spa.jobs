@@ -45,25 +45,25 @@ const router = createRouter({
     },
 
     {
-        path: '/faq',
+        path: '/flex-job-faq',
         name: 'faq',
         component: () => import('../views/Register.vue')
     },
 
     {
-        path: '/companies',
+        path: '/flex-job-companies',
         name: 'companies',
         component: () => import('../views/BrowseCompanies.vue')
     },
 
     {
-        path: '/company/:uuid/:slug',
+        path: '/flex-job-company/:uuid/:slug',
         name: 'company',
         component: () => import('../views/Company.vue')
     },
 
     {
-        path: '/industries',
+        path: '/flex-job-industries',
         name: 'industries',
         component: () => import('../views/Industries.vue')
     },
@@ -82,14 +82,14 @@ const router = createRouter({
     },
 
     {
-        path: '/post/job-details',
+        path: '/post-flex-job/job-details',
         name: 'post-job-details',
         beforeEnter: isAuthenticated,
         component: () => import('../views/PostListingJobDetails.vue')
     },
 
     {
-        path: '/post/company-details',
+        path: '/post-flex-job/company-details',
         name: 'post-company-details',
         beforeEnter: isAuthenticated,
         component: () => import('../views/PostListingCompanyDetails.vue')
@@ -153,7 +153,7 @@ const router = createRouter({
     },
 
     {
-        path: '/listing/:uuid/:slug',
+        path: '/flex-job-listing/:uuid/:slug',
         name: 'listing',
         component: () => import('../views/ListingView.vue')
     },

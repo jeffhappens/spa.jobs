@@ -24,7 +24,7 @@ const description = ref('Flex Job listings is a curated job board of the best re
                 <p class="text-lg">{{ description }}</p>
                 <div class="mt-10">
                     <router-link
-                        :to="store.state.post_job_item.destination"
+                        :to="{ name: store.state.post_job_item.routeName }"
                         class="text-lg md:text-xl font-semibold py-4 px-8 rounded-full bg-[color:var(--p-orange)]">
                         {{ store.state.post_job_item.label }}
                     </router-link>
