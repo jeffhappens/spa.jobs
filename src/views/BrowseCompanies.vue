@@ -40,9 +40,11 @@
 
 
             <div v-for="company in companies.data" :key="company.id" class="bg-white p-4 mb-8 shadow-md rounded-lg flex gap-5">
-                <div class="w-36">
+            
+                <div class="w-20">
                     <img :src="`${store.state.api_url_base}/${company.logo}`" />
                 </div>
+            
                 <div class="text-gray-600 flex-1">
 
                     <div class="flex items-start justify-between">
@@ -54,20 +56,20 @@
                                     slug: company.slug
                                 }
                             }">
-                                <h2 class="text-2xl font-semibold text-gray-700 hover:underline">{{ company.name }}</h2>
+                                <h2 class="text-lg font-bold text-gray-700 hover:underline">{{ company.name }}</h2>
                             </router-link>
-                            <p>
-                                {{ company.city }}, {{ company.state }}
-                            </p>
-                            <p class="font-semibold mb-2">
+                            
+                            <p>{{ company.city }}, {{ company.state }}</p>
+
+                            <p class="font-semibold">
                                 Industry:
                                 <span class="italic">{{ company.industry.label }}</span>
                             </p>
                         </div>
 
-                        <div>
+                        <!-- <div>
                             <p class="bg-orange-400 inline-block px-2 mb-2 text-white rounded-sm">{{ company.listings_count }} listing(s)</p>
-                        </div>
+                        </div> -->
 
                     </div>
                     

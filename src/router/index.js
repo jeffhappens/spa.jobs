@@ -179,10 +179,10 @@ async function isAuthenticated(to, from , next) {
     let userObj = localStorage.getItem('user')
 
     if(userObj) {
+
         try {
             const user = await axios.get(`${store.state.api_url_base}/api/user`)
             next()
-
         } catch(error) {
             next('/login')
         }

@@ -48,7 +48,6 @@ getLoggedInUser()
         @company:added="notify('New Company Added')"
         @listing:updated="notify('Listing updated')"
         @emailVerified="notify('Email Successfully Verified. You are now logged in.')"
-        @ready="allowTabbingIntoEditor"
         class="flex-1"
     />
 
