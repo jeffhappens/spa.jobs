@@ -67,9 +67,9 @@
                             </p>
                         </div>
 
-                        <!-- <div>
-                            <p class="bg-orange-400 inline-block px-2 mb-2 text-white rounded-sm">{{ company.listings_count }} listing(s)</p>
-                        </div> -->
+                        <div class="absolute -top-7 -right-2 bg-amber-400 text-white text-sm py-0 px-2 rounded-sm">
+                            <p>{{ company.listings_count }} listing(s)</p>
+                        </div>
 
                     </div>
                     
