@@ -73,9 +73,6 @@
 
                     </div>
                     
-
-                    
-                    <!-- <p>{{ company.description }}</p> -->
                 </div> 
             </div>
 
