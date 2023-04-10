@@ -95,11 +95,11 @@
 
         <Container>
 
-            <div class="flex items-start gap-5">
+            <div class="flex-col md:flex items-start gap-5">
 
                 <SidebarAccount />
 
-                <section class="flex-1">
+                <section class="flex-1 w-full">
 
                     <div class="bg-white p-4 mb-6 w-full shadow-md text-gray-800 flex gap-4 rounded-lg">
 
