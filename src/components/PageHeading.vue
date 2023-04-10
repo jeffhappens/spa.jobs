@@ -13,7 +13,7 @@
 
             <router-link
                 v-if="actions"
-                :to="actions.url"
+                :to="{ name: actions.routeName }"
                 class="text-white bg-[color:var(--p-blue-md)] rounded-md py-2 px-4">
                 {{ actions.label }}
             </router-link>

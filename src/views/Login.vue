@@ -78,7 +78,7 @@
                 <div class="mb-4">
                     <Label for="password" value="Password" />
                     <TextInput type="password" :modelValue="user.password" @update:modelValue="user.password = $event" />
-                    <router-link class="text-sm text-[color:var(--p-orange)] font-semibold" to="/forgot-password">I forgot my password</router-link>
+                    <router-link class="text-sm text-[color:var(--p-orange)] font-semibold" :to="{ name: 'forgot-password' }">I forgot my password</router-link>
                 </div>
 
                 <div class="md:flex items-center justify-between text-center">
@@ -98,7 +98,7 @@
                         <span v-else>Sign In</span>
                     </button>
 
-                    <router-link class="text-sky-500 font-semibold" to="/register">Create a new account</router-link>
+                    <router-link class="text-sky-500 font-semibold" :to="{ name: 'register' }">Create a new account</router-link>
                         
 
                 </div>

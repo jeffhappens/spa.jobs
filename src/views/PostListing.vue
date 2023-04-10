@@ -290,7 +290,7 @@
                                 <div class="p-4">
                                     <ul>
                                         <li>
-                                            <router-link class="text-sky-500 font-semibold" :to="`/company/${company.uuid}/${company.slug}`">Company Profile &amp; All listings</router-link>
+                                            <router-link class="text-sky-500 font-semibold" :to="{ name: 'company', params: { uuid: company.uuid, slug: company.slug }}">Company Profile &amp; All listings</router-link>
                                             
                                         </li>
                                         <li>

@@ -14,7 +14,7 @@
     const myCompanies = ref(null)
     const actions = {
         label: 'Add New Company',
-        url: '/account/companies/add'
+        routeName: 'add-company'
     }
 
     async function getCompanies() {

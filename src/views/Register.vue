@@ -111,7 +111,7 @@
                     <div class="block md:flex items-center justify-between">
                         <button class="w-full md:w-auto py-2 px-10 bg-[color:var(--p-blue-md)] text-lg text-white font-semibold rounded-md">Create Account</button>
                         <div class="text-center my-4 md:text-start md:my-0">
-                            <router-link class="text-sky-500 font-semibold" to="/login">I have an account</router-link>
+                            <router-link class="text-sky-500 font-semibold" :to="{ name: 'login '}">I have an account</router-link>
                         </div>
                     </div>
 

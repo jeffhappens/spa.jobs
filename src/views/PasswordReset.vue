@@ -31,7 +31,7 @@
                         <h2 class="text-3xl font-semibold">Password reset successfully!</h2>
                         <p>You can now sign in to your account using your new password.</p>
                     </div>
-                    <router-link to="/login" class="h-10 w-28 bg-[color:var(--p-blue-md)] text-lg text-white font-semibold rounded-md flex items-center justify-center">
+                    <router-link :to="{ name: 'login' }" class="h-10 w-28 bg-[color:var(--p-blue-md)] text-lg text-white font-semibold rounded-md flex items-center justify-center">
                         <svg
                             v-if="loading"
                             aria-hidden="true"

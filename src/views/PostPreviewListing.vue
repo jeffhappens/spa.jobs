@@ -77,7 +77,7 @@
                             <div class="p-4 text-center">
                                 <ul>
                                     <li>
-                                        <router-link class="text-sky-500 font-semibold" :to="`/company/${store.state.listing.company.uuid}/${store.state.listing.company.slug}`">Company Profile &amp; Listings</router-link>
+                                        <router-link class="text-sky-500 font-semibold" :to="{ name: 'company', params: { uuid: store.state.listing.company.uuid, slug: store.state.listing.company.slug }}">Company Profile &amp; Listings</router-link>
                                     </li>
                                     <li>
                                         <a target="_blank" class="text-sky-500 font-semibold" :href="store.state.listing.company.url">

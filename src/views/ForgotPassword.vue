@@ -47,7 +47,7 @@
                         </svg>
                         <span v-else>Sign In</span>
                     </button>
-                    <router-link to="/login" class="text-[color:var(--p-orange)] font-semibold">Cancel</router-link>
+                    <router-link :to="{ name: 'login' }" class="text-[color:var(--p-orange)] font-semibold">Cancel</router-link>
                 </div>
             </form>
         </div>
