@@ -63,7 +63,7 @@
                     </router-link>
                 </p>
                 <p class="text-xs text-gray-600">
-                    {{ listing.renewed_on ? 'Reposted' : 'Posted' }} on {{ listing.created_at }}
+                    {{ listing.renewed_on ? 'Reposted' : 'Posted' }} on {{ listing.renewed_on ? listing.renewed_on : listing.created_at }}
                     <!-- -->
                     <span v-if="route.name === 'my-listings'">
                         / {{ listing.expired ? 'Expired' : 'Expires' }} on {{ listing.expires_at }}
