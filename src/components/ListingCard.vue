@@ -70,7 +70,7 @@
                     </span>
                 </p>
 
-                <div v-if="listing.expired">
+                <div v-if="route.name === 'my-listings' && listing.expired">
                     <button
                         v-if="!renewMessage"
                         @click="showRenewMessage"
