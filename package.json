@@ -21,6 +21,7 @@
     "filepond-plugin-image-preview": "^4.6.11",
     "filepond-plugin-image-resize": "^2.0.10",
     "js-cookie": "^3.0.1",
+    "micromodal": "^0.4.10",
     "pinia": "^2.0.30",
     "vue": "^3.2.45",
     "vue-filepond": "^7.0.3",

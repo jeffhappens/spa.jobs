@@ -2,12 +2,12 @@
 
     import { ref } from 'vue'
     
-    import MainContentArea from '../components/MainContentArea.vue'
-    import Container from '../components/Container.vue'
-    import PageHeading from '../components/PageHeading.vue'
-    import SidebarAccount from '../components/SidebarAccount.vue'
-
-    import ListingCard from '../components/ListingCard.vue'
+    import MainContentArea from '#/MainContentArea.vue'
+    import Container from '#/Container.vue'
+    import PageHeading from '#/PageHeading.vue'
+    import SidebarAccount from '#/SidebarAccount.vue'
+    
+    import ListingCard from '#/ListingCard.vue'
 
     import { useStore } from 'vuex'
     const store = useStore()
@@ -15,17 +15,17 @@
     const user = JSON.parse(localStorage.getItem('user'))
 
     const listings = ref(null)
-
+    
     async function getListings() {
         const { data } = await axios.get(`${store.state.api_url_base}/api/mylistings`)
         listings.value = data
     }
     getListings()
+
 </script>
 <template>
-
     <MainContentArea>
-        
+
         <PageHeading text="My Listings" :actions="actions" />
 
         <Container>
