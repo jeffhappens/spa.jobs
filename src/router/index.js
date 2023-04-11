@@ -166,6 +166,12 @@ const router = createRouter({
         path: '/privacy-policy',
         name: 'privacy-policy',
         component: () => import('../views/PrivacyPolicy.vue')
+    },
+
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'not-found',
+        component: () => import('../views/NotFound.vue')
     }
 
 
