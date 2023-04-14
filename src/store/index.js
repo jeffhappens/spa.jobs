@@ -10,7 +10,14 @@ const store = createStore({
         listing: {
             title: '',
             type_id: '1',
-            apply_link: 'https://',
+
+            apply_link: {
+                type: 'url',
+                icon: 'link',
+                value: 'https://',
+            },
+
+            // apply_link: 'https://',
             description: '',
             author_uuid: '',
             company_id: '',
@@ -42,6 +49,13 @@ const store = createStore({
 
     mutations: {
 
+        set_apply_link_value(state, data) {
+            state.listing.apply_link = data
+        },
+        update_apply_link(state, data) {
+            state.listing.apply_link.value = data
+        },
+
         set_listing_value(state, data) {
             state.listing[data.field] = data.value
         },
@@ -58,6 +72,13 @@ const store = createStore({
     actions: {
         set_job_listing(context, listing) {
             context.commit('set_job_listing', listing)
+        },
+
+        SET_APPLY_LINK_VALUE(context, data) {
+            context.commit('set_apply_link_value', data)
+        },
+        UPDATE_APPLY_LINK(context, data) {
+            context.commit('update_apply_link', data)
         },
 
         SET_LISTING_VALUE(context, data) {

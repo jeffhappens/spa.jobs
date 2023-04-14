@@ -49,7 +49,6 @@
         <div class="md:flex items-center gap-5">
             <Select
                 class="md:w-1/3"
-                :class="{ 'border border-red-600' : errors?.company_id }"
                 v-model="store.state.listing.company_id"
                 @update:modelValue="setCompany($event)">
                 <option value="">Select a Company</option>

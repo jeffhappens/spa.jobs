@@ -57,6 +57,10 @@
     }
     updateState('author_uuid', user.uuid)
 
+    function updateApplyLink($event) {
+        store.dispatch('UPDATE_APPLY_LINK', $event)
+    }
+
     const errors = ref()
 
     async function validateListing() {
@@ -67,9 +71,7 @@
             )
             router.push({ name: 'post-preview' })
         } catch(err) {
-            console.log(err.response.data.errors)
             errors.value = err.response.data.errors
-
         }
     }
 
@@ -91,13 +93,19 @@
         const typeIsUrl = type === 'url'
         const typeIsEmail = type === 'email'
 
-        console.log(type)
-
         if(typeIsEmail) {
-            updateState('apply_link', '')
+            store.dispatch('SET_APPLY_LINK_VALUE', {
+                type: 'email',
+                icon: 'envelope',
+                value: '',
+            })
         }
         if(typeIsUrl) {
-            updateState('apply_link', 'https://')
+            store.dispatch('SET_APPLY_LINK_VALUE', {
+                type: 'url',
+                icon: 'link',
+                value: 'https://',
+            })
         }
         applicationType.value = type
         
@@ -142,7 +150,6 @@
                             <TextInput
                                 v-model="store.state.listing.title"
                                 @update:modelValue="updateState('title', $event)"
-                                :class="{ 'border border-red-500' : errors?.title }"
                             />
                             <ErrorMessage v-if="errors?.title" text="Please provide a Job Title" />
                         </div>
@@ -169,37 +176,40 @@
 
                             <!-- Apply Link -->
                             <div class="mb-4 md:w-1/2">
+
                                 <Label
                                     for="title"
                                     helpText="The url to your application, or you can use an email address."
                                     value="Application Link or Email" />
 
-                                <TextInput
-                                    v-if="applicationType === 'url'"
-                                    v-model="store.state.listing.apply_link"
-                                    @update:modelValue="updateState('apply_link', $event)"
-                                    :class="{ 'border border-red-500' : errors?.apply_link }"
-                                />
-                                <p
-                                    v-if="applicationType === 'url'"
-                                    class="text-sky-600 text-sm hover:underline cursor-pointer"
-                                    @click="changeApplicationLinkContext('email')">
-                                    Use an email address instead
-                                </p>
+                                <div v-if="store.state.listing.apply_link.type === 'url'">
 
-                                <TextInput
-                                    v-if="applicationType === 'email'"
-                                    v-model="store.state.listing.apply_link"
-                                    @update:modelValue="updateState('apply_link', $event)"
-                                    :class="{ 'border border-red-500' : errors?.apply_link }"
-                                />
-                                <p
-                                    v-if="applicationType === 'email'"
-                                    class="text-sky-600 text-sm hover:underline cursor-pointer"
-                                    @click="changeApplicationLinkContext('url')">
-                                    Use a url instead
-                                </p>
-                                <ErrorMessage v-if="errors?.apply_link" text="Please provide a link to your application" />
+                                    <TextInput
+                                        :icon="store.state.listing.apply_link.icon"
+                                        v-model="store.state.listing.apply_link.value"
+                                        @update:modelValue="updateApplyLink($event)"
+                                    />
+                                    <p
+                                        
+                                        class="text-sky-600 text-sm hover:underline cursor-pointer"
+                                        @click="changeApplicationLinkContext('email')">
+                                        Use an email address instead
+                                    </p>
+                                </div>
+                                <div v-else>
+
+                                    <TextInput
+                                        icon="envelope"
+                                        v-model="store.state.listing.apply_link.value"
+                                        @update:modelValue="updateApplyLink($event)"
+                                    />
+                                    <p
+                                        class="text-sky-600 text-sm hover:underline cursor-pointer"
+                                        @click="changeApplicationLinkContext('url')">
+                                        Use a url instead
+                                    </p>
+                                </div>
+                                <ErrorMessage v-if="errors?.['apply_link.value']" :text="errors['apply_link.value'][0]" />
                             </div>
 
                         </div>
@@ -212,7 +222,7 @@
                                 helpText="Make sure to include at least a detailed job summary, and required/preferred skills." />
                             
                             <!-- Quill Editor -->
-                            <div :class="{ 'border border-red-500' : errors?.description }">
+                            <div>
                                 <QuillEditor
                                     theme="snow"
                                     :options="quillOptions"
