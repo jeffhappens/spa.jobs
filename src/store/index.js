@@ -5,7 +5,7 @@ const store = createStore({
         site_title: 'FJL',
         api_url_base: process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'https://api.flexjoblistings.com',
 
-        payment_link_url: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_8wM041fpEbUZ8b6bII' : 'https://buy.stripe.com/28oeVCfod4Nacq4000',
+        payment_link_url: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_8wM041fpEbUZ8b6bII' : 'https://buy.stripe.com/00g14M2Br93q89O8wx',
 
         listing: {
             title: '',
