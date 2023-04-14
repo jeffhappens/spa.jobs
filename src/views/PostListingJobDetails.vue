@@ -209,7 +209,7 @@
                                         Use a url instead
                                     </p>
                                 </div>
-                                <ErrorMessage v-if="errors?.['apply_link.value']" :text="errors['apply_link.value'][0]" />
+                                <ErrorMessage v-if="errors?.apply_link" :text="errors?.apply_link[0]" />
                             </div>
 
                         </div>
