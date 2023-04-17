@@ -148,6 +148,7 @@
                                 value="Job Title" />
 
                             <TextInput
+                                type="text"
                                 v-model="store.state.listing.title"
                                 @update:modelValue="updateState('title', $event)"
                             />
@@ -185,6 +186,7 @@
                                 <div v-if="store.state.listing.apply_link.type === 'url'">
 
                                     <TextInput
+                                        type="text"
                                         :icon="store.state.listing.apply_link.icon"
                                         v-model="store.state.listing.apply_link.value"
                                         @update:modelValue="updateApplyLink($event)"
@@ -199,6 +201,7 @@
                                 <div v-else>
 
                                     <TextInput
+                                        type="text"
                                         icon="envelope"
                                         v-model="store.state.listing.apply_link.value"
                                         @update:modelValue="updateApplyLink($event)"

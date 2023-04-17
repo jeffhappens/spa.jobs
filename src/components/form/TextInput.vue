@@ -2,7 +2,7 @@
 
 import { onMounted, ref } from 'vue'
 
-defineProps(['modelValue', 'icon']);
+defineProps(['modelValue', 'icon', 'type']);
 
 defineEmits(['update:modelValue']);
 
@@ -18,12 +18,13 @@ defineExpose({ focus: () => input.value.focus() });
 </script>
 
 <template>
-    <div class="text-gray-700 w-full p-2 mb-1 shadow-sm bg-gray-50 border border-gray-300 flex items-center">
-        <div v-if="icon" class="mr-2">
+    <div class="text-gray-700 w-full mb-1 shadow-sm bg-gray-50 flex items-center border border-gray-300">
+        <div v-if="icon" class="pl-2 pt-1">
             <font-awesome-icon :icon="`fa-solid fa-${icon}`" class="text-xl" />
         </div>
         <input
-            class="w-full bg-gray-50 !outline-none focus:ring-0"
+            :type="type"
+            class="w-full bg-gray-50 !outline-none focus:ring-0 border-0"
             :value="modelValue"
             @input="$emit('update:modelValue', $event.target.value)"
             ref="input"

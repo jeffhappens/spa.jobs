@@ -151,18 +151,18 @@
         
         <div class="mb-4">
             <FormLabel value="Company Name" for="company_name" />
-            <TextInput name="company_name" v-model="company.name" @update:modelValue="company.name = $event" />
+            <TextInput name="company_name" type="text" v-model="company.name" @update:modelValue="company.name = $event" />
         </div>
 
         <div class="mb-4">
             <FormLabel value="Company Address" for="company_address" />
-            <TextInput name="company_address" v-model="company.address" @update:modelValue="company.address = $event" />
+            <TextInput name="company_address" type="text" v-model="company.address" @update:modelValue="company.address = $event" />
         </div>
 
         <div class="flex gap-5">
             <div class="mb-4 w-1/2">
                 <FormLabel value="City" for="company_city" />
-                <TextInput name="company_city" v-model="company.city" @update:modelValue="company.city = $event" />
+                <TextInput name="company_city" type="text" v-model="company.city" @update:modelValue="company.city = $event" />
             </div>
             <div class="mb-4 w-1/4">
                 <FormLabel value="State" for="company_state" />
@@ -175,18 +175,18 @@
             </div>
             <div class="mb-4 w-1/4">
                 <FormLabel value="Zip Code" for="company_zip" />
-                <TextInput name="company_zip" v-model="company.zip" @update:modelValue="company.zip = $event" />
+                <TextInput name="company_zip" type="text" v-model="company.zip" @update:modelValue="company.zip = $event" />
             </div>
         </div>
 
         <div class="mb-4">
             <FormLabel value="Email" for="company_email" />
-            <TextInput name="company_email" v-model="company.email" @update:modelValue="company.email = $event" />
+            <TextInput name="company_email" type="text" v-model="company.email" @update:modelValue="company.email = $event" />
         </div>
 
         <div class="mb-4">
             <FormLabel value="Company URL" for="company_url" />
-            <TextInput name="company_url" v-model="company.url" @update:modelValue="company.url = $event" />
+            <TextInput name="company_url" type="text" v-model="company.url" @update:modelValue="company.url = $event" />
         </div>
 
         <div class="mb-4">

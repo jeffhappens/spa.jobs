@@ -72,7 +72,7 @@
 
                 <div class="mb-4">
                     <Label for="email" value="Email Address" />
-                    <TextInput :modelValue="user.email" @update:modelValue="user.email = $event" />
+                    <TextInput type="text" :modelValue="user.email" @update:modelValue="user.email = $event" />
                 </div>
 
                 <div class="mb-4">

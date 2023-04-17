@@ -65,22 +65,9 @@
     }
     getCompanies()
 
-    function updateState(field, value) {
-        store.dispatch('SET_LISTING_VALUE', { field, value })
-    }
-
     const applicationType = ref('url')
 
     function changeApplicationLinkContext(type) {
-        const typeIsUrl = type === 'url'
-        const typeIsEmail = type === 'email'
-
-        if(typeIsEmail) {
-            updateState('apply_link', '')
-        }
-        if(typeIsUrl) {
-            updateState('apply_link', 'https://')
-        }
         applicationType.value = type
     }
 
@@ -127,6 +114,7 @@
                                 value="Job Title" />
 
                             <TextInput
+                                type="text"
                                 v-model="listing.title"
                                 @update:modelValue="listing.title = $event"
                                 required
@@ -159,31 +147,36 @@
                                     helpText="The url to your application, or you can use an email address."
                                     value="Application Link or Email" />
 
-                                <TextInput
-                                    v-if="applicationType === 'url'"
-                                    v-model="store.state.listing.apply_link"
-                                    @update:modelValue="updateState('apply_link', $event)"
-                                    :class="{ 'border border-red-500' : errors?.apply_link }"
-                                />
-                                <p
-                                    v-if="applicationType === 'url'"
-                                    class="text-sky-600 text-sm hover:underline cursor-pointer"
-                                    @click="changeApplicationLinkContext('email')">
-                                    Use an email address instead
-                                </p>
+                                <div v-if="applicationType === 'url'">
 
-                                <TextInput
-                                    v-if="applicationType === 'email'"
-                                    v-model="store.state.listing.apply_link"
-                                    @update:modelValue="updateState('apply_link', $event)"
-                                    :class="{ 'border border-red-500' : errors?.apply_link }"
-                                />
-                                <p
-                                    v-if="applicationType === 'email'"
-                                    class="text-sky-600 text-sm hover:underline cursor-pointer"
-                                    @click="changeApplicationLinkContext('url')">
-                                    Use a url instead
-                                </p>
+                                    <TextInput
+                                        type="text"
+                                        :icon="store.state.listing.apply_link.icon"
+                                        v-model="listing.apply_link"
+                                        @update:modelValue="updateApplyLink($event)"
+                                    />
+                                    <p
+                                        
+                                        class="text-sky-600 text-sm hover:underline cursor-pointer"
+                                        @click="changeApplicationLinkContext('email')">
+                                        Use an email address instead
+                                    </p>
+                                </div>
+                                <div v-else>
+
+                                    <TextInput
+                                        type="text"
+                                        icon="envelope"
+                                        v-model="store.state.listing.apply_link.value"
+                                        @update:modelValue="updateApplyLink($event)"
+                                    />
+                                    <p
+                                        class="text-sky-600 text-sm hover:underline cursor-pointer"
+                                        @click="changeApplicationLinkContext('url')">
+                                        Use a url instead
+                                    </p>
+                                </div>
+
                                 <!-- <Label
                                     for="title"
                                     helpText="The url to your application, or an email address."

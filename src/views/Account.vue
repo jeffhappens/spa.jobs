@@ -122,11 +122,11 @@
 
                             <div class="mb-2">
                                 <Label for="password" value="Current Password" />
-                                <TextInput v-model="currentPassword" />
+                                <TextInput type="password" v-model="currentPassword" />
                             </div>
                             <div>
                                 <Label for="password" value="New Password" />
-                                <TextInput v-model="newPassword" />
+                                <TextInput type="password" v-model="newPassword" />
                             </div>
 
                             <div class="flex items-center gap-5 mt-6">
@@ -146,7 +146,7 @@
                         </div>
 
 
-                        <TextInput v-model="deletetext" @update:modelValue="deletetext = $event"/>
+                        <TextInput type="text" v-model="deletetext" @update:modelValue="deletetext = $event"/>
 
                         <button
                             :disabled="deleteButtonDisabled"

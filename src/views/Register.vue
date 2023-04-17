@@ -57,6 +57,7 @@
 
                         <TextInput
                             name="name"
+                            type="text"
                             :class="{ 'border-2 border-red-500' : errors?.name }"
                             v-model="user.name"
                             @update:modelValue="user.name = $event" />
@@ -72,6 +73,7 @@
 
                         <TextInput
                             name="email"
+                            type="email"
                             :class="{ 'border-2 border-red-500' : errors?.email }"
                             v-model="user.email"
                             @update:modelValue="user.email = $event" />
