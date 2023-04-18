@@ -172,7 +172,14 @@ const router = createRouter({
         path: '/:pathMatch(.*)*',
         name: 'not-found',
         component: () => import('../views/NotFound.vue')
+    },
+
+    {
+        path: '/report-flex-job-listing/:uuid/:slug',
+        name: 'report',
+        component: () => import('../views/Report.vue')
     }
+
 
 
   ]

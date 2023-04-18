@@ -71,19 +71,6 @@
         applicationType.value = type
     }
 
-
-
-    // function setCompanyId(event) {
-    //     console.log(event)
-
-    //     const company = companies.value.find(v => {
-    //         return v.id == event
-    //     })
-    //     listing.value.company_id = Number(company.id)
-    //     listing.value.industry_id = Number(company.industry.id)
-
-    // }
-
 </script>
 <template>
     <MainContentArea>

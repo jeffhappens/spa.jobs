@@ -47,6 +47,7 @@ getLoggedInUser()
         @user:login="setLoggedInUser"
         @company:added="notify('New Company Added')"
         @listing:updated="notify('Listing updated')"
+        @listing:reported="notify('Listing has been reported. Thank you for helping to keep this site reliable and safe.')"
         @emailVerified="notify('Email Successfully Verified. You are now logged in.')"
         class="flex-1"
     />
