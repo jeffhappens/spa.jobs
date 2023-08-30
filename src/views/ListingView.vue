@@ -41,6 +41,13 @@
         <PageHeading text="Job Listing" />
 
         <Container v-if="listing">
+            <div
+                v-if="listing.expired"
+                class="text-gray-700 bg-red-100 border border-red-300 p-4 mb-8">
+                <p class="font-bold">This listing has expired on Flex Job Listings</p>
+                <p>Reasons could include: the employer is not accepting applications, is not actively hiring, or is reviewing applications.</p>
+            </div>
+            
             <div class="lg:flex gap-10 justify-between items-start">
                 
                 <div class="text-gray-600 text-lg lg:w-2/3">
@@ -60,14 +67,14 @@
 
                     <div class="editor_content mt-12" v-html="listing.description"></div>
 
-                    <div class="flex items-center justify-between gap-10">
+                    <div v-if="!listing.expired" class="flex items-center justify-between gap-10">
 
                         <div class="my-6">
                             <a v-if="applyLinkWeb()" :href="listing.apply_link" class="bg-sky-400 text-white px-6 py-2 rounded-sm block text-center md:inline">Apply for this Job</a>
                             <a v-else :href="`mailto:${listing.apply_link}`" class="bg-sky-400 text-white px-6 py-2 rounded-sm block text-center md:inline">Apply for this Job</a>
                         </div>
 
-                        <div class="flex items-center gap-2 p-2 hover:underline hover:text-red-400">
+                        <!-- <div class="flex items-center gap-2 p-2 hover:underline hover:text-red-400">
                             <router-link :to="{
                                 name: 'report',
                                 params: {
@@ -79,7 +86,7 @@
                                 <font-awesome-icon icon="fa-solid fa-flag" />
                                 Report this listing
                             </router-link>
-                        </div>
+                        </div> -->
                     </div>
                     
                 </div>
@@ -112,10 +119,7 @@
                         <a v-else :href="`mailto:${listing.apply_link}`" class="bg-sky-400 text-white px-6 py-2 rounded-sm">Apply for this Job</a>
                     </div> -->
                 </div>
-
-
             </div>
-
         </Container>
     </MainContentArea>
     
